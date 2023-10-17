@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import React from 'react'
-import { makeApiRequest } from '../api'
+import { api } from '../api'
 
 export default async function Home() {
   // const res = await fetch('http://localhost:3001/user/admin', {
@@ -12,13 +12,23 @@ export default async function Home() {
   // })     
   // console.log(await res.json())
 
+  // try {
+  //   const data = await makeApiRequest('http://localhost:3001/user/admin', {
+  //     method: 'GET',
+  //   });
+  //   console.log(data);
+  // } catch (error) {
+  //   console.error('Erro:', error);
+  // }
+
+  //console.log(cookies().get('access_token'))
+
   try {
-    const data = await makeApiRequest('http://localhost:3001/user/admin', {
-      method: 'GET',
-    });
-    console.log(data);
-  } catch (error) {
-    console.error('Erro:', error);
+    const res = await api.get('/user/admin')
+
+    console.log(res.data)
+  } catch (err) {
+    console.error("Ocorreu um erro")
   }
 
   return (
