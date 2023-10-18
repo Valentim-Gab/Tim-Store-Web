@@ -63,9 +63,11 @@
 
 import axios from 'axios'
 import { cookies } from 'next/headers'
-import { setCookie } from 'nookies'
+import { useRouter } from 'next/navigation'
+import { destroyCookie, setCookie } from 'nookies'
 
 const token = cookies().get('access_token')?.value
+//const router = useRouter()
 
 export const api = axios.create({
   baseURL: 'http://localhost:3001',
@@ -85,41 +87,44 @@ api.interceptors.response.use(
     return response
   },
   async (error) => {
+    //console.error(error.response.data)
     if (
       error.response.status === 403 &&
       error.response.data.error === 'session_expired'
     ) {
       try {
-        const refreshToken = cookies().get('refresh_token')?.value;
+      //  router.push('/login')
+      //  cookies().delete('access_token')
+
+      //   const refreshToken = cookies().get('refresh_token')?.value;
       
-        const res = await api.post('/refresh', {
-          refresh_token: refreshToken
-        })
+      //   const res = await api.post('/refresh', {
+      //     refresh_token: refreshToken
+      //   })
 
-        if (res.data && res.data.tokens.access_token) {
-          const { tokens } = res.data
+      //   if (res.data && res.data.tokens.access_token) {
+      //     const { tokens } = res.data
 
-          console.log(tokens)
+      //     console.log(tokens)
 
-          setCookie(null, 'access_token', tokens.access_token, {
-            maxAge: 60 * 60 * 24 * 7, //1 semana
-          })
-          setCookie(null, 'refresh_token', tokens.refresh_token, {
-            maxAge: 60 * 60 * 24 * 7, //1 semana
-          })
+      //     setCookie(null, 'access_token', tokens.access_token, {
+      //       maxAge: 60 * 60 * 24 * 7, //1 semana
+      //     })
+      //     setCookie(null, 'refresh_token', tokens.refresh_token, {
+      //       maxAge: 60 * 60 * 24 * 7, //1 semana
+      //     })
 
-          // cookies().set('access_token', tokens.access_token, {
-          //   maxAge: 60 * 60 * 24 * 7 //1 semana
-          // })
-          // cookies().set('refresh_token', tokens.refresh_token, {
-          //   maxAge: 60 * 60 * 24 * 7 //1 semana
-          // })
+      //     // cookies().set('access_token', tokens.access_token, {
+      //     //   maxAge: 60 * 60 * 24 * 7 //1 semana
+      //     // })
+      //     // cookies().set('refresh_token', tokens.refresh_token, {
+      //     //   maxAge: 60 * 60 * 24 * 7 //1 semana
+      //     // })
 
-          console.log('Sipah deu')
+      //     console.log('Sipah deu')
 
-          //api(error.config);
+      //     //api(error.config);
           return Promise.reject(error);
-        }
       } catch (refreshError) {
         console.error('Erro ao renovar o token:', refreshError);
       }

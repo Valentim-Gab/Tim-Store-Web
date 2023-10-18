@@ -54,6 +54,12 @@ export default function Login() {
     }
   }
 
+  async function test() {
+    'use server'
+
+    console.log('teste')
+  }
+
   return (
     <main className="min-h-screen p-8">
       <form action={login} className="flex flex-col gap-4">
@@ -62,6 +68,10 @@ export default function Login() {
         <label htmlFor="password">Senha:</label>
         <input type="password" name="password" id="password" className="text-black" />
         <button type="submit" className="border p-4">Login</button>
+      </form>
+
+      <form action={test} className="flex flex-col gap-4">
+        <button type="submit" className="border p-4">Logout</button>
       </form>
     </main>
   )

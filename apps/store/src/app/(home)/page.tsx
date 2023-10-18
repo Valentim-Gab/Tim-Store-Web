@@ -1,39 +1,28 @@
-import { cookies } from 'next/headers'
+
 import React from 'react'
 import { api } from '../api'
+import { destroyCookie } from 'nookies'
+import { cookies } from 'next/headers'
+import { NextRequest } from 'next/server'
+import { FetchAuth } from './feth'
+
+
 
 export default async function Home() {
-  // const res = await fetch('http://localhost:3001/user/admin', {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${cookies().get('access_token')?.value}`
-  //   }
-  // })     
-  // console.log(await res.json())
+  const res = await FetchAuth('http://localhost:3001/user/admin', 'GET')
+
+  console.log(await res.json())
 
   // try {
-  //   const data = await makeApiRequest('http://localhost:3001/user/admin', {
-  //     method: 'GET',
-  //   });
-  //   console.log(data);
-  // } catch (error) {
-  //   console.error('Erro:', error);
+  //   api.get('/user/admin').catch(() => {
+  //     console.error("Ocorreu um erro")
+  //     destroyCookie(undefined, 'access_token')
+  //   })
+
+  //   //console.log(res.data)
+  // } catch (err) {
+
   // }
 
-  //console.log(cookies().get('access_token'))
-
-  try {
-    const res = await api.get('/user/admin')
-
-    console.log(res.data)
-  } catch (err) {
-    console.error("Ocorreu um erro")
-  }
-
-  return (
-    <main className="min-h-screen p-8">
-      salve
-    </main>
-  )
+  return <main className="min-h-screen p-8">salve</main>
 }
