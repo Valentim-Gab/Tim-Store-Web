@@ -1,6 +1,8 @@
 // import { cookies } from "next/headers";
 // import { setCookie } from "nookies";
 
+import { getApiClient } from "./axios";
+
 // export async function makeApiRequest(url: string, options: any = {}) {
 //   const accessToken = cookies().get('access_token')?.value;
 
@@ -61,75 +63,79 @@
 //   }
 // }
 
-import axios from 'axios'
-import { cookies } from 'next/headers'
-import { useRouter } from 'next/navigation'
-import { destroyCookie, setCookie } from 'nookies'
+// import axios from 'axios'
+// import { cookies } from 'next/headers'
+// import { redirect, useRouter } from 'next/navigation'
+// import { NextResponse } from 'next/server'
+// import { destroyCookie, setCookie } from 'nookies'
 
-const token = cookies().get('access_token')?.value
-//const router = useRouter()
+// const token = cookies().get('access_token')?.value
+// //const router = useRouter()
 
-export const api = axios.create({
-  baseURL: 'http://localhost:3001',
-})
+// export const api = axios.create({
+//   baseURL: 'http://localhost:3001',
+// })
 
-api.interceptors.request.use((config) => {
-  if (token) {
-    api.defaults.headers['Authorization'] = `Bearer ${token}`
-    config.headers['Authorization'] = `Bearer ${token}`
-  }
+// api.interceptors.request.use((config) => {
+//   if (token) {
+//     api.defaults.headers['Authorization'] = `Bearer ${token}`
+//     config.headers['Authorization'] = `Bearer ${token}`
+//   }
 
-  return config
-})
+//   return config
+// })
 
-api.interceptors.response.use(
-  (response) => {
-    return response
-  },
-  async (error) => {
-    //console.error(error.response.data)
-    if (
-      error.response.status === 403 &&
-      error.response.data.error === 'session_expired'
-    ) {
-      try {
-      //  router.push('/login')
-      //  cookies().delete('access_token')
-
-      //   const refreshToken = cookies().get('refresh_token')?.value;
+// api.interceptors.response.use(
+//   (response) => {
+//     return response
+//   },
+//   async (error) => {
+//     //console.error(error.response.data)
+//     if (
+//       error.response.status === 403 &&
+//       error.response.data.error === 'session_expired'
+//     ) {
+//       try {
+//       //  router.push('/login')
+//       //  cookies().delete('access_token')
       
-      //   const res = await api.post('/refresh', {
-      //     refresh_token: refreshToken
-      //   })
 
-      //   if (res.data && res.data.tokens.access_token) {
-      //     const { tokens } = res.data
+//       //   const refreshToken = cookies().get('refresh_token')?.value;
+      
+//       //   const res = await api.post('/refresh', {
+//       //     refresh_token: refreshToken
+//       //   })
 
-      //     console.log(tokens)
+//       //   if (res.data && res.data.tokens.access_token) {
+//       //     const { tokens } = res.data
 
-      //     setCookie(null, 'access_token', tokens.access_token, {
-      //       maxAge: 60 * 60 * 24 * 7, //1 semana
-      //     })
-      //     setCookie(null, 'refresh_token', tokens.refresh_token, {
-      //       maxAge: 60 * 60 * 24 * 7, //1 semana
-      //     })
+//       //     console.log(tokens)
 
-      //     // cookies().set('access_token', tokens.access_token, {
-      //     //   maxAge: 60 * 60 * 24 * 7 //1 semana
-      //     // })
-      //     // cookies().set('refresh_token', tokens.refresh_token, {
-      //     //   maxAge: 60 * 60 * 24 * 7 //1 semana
-      //     // })
+//       //     setCookie(null, 'access_token', tokens.access_token, {
+//       //       maxAge: 60 * 60 * 24 * 7, //1 semana
+//       //     })
+//       //     setCookie(null, 'refresh_token', tokens.refresh_token, {
+//       //       maxAge: 60 * 60 * 24 * 7, //1 semana
+//       //     })
 
-      //     console.log('Sipah deu')
+//       //     // cookies().set('access_token', tokens.access_token, {
+//       //     //   maxAge: 60 * 60 * 24 * 7 //1 semana
+//       //     // })
+//       //     // cookies().set('refresh_token', tokens.refresh_token, {
+//       //     //   maxAge: 60 * 60 * 24 * 7 //1 semana
+//       //     // })
 
-      //     //api(error.config);
-          return Promise.reject(error);
-      } catch (refreshError) {
-        console.error('Erro ao renovar o token:', refreshError);
-      }
-    }
+//       //     console.log('Sipah deu')
 
-    return Promise.reject(error);
-  }
-)
+//       //     //api(error.config);
+//           return Promise.reject(error);
+//       } catch (refreshError) {
+//         console.error('Erro ao renovar o token:', refreshError);
+//       }
+//     }
+
+//     return Promise.reject(error);
+//   }
+// )
+
+export const api = getApiClient()

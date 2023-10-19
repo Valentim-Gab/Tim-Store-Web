@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       setUser(user)
 
-      router.push('/')
+      // router.push('/')
     } else {
       console.error('Não deu')
     }

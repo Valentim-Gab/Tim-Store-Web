@@ -1,28 +1,49 @@
+'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { api } from '../api'
 import { destroyCookie } from 'nookies'
-import { cookies } from 'next/headers'
+
 import { NextRequest } from 'next/server'
 import { FetchAuth } from './feth'
+import { GetServerSideProps } from 'next'
+import { get } from 'http'
+import { redirect } from 'next/dist/server/api-utils'
+import { getApiClient } from '../axios'
 
+export default function Home(ctx: any) {
+  // const res = await FetchAuth('http://localhost:3001/user/admin', 'GET')
 
-
-export default async function Home() {
-  const res = await FetchAuth('http://localhost:3001/user/admin', 'GET')
-
-  console.log(await res.json())
+  // console.log(await res.json())
 
   // try {
-  //   api.get('/user/admin').catch(() => {
-  //     console.error("Ocorreu um erro")
-  //     destroyCookie(undefined, 'access_token')
-  //   })
+  useEffect(() => {
+    const apiClient = getApiClient(ctx)
+
+    // apiClient.get('/user/admin')
+    // .then(res => {
+    //   console.log(res.data)
+    // })
+    // .catch((err) => {
+    //   console.error("Ocorreu um erro", err.data)
+    // })
+
+    FetchAuth('http://localhost:3001/user/admin', 'GET', ctx).then((data) => {
+      console.log(data)
+    })
+    .catch((err) => {
+      console.log('Erro')
+    })
+  })
 
   //   //console.log(res.data)
   // } catch (err) {
 
   // }
+
+  //console.log(ctx)
+
+  
 
   return <main className="min-h-screen p-8">salve</main>
 }
