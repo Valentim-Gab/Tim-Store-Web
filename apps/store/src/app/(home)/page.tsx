@@ -10,6 +10,11 @@ import { GetServerSideProps } from 'next'
 import { get } from 'http'
 import { redirect } from 'next/dist/server/api-utils'
 import { getApiClient } from '../axios'
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js'
+import CheckoutForm from '@/components/stripe/checkout-form'
+
+const stripe = loadStripe('')
 
 export default function Home(ctx: any) {
   // const res = await FetchAuth('http://localhost:3001/user/admin', 'GET')
@@ -17,24 +22,24 @@ export default function Home(ctx: any) {
   // console.log(await res.json())
 
   // try {
-  useEffect(() => {
-    const apiClient = getApiClient(ctx)
+  // useEffect(() => {
+  //   const apiClient = getApiClient(ctx)
 
-    // apiClient.get('/user/admin')
-    // .then(res => {
-    //   console.log(res.data)
-    // })
-    // .catch((err) => {
-    //   console.error("Ocorreu um erro", err.data)
-    // })
+  //   // apiClient.get('/user/admin')
+  //   // .then(res => {
+  //   //   console.log(res.data)
+  //   // })
+  //   // .catch((err) => {
+  //   //   console.error("Ocorreu um erro", err.data)
+  //   // })
 
-    FetchAuth('http://localhost:3001/user/admin', 'GET', ctx).then((data) => {
-      console.log(data)
-    })
-    .catch((err) => {
-      console.log('Erro')
-    })
-  })
+  //   FetchAuth('http://localhost:3001/user/admin', 'GET', ctx).then((data) => {
+  //     console.log(data)
+  //   })
+  //   .catch((err) => {
+  //     console.log('Erro')
+  //   })
+  // })
 
   //   //console.log(res.data)
   // } catch (err) {
@@ -43,7 +48,13 @@ export default function Home(ctx: any) {
 
   //console.log(ctx)
 
-  
+  const options = {
+    clientSecret: ''
+  }
 
-  return <main className="min-h-screen p-8">salve</main>
+  return (
+    <Elements stripe={stripe} options={options}>
+      <CheckoutForm />
+    </Elements>
+  )
 }
