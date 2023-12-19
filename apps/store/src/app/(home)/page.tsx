@@ -14,7 +14,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from '@/components/stripe/checkout-form'
 
-const stripe = loadStripe('')
+const stripe = loadStripe('{{CHAVE PÚBLICA}}')
 
 export default function Home(ctx: any) {
   // const res = await FetchAuth('http://localhost:3001/user/admin', 'GET')
@@ -49,7 +49,7 @@ export default function Home(ctx: any) {
   //console.log(ctx)
 
   const options = {
-    clientSecret: ''
+    clientSecret: '{{CLIENT_SECRET}}'
   }
 
   return (
