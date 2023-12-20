@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useContext } from 'react'
 import { Login } from '@/interfaces/Login'
 import { AuthContext } from '@/contexts/auth-context'
@@ -8,8 +6,10 @@ import { cookies } from 'next/headers'
 // import { setCookie } from 'nookies'
 
 import { parseCookies } from 'nookies'
+import { getApiClient } from '../axios'
+import { redirect } from 'next/navigation'
 
-export default function Login(ctx: any) {
+export default function Login() {
   //const { signIn } = useContext(AuthContext)
 
   //destroyCookie(ctx, 'access_token')
@@ -22,8 +22,8 @@ export default function Login(ctx: any) {
   //     await signIn({username, password})
   // }
 
-  function handleSignIn(formData: FormData) {
-    //'use server'
+  async function handleSignIn(formData: FormData) {
+    'use server'
 
     if (formData.entries()) {
       const login: Login = {
@@ -31,18 +31,30 @@ export default function Login(ctx: any) {
         password: formData.get('password')?.toString() ?? ''
       }
 
-      fetch('http://localhost:3001/login', {
+      const res = await fetch('http://localhost:3001/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(login),
         credentials: 'include'
-      }).then((res) => {
-        console.log(res)
       })
 
-      fetch('http://localhost:3001/test', {
+      const data = await res.json()
+
+      cookies().set('access_token', data.tokens.access_token, {
+        maxAge: 60 * 60 * 24 * 7, //1 semana
+        httpOnly: true,
+        secure: true,
+      })
+
+      cookies().set('refresh_token', data.tokens.refresh_token, {
+        maxAge: 60 * 60 * 24 * 7, //1 semana
+        httpOnly: true,
+        secure: true,
+      })
+
+      const res2 = await fetch('http://localhost:3001/test', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -50,6 +62,12 @@ export default function Login(ctx: any) {
         credentials: 'include',
         cache: 'no-cache'
       })
+
+      //const axios = getApiClient()
+
+      // axios.post('/login', login)
+
+      //console.log(res.status)
 
       // const { tokens } = await res.json()
 
@@ -67,9 +85,9 @@ export default function Login(ctx: any) {
       //   maxAge: 60 * 60 * 24 * 7, //1 semana
       // })
 
-      // console.log(res.headers)
+      // console.log(res.headers
 
-      // console.log(cookies().get('access_token'))
+      //axios.get('/test')
 
       // const cookiesAfterLogin = parseCookies();
       // console.log(cookiesAfterLogin);
@@ -81,6 +99,8 @@ export default function Login(ctx: any) {
       //   },
       //   credentials: 'include'
       // })
+
+      redirect('/')
     }
   }
 

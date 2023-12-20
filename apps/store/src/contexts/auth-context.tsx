@@ -11,11 +11,12 @@ interface AuthContextInterface {
   user: User | null
   isAuthenticated: boolean
   signIn: (data: Login) => Promise<void>
+  ctx?: any
 }
 
 export const AuthContext = createContext({} as AuthContextInterface)
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children, ctx }: { children: React.ReactNode, ctx?: any }) {
   const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
 
@@ -65,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, signIn, ctx }}>
       {children}
     </AuthContext.Provider>
   )

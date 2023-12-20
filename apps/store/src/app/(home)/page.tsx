@@ -6,61 +6,39 @@ import { NextRequest } from 'next/server'
 import { FetchAuth } from './feth'
 import { GetServerSideProps } from 'next'
 import { get } from 'http'
-import { redirect } from 'next/dist/server/api-utils'
 import { getApiClient } from '../axios'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from '@/components/stripe/checkout-form'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 //const stripe = loadStripe('{{CHAVE PÚBLICA}}')
 
 export default async function Home() {
-  // const res = await FetchAuth('http://localhost:3001/user/admin', 'GET')
-
-  // console.log(await res.json())
-
-  // try {
-  // useEffect(() => {
-  //   const apiClient = getApiClient(ctx)
-
-  //   // apiClient.get('/user/admin')
-  //   // .then(res => {
-  //   //   console.log(res.data)
-  //   // })
-  //   // .catch((err) => {
-  //   //   console.error("Ocorreu um erro", err.data)
-  //   // })
-
-  //   FetchAuth('http://localhost:3001/user/admin', 'GET', ctx).then((data) => {
-  //     console.log(data)
-  //   })
-  //   .catch((err) => {
-  //     console.log('Erro')
-  //   })
-  // })
-
-  //   //console.log(res.data)
-  // } catch (err) {
-
-  // }
-
-  //console.log(ctx)
-
-  const res2 = await fetch('http://localhost:3001/test', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    cache: 'no-cache',
-    credentials: 'include',
-  })
-
-  console.log(cookies().get('access_token'))
+  // const api = getApiClient()
+  // await api.get('/test')
 
   const options = {
     clientSecret: '{{CLIENT_SECRET}}',
   }
+
+  console.log(cookies().get('access_token'))
+
+  // const resRefresh = await fetch('http://localhost:3001/refresh', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${cookies().get('access_token')?.value}`,
+  //   },
+  //   body: JSON.stringify({
+  //     refresh_token: cookies().get('refresh_token')?.value,
+  //   }),
+  // })
+
+  //console.log(cookies().get('teste'))
+
+  redirect('/logout-user')
 
   return (
     // <Elements stripe={stripe} options={options}>

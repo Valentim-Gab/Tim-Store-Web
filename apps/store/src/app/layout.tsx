@@ -12,14 +12,15 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({
-  children,
+  children, ctx
 }: {
   children: React.ReactNode
+  ctx?: any
 }) {
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        <AuthProvider>
+        <AuthProvider ctx={ctx}>
           {children}
         </AuthProvider>
         {/* <Header />
