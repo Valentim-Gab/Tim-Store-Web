@@ -4,58 +4,85 @@ import React, { useContext } from 'react'
 import { Login } from '@/interfaces/Login'
 import { AuthContext } from '@/contexts/auth-context'
 import { destroyCookie } from 'nookies'
-// import { cookies } from 'next/headers'
+import { cookies } from 'next/headers'
 // import { setCookie } from 'nookies'
 
+import { parseCookies } from 'nookies'
+
 export default function Login(ctx: any) {
-  const { signIn } = useContext(AuthContext)
+  //const { signIn } = useContext(AuthContext)
 
   //destroyCookie(ctx, 'access_token')
 
-  async function handleSignIn(formData: FormData) {
-    const username = formData.get('email')?.toString()
-    const password = formData.get('password')?.toString()
+  // async function handleSignIn(formData: FormData) {
+  //   const username = formData.get('email')?.toString()
+  //   const password = formData.get('password')?.toString()
 
-    if (username && password)
-      await signIn({username, password})
-  }
-
-  // async function login(formData: FormData) {
-  //   'use server'
-
-  //   if (formData.entries()) {
-  //     const login: Login = {
-  //       username: formData.get('email')?.toString() ?? '',
-  //       password: formData.get('password')?.toString() ?? ''
-  //     }
-
-  //     const res = await fetch('http://localhost:3001/login', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(login)
-  //     })
-
-  //     const { tokens } = await res.json()
-
-  //     cookies().set('access_token', tokens.access_token, {
-  //       maxAge: 60 * 60 * 24 * 7 //1 semana
-  //     })
-  //     cookies().set('refresh_token', tokens.refresh_token, {
-  //       maxAge: 60 * 60 * 24 * 7 //1 semana
-  //     })
-
-  //     // setCookie(undefined, 'access_token', tokens.access_token, {
-  //     //   maxAge: 60 * 60 * 24 * 7, //1 semana
-  //     // })
-  //     // setCookie(undefined, 'refresh_token', tokens.refresh_token, {
-  //     //   maxAge: 60 * 60 * 24 * 7, //1 semana
-  //     // })
-
-  //     console.log(cookies().get("access_token"))
-  //   }
+  //   if (username && password)
+  //     await signIn({username, password})
   // }
+
+  function handleSignIn(formData: FormData) {
+    //'use server'
+
+    if (formData.entries()) {
+      const login: Login = {
+        username: formData.get('email')?.toString() ?? '',
+        password: formData.get('password')?.toString() ?? ''
+      }
+
+      fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(login),
+        credentials: 'include'
+      }).then((res) => {
+        console.log(res)
+      })
+
+      fetch('http://localhost:3001/test', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        cache: 'no-cache'
+      })
+
+      // const { tokens } = await res.json()
+
+      // cookies().set('access_token', tokens.access_token, {
+      //   maxAge: 60 * 60 * 24 * 7 //1 semana
+      // })
+      // cookies().set('refresh_token', tokens.refresh_token, {
+      //   maxAge: 60 * 60 * 24 * 7 //1 semana
+      // })
+
+      // setCookie(undefined, 'access_token', tokens.access_token, {
+      //   maxAge: 60 * 60 * 24 * 7, //1 semana
+      // })
+      // setCookie(undefined, 'refresh_token', tokens.refresh_token, {
+      //   maxAge: 60 * 60 * 24 * 7, //1 semana
+      // })
+
+      // console.log(res.headers)
+
+      // console.log(cookies().get('access_token'))
+
+      // const cookiesAfterLogin = parseCookies();
+      // console.log(cookiesAfterLogin);
+
+      // const res2 = await fetch('http://localhost:3001/test', {
+      //   method: 'GET',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   credentials: 'include'
+      // })
+    }
+  }
 
   return (
     <main className="min-h-screen p-8">

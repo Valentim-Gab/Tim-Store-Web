@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect } from 'react'
 import { api } from '../api'
 import { destroyCookie } from 'nookies'
@@ -10,13 +8,14 @@ import { GetServerSideProps } from 'next'
 import { get } from 'http'
 import { redirect } from 'next/dist/server/api-utils'
 import { getApiClient } from '../axios'
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from '@/components/stripe/checkout-form'
+import { cookies } from 'next/headers'
 
-const stripe = loadStripe('{{CHAVE PÚBLICA}}')
+//const stripe = loadStripe('{{CHAVE PÚBLICA}}')
 
-export default function Home(ctx: any) {
+export default async function Home() {
   // const res = await FetchAuth('http://localhost:3001/user/admin', 'GET')
 
   // console.log(await res.json())
@@ -48,13 +47,25 @@ export default function Home(ctx: any) {
 
   //console.log(ctx)
 
+  const res2 = await fetch('http://localhost:3001/test', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    cache: 'no-cache',
+    credentials: 'include',
+  })
+
+  console.log(cookies().get('access_token'))
+
   const options = {
-    clientSecret: '{{CLIENT_SECRET}}'
+    clientSecret: '{{CLIENT_SECRET}}',
   }
 
   return (
-    <Elements stripe={stripe} options={options}>
-      <CheckoutForm />
-    </Elements>
+    // <Elements stripe={stripe} options={options}>
+    //   <CheckoutForm />
+    // </Elements>
+    <div></div>
   )
 }
