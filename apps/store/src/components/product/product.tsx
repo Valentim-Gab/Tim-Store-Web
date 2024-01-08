@@ -1,10 +1,11 @@
 'use client'
 
-import { StripeCustomCheckout } from '@stripe/stripe-js'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export default function Product() {
+  const router = useRouter()
+
   const cart = {
     cart_list: [
       {
@@ -28,7 +29,7 @@ export default function Product() {
       .then((res) => res.json())
       .then((data: { paymentIntentId: string }) => {
         console.log(data)
-        redirect(`/purchase/${data.paymentIntentId}`)
+        router.push(`/purchase/${data.paymentIntentId}`)
       })
   }
 

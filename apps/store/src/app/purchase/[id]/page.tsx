@@ -1,21 +1,22 @@
-import CheckoutForm from '@/components/stripe/checkout-form'
-import { Elements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
-import React from 'react'
+import { StripeElementsOptions } from '@stripe/stripe-js'
+import StripeElement from './stripe-element'
 
-const stripe = loadStripe('{{CHAVE PÚBLICA}}')
-
-export default function Purchase({ params }: {params: {id: string}}) {
-
-  const options = {
-    clientSecret: '{{CLIENT_SECRET}}',
-  }
-
-  console.log(params)
-
-  return (
-    <Elements stripe={stripe} options={options}>
-      <CheckoutForm />
-    </Elements>
+export default async function Purchase({ params }: { params: { id: string } }) {
+  const options: StripeElementsOptions = {}
+  const response = await fetch(
+    `http://localhost:3001/stripe/pay/${params.id}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
   )
+
+  const data = await response.json()
+
+  if (data.client_secret)
+    options.clientSecret = data.client_secret
+
+  return <StripeElement options={options} />
 }
