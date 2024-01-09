@@ -10,13 +10,12 @@ import { createContext, useEffect, useState } from 'react'
 interface AuthContextInterface {
   user: User | null
   isAuthenticated: boolean
-  signIn: (data: Login) => Promise<void>
-  ctx?: any
+  signIn?: (data: Login) => Promise<void>
 }
 
 export const AuthContext = createContext({} as AuthContextInterface)
 
-export function AuthProvider({ children, ctx }: { children: React.ReactNode, ctx?: any }) {
+export function AuthProvider({ children }: { children: React.ReactNode}) {
   const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
 
@@ -25,6 +24,8 @@ export function AuthProvider({ children, ctx }: { children: React.ReactNode, ctx
   useEffect(() => {
     const { access_token } = parseCookies()
 
+    console.log(parseCookies())
+
     if (access_token) {
       const userService = new UserService()
       
@@ -32,41 +33,41 @@ export function AuthProvider({ children, ctx }: { children: React.ReactNode, ctx
     }
   }, [])
 
-  async function signIn({ username, password }: Login) {
-    const login: Login = {
-      username: username,
-      password: password
-    }
+  // async function signIn({ username, password }: Login) {
+  //   const login: Login = {
+  //     username: username,
+  //     password: password
+  //   }
 
-    const res = await fetch('http://localhost:3001/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(login)
-    })
+  //   const res = await fetch('http://localhost:3001/login', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(login)
+  //   })
 
-    if (res.ok) {
-      const { user, tokens } = await res.json()
-      console.log(tokens)
+  //   if (res.ok) {
+  //     const { user, tokens } = await res.json()
+  //     console.log(tokens)
 
-      setCookie(undefined, 'access_token', tokens.access_token, {
-        maxAge: 60 * 60 * 24 * 7, //1 semana
-      })
-      setCookie(undefined, 'refresh_token', tokens.refresh_token, {
-        maxAge: 60 * 60 * 24 * 7, //1 semana
-      })
+  //     // setCookie(undefined, 'access_token', tokens.access_token, {
+  //     //   maxAge: 60 * 60 * 24 * 7, //1 semana
+  //     // })
+  //     // setCookie(undefined, 'refresh_token', tokens.refresh_token, {
+  //     //   maxAge: 60 * 60 * 24 * 7, //1 semana
+  //     // })
 
-      setUser(user)
+  //     setUser(user)
 
-      // router.push('/')
-    } else {
-      console.error('Não deu')
-    }
-  }
+  //     // router.push('/')
+  //   } else {
+  //     console.error('Não deu')
+  //   }
+  // }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn, ctx }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, /* signIn */ }}>
       {children}
     </AuthContext.Provider>
   )
