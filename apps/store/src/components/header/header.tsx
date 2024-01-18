@@ -1,39 +1,17 @@
-import { GetServerSideProps } from 'next'
 import { cookies } from 'next/headers'
 import React from 'react'
 
 export default function Header() {
-  const token = cookies().get('access_token')
+  //const token = cookies().get('access_token')
 
   return (
-    <div>
-      {token && <div>LOGADO</div>}
-      {!token && <div>NÃO LOGADO</div>}
-    </div>
+    <header className="flex justify-center items-center self-stretch h-14 shadow-md bg-violet-500">
+      <div className="flex items-center self-stretch flex-1 gap-4 py-2 px-4">
+        <input type="text" placeholder="Pesquisar" />
+      </div>
+      <div>
+        <i className="icon-[solar--hamburger-menu-broken]"></i>
+      </div>
+    </header>
   )
 }
-
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
-//   const token = cookies().get('access_token')?.value
-
-//   if (!token) {
-//     // return {
-//     //   redirect: {
-//     //     destination: '/',
-//     //     permanent: false
-//     //   }
-//     // }
-
-//     return {
-//       props: {
-//         isAuthenticated: false
-//       }
-//     }
-//   }
-
-//   return {
-//     props: {
-//       isAuthenticated: true
-//     }
-//   }
-// }
