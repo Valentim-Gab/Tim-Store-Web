@@ -1,6 +1,14 @@
-.search-input {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  width: 100%;
+header {
+  z-index: 10;
+
+  .search-input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+  }
+  
+  .burger-icon {
+    transition: 0.2s;
+  }
 }
