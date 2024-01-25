@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import './navbar.scss'
+import './navbar-mobile.scss'
 
 interface NavbarProps {
   active: boolean
@@ -8,7 +8,11 @@ interface NavbarProps {
   setActive: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Navbar({ active, setActive, pathname }: NavbarProps) {
+export default function NavbarMobile({
+  active,
+  setActive,
+  pathname,
+}: NavbarProps) {
   const items = [
     {
       icon: 'icon-[solar--home-bold]',
@@ -17,7 +21,7 @@ export default function Navbar({ active, setActive, pathname }: NavbarProps) {
     },
     {
       icon: 'icon-[solar--bag-4-bold]',
-      text: 'Carriho',
+      text: 'Carrinho',
       url: '/cart',
     },
     {
@@ -34,11 +38,11 @@ export default function Navbar({ active, setActive, pathname }: NavbarProps) {
 
   return (
     <nav
-      className={`navbar bg-primary w-full ${
+      className={`navbar bg-primary text-background w-full ${
         active ? 'active' : ''
-      } sm:w-fit sm:bg-transparent`}
+      }`}
     >
-      <ul className="items border-t sm:flex sm:border-none sm:px-4 sm:gap-4">
+      <ul className="items pb-2">
         {items &&
           items.map((item, index) => (
             <Link
@@ -48,14 +52,20 @@ export default function Navbar({ active, setActive, pathname }: NavbarProps) {
                 setActive(false)
               }}
             >
-              <li className="flex items-center self-stretch p-4 cursor-pointer">
+              <li
+                className={`flex items-center self-stretch cursor-pointer p-4 ${
+                  pathname === item.url ? 'py-1' : ''
+                }`}
+              >
                 <div
-                  className={`item flex items-center gap-2 ${
-                    pathname === item.url ? 'text-yellow-300' : ''
+                  className={`item flex items-center justify-center gap-2 ${
+                    pathname === item.url
+                      ? 'bg-background text-primary py-1 px-2 rounded'
+                      : ''
                   }`}
                 >
-                  <i className={`${item.icon} sm:text-2xl`}></i>
-                  <p className="sm:text-sm">{item.text}</p>
+                  <i className={`${item.icon} text-lg`}></i>
+                  <p className="font-medium">{item.text}</p>
                 </div>
               </li>
             </Link>

@@ -2,6 +2,7 @@ import { AuthProvider } from '@/contexts/auth-context'
 import './globals.scss'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import HeaderMobile from '@/components/header/header-mobile'
 import Header from '@/components/header/header'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <Header />
+          <HeaderMobile />
           {children}
         </AuthProvider>
         {/* <Header />

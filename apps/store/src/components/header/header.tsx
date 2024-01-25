@@ -1,49 +1,32 @@
-'use client'
-
-import { cookies } from 'next/headers'
 import React from 'react'
-import './header.scss'
-import { usePathname } from 'next/navigation'
-import Navbar from './navbar'
 
 export default function Header() {
-  //const token = cookies().get('access_token')
-  const [active, setActive] = React.useState(false)
-  const pathname = usePathname()
-
-  function showItems() {
-    setActive(!active)
-  }
-
   return (
-    <header className="flex justify-center items-center self-stretch h-14 shadow-md bg-primary text-primary-foreground">
-      <div className="flex items-center self-stretch flex-1 gap-4 py-2 px-4">
-        <button className="flex justify-center items-center">
-          <i className="icon-[lucide--search] w-8 h-8"></i>
-        </button>
+    <header className="hidden flex-col items-center self-stretch bg-primary text-background shadow-md lg:flex">
+      <div className="flex justify-between items-center self-stretch h-20 px-16">
+        <div className="logo text-2xl font-black">TIM-BRECHO</div>
         <input
+          id="search"
+          placeholder="O que você procura?"
           type="text"
-          placeholder="Pesquisar"
-          className="font-medium border-none outline-none bg-transparent w-full placeholder:text-gray-300"
+          className=""
         />
+        <div className="flex justify-end items-center gap-4 self-stretch">
+          <button className="flex justify-center items-center">
+            <i className="icon-[solar--bag-4-bold] text-3xl"></i>
+          </button>
+          <button className="flex justify-center items-center gap-2 py-4 px-8 font-bold">
+            <i className="icon-[solar--login-3-bold] text-2xl"></i>
+            Entrar
+          </button>
+        </div>
       </div>
-      <div className="flex justify-center items-center">
-        <button
-          onClick={showItems}
-          className="flex justify-center items-center"
-        >
-          {!active ? (
-            <span className="flex items-center justify-center w-14 h-14">
-              <i className="burger-icon icon-[solar--hamburger-menu-broken] w-14 h-14"></i>
-            </span>
-          ) : (
-            <span className="flex items-center justify-center w-14 h-14">
-              <i className="burger-icon icon-[solar--close-circle-broken] w-10 h-10"></i>
-            </span>
-          )}
-        </button>
+
+      <div className="flex items-end self-stretch px-16">
+        <ul className="flex">
+          <li>Teste</li><li>Teste</li><li>Teste</li><li>Teste</li><li>Teste</li>
+        </ul>
       </div>
-      <Navbar active={active} setActive={setActive} pathname={pathname} />
     </header>
   )
 }
