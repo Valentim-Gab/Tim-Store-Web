@@ -1,32 +1,39 @@
+'use client'
+
 import React from 'react'
+import './header.scss'
+import { usePathname } from 'next/navigation'
+import Navbar from './navbar'
+import Link from 'next/link'
 
 export default function Header() {
+  const pathname = usePathname()
+
   return (
-    <header className="hidden flex-col items-center self-stretch bg-primary text-background shadow-md lg:flex">
+    <header className="header hidden flex-col items-center bg-primary text-background shadow-md sticky top-0 lg:flex">
       <div className="flex justify-between items-center self-stretch h-20 px-16">
-        <div className="logo text-2xl font-black">TIM-BRECHO</div>
-        <input
-          id="search"
-          placeholder="O que você procura?"
-          type="text"
-          className=""
-        />
-        <div className="flex justify-end items-center gap-4 self-stretch">
-          <button className="flex justify-center items-center">
-            <i className="icon-[solar--bag-4-bold] text-3xl"></i>
+        <Link href="/" className="logo text-2xl font-black cursor-pointer px-2">TIM-BRECHO</Link>
+        <div className="search-container flex gap-2 items-center py-1 px-2 rounded bg-background">
+          <input
+            placeholder="O que você procura?"
+            type="text"
+            className="bg-transparent text-sm border-none outline-none text-foreground w-full py-1 px-2 placeholder:text-lightblack"
+          />
+          <button className="flex justify-center items-center rounded p-1">
+            <i className="icon-[lucide--search] w-6 h-6 text-lightblack"></i>
           </button>
-          <button className="flex justify-center items-center gap-2 py-4 px-8 font-bold">
-            <i className="icon-[solar--login-3-bold] text-2xl"></i>
+        </div>
+        <div className="flex justify-end items-center gap-8 self-stretch">
+          <button className="flex justify-center items-center p-2 rounded">
+            <i className="icon-[solar--bag-4-bold] w-8 h-8"></i>
+          </button>
+          <button className="flex justify-center items-center gap-2 p-4 font-bold rounded">
+            <i className="icon-[solar--login-3-bold] w-6 h-6"></i>
             Entrar
           </button>
         </div>
       </div>
-
-      <div className="flex items-end self-stretch px-16">
-        <ul className="flex">
-          <li>Teste</li><li>Teste</li><li>Teste</li><li>Teste</li><li>Teste</li>
-        </ul>
-      </div>
+      <Navbar pathname={pathname} />
     </header>
   )
 }
