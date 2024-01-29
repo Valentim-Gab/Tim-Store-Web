@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './header.scss'
 import { usePathname } from 'next/navigation'
 import Navbar from './navbar'
@@ -8,11 +8,35 @@ import Link from 'next/link'
 
 export default function Header() {
   const pathname = usePathname()
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false)
+  const [lastScrollTop, setLastScrollTop] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollTop =
+        window.scrollY || document.documentElement.scrollTop
+
+      if (currentScrollTop > lastScrollTop) setIsHeaderHidden(true)
+      else setIsHeaderHidden(false)
+
+      setLastScrollTop(currentScrollTop <= 0 ? 0 : currentScrollTop)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollTop])
 
   return (
-    <header className="header hidden flex-col items-center bg-primary text-background shadow-md sticky top-0 lg:flex">
-      <div className="flex justify-between items-center self-stretch h-20 px-16">
-        <Link href="/" className="logo text-2xl font-black cursor-pointer px-2">TIM-BRECHO</Link>
+    <header
+      className={`header hidden flex-col items-center bg-primary text-background shadow-md top-0 w-full lg:flex lg:fixed ${
+        isHeaderHidden ? 'hidden-scroll' : ''
+      }`}
+    >
+      <div className="header-container flex justify-between items-center self-stretch h-20 px-16">
+        <Link href="/" className="logo text-2xl font-black cursor-pointer px-2">
+          TIM-BRECHO
+        </Link>
         <div className="search-container flex gap-2 items-center py-1 px-2 rounded bg-background">
           <input
             placeholder="O que você procura?"

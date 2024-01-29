@@ -15,7 +15,7 @@ export default function HeaderMobile() {
   }
 
   return (
-    <header className="header-mobile flex justify-center items-center self-stretch h-14 shadow-md bg-primary text-background sm:h-16 lg:hidden">
+    <header className="header-mobile flex justify-center items-center self-stretch h-14 shadow-md bg-primary text-background sticky top-0 sm:h-16 lg:hidden">
       <div className="flex items-center self-stretch flex-1 gap-4 py-2 px-4">
         <button className="flex justify-center items-center">
           <i className="icon-[lucide--search] w-8 h-8"></i>

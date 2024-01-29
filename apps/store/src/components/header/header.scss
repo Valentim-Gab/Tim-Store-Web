@@ -1,5 +1,14 @@
 .header {
   z-index: 10;
+  transition: 0.4s;
+
+  &.hidden-scroll {
+    transform: translateY(-80px);
+
+    &:hover {
+      transform: translateY(0);
+    }
+  }
   
   .search-container {
     width: 320px;

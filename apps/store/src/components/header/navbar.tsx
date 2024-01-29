@@ -26,7 +26,7 @@ export default function Navbar({ pathname }: NavbarProps) {
   ]
 
   return (
-    <nav className="text-background w-full px-16">
+    <nav className="sticky text-background w-full px-16">
       <ul className="flex items-center self-stretch">
         <li className="flex items-center justify-center self-stretch rounded">
           <button className="flex items-center justify-center gap-2 cursor-pointer py-1 px-2">
