@@ -5,6 +5,12 @@ import './header.scss'
 import { usePathname } from 'next/navigation'
 import Navbar from './navbar'
 import Link from 'next/link'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@radix-ui/react-popover'
+import BagPopup from './bag-popup'
 
 export default function Header() {
   const pathname = usePathname()
@@ -41,16 +47,14 @@ export default function Header() {
           <input
             placeholder="O que você procura?"
             type="text"
-            className="bg-transparent text-sm border-none outline-none text-foreground w-full py-1 px-2 placeholder:text-lightblack"
+            className="bg-transparent text-sm border-none outline-none text-foreground w-full py-1 px-2 placeholder:text-light-black"
           />
           <button className="flex justify-center items-center rounded p-1">
-            <i className="icon-[lucide--search] w-6 h-6 text-lightblack"></i>
+            <i className="icon-[lucide--search] w-6 h-6 text-light-black"></i>
           </button>
         </div>
         <div className="flex justify-end items-center gap-8 self-stretch">
-          <button className="flex justify-center items-center p-2 rounded">
-            <i className="icon-[solar--bag-4-bold] w-8 h-8"></i>
-          </button>
+          <BagPopup />
           <button className="flex justify-center items-center gap-2 p-4 font-bold rounded">
             <i className="icon-[solar--login-3-bold] w-6 h-6"></i>
             Entrar

@@ -24,7 +24,7 @@ export default function HeaderMobile() {
           id="search"
           placeholder="O que você procura?"
           type="text"
-          className="font-medium border-none outline-none bg-transparent w-full placeholder:text-lightwhite"
+          className="font-medium border-none outline-none bg-transparent w-full placeholder:text-light-white"
         />
       </div>
       <div className="flex justify-center items-center">
