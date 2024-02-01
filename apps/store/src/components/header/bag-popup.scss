@@ -20,4 +20,27 @@
   &::-webkit-scrollbar-corner {
     background-color: transparent;
   }
+
+  .bag-item {
+    
+    &:hover {
+      .bag-item-remove {
+        scale: 1;
+      }
+    }
+
+    .bag-item-remove {
+      scale: 0.000001;
+      transition: all 0.3s ease-in-out;
+      padding: 2px;
+
+      span {
+        padding: 2px;
+
+        p {
+          font-size: 10px;
+        }
+      }
+    }
+  }
 }
