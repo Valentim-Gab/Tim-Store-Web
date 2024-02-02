@@ -1,14 +1,16 @@
 'use client'
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@radix-ui/react-popover'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import './bag-popup.scss'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../ui/tooltip'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 
 export default function BagPopup() {
   const listProduct = [
@@ -51,9 +53,23 @@ export default function BagPopup() {
   ]
 
   const [isOpen, setIsOpen] = useState(false)
+  const [tooltipRemoveOpen, setTooltipRemoveOpen] = useState<number | null>(
+    null
+  )
 
   function open() {
     setIsOpen(!isOpen)
+  }
+
+  function openTooltipRemove(productId: number) {
+    if (productId !== tooltipRemoveOpen) {
+      setTooltipRemoveOpen(productId)
+
+      return
+    }
+
+    setTooltipRemoveOpen(null)
+    console.log(`remove product ${productId}`)
   }
 
   function getTotal() {
@@ -72,19 +88,20 @@ export default function BagPopup() {
   return (
     <Popover onOpenChange={open}>
       <PopoverTrigger
-        className={`flex justify-center items-center p-1 rounded-t-full ${
+        className={`flex justify-center items-center p-1 rounded-full ${
           isOpen ? 'bg-background text-primary' : ''
         }`}
       >
         <i className="icon-[solar--bag-4-bold] w-8 h-8"></i>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col justify-between items-center w-60 h-72 text-foreground bg-background rounded shadow-md z-20 pt-1">
-        <div className="bag-popup-content flex flex-col items-center flex-1 self-stretch overflow-y-scroll mb-1">
+      <PopoverContent className="flex flex-col justify-between items-center w-60 h-72 text-foreground bg-background rounded shadow-md z-20 p-0 pt-1">
+        <ul className="bag-popup-content flex flex-col items-center flex-1 self-stretch overflow-y-scroll mb-1">
           {listProduct &&
             listProduct.map((product) => (
-              <div
+              <li
                 key={product.id}
-                className="bag-item flex justify-between items-start self-stretch py-1 mx-2 border-b border-primary"
+                className="bag-item flex justify-between self-stretch py-1 mx-2 border-b border-primary"
+                onMouseLeave={() => setTooltipRemoveOpen(null)}
               >
                 <div className="flex gap-2">
                   <Image
@@ -92,8 +109,8 @@ export default function BagPopup() {
                       'https://cdn.discordapp.com/attachments/1175185524433109093/1202074715032658010/Frame_2.png?ex=65cc2251&is=65b9ad51&hm=89b8b351dae21ba9f404f380de2d534b9352796b37a7865e5d64672f95ad9266&'
                     }
                     alt={''}
-                    width={56}
-                    height={56}
+                    width={50}
+                    height={50}
                     className="rounded"
                   />
                   <div className="flex flex-col items-start gap-1 self-stretch">
@@ -109,19 +126,27 @@ export default function BagPopup() {
                   </div>
                 </div>
                 {/* TODO: AJUSTE */}
-                <button className="bag-item-remove flex justify-center items-center self-stresh rounded-full border">
-                  <span className="">
-                    <p>Confirma?</p>
-                  </span>
-                  <i className="icon-[solar--close-circle-broken] w-4 h-4 text-gray-400"></i>
-                </button>
-                <button className="bag-item-remove flex justify-center items-center self-stresh p-4">
-                  <i className="icon-[solar--close-circle-broken] w-4 h-4 text-gray-400"></i>
-                </button>
+                <div className="flex items-center justify-center self-stretch">
+                  <TooltipProvider delayDuration={100}>
+                    <Tooltip open={tooltipRemoveOpen === product.id}>
+                      <TooltipTrigger>
+                        <button
+                          className="bag-item-remove flex justify-center items-center self-stretch p-4"
+                          onClick={() => openTooltipRemove(product.id)}
+                        >
+                          <i className="icon-[solar--close-circle-broken] w-6 h-6 text-light-black"></i>
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Clique novamente para excluir</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 {/* AJUSTE */}
-              </div>
+              </li>
             ))}
-        </div>
+        </ul>
         <div className="flex justify-center items-center gap-2 self-stretch rounded-b text-xs p-1">
           <p className="font-medium">Total: {getTotal()}</p>
           <Link
