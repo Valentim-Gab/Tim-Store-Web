@@ -39,11 +39,11 @@ export default function Header() {
         isHeaderHidden ? 'hidden-scroll' : ''
       }`}
     >
-      <div className="header-container flex justify-between items-center self-stretch h-20 px-16">
+      <div className="header-container container flex justify-between items-center self-stretch h-20">
         <Link href="/" className="logo text-2xl font-black cursor-pointer px-2">
           TIM-BRECHO
         </Link>
-        <div className="search-container flex gap-2 items-center py-1 px-2 rounded bg-background">
+        <div className="search-container flex gap-2 items-center py-1 px-2 rounded bg-background w-2/5 min-w-80">
           <input
             placeholder="O que você procura?"
             type="text"

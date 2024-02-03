@@ -94,7 +94,7 @@ export default function BagPopup() {
       >
         <i className="icon-[solar--bag-4-bold] w-8 h-8"></i>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col justify-between items-center w-60 h-72 text-foreground bg-background rounded shadow-md z-20 p-0 pt-1">
+      <PopoverContent className="flex flex-col justify-between items-center w-60 h-72 text-foreground bg-background rounded shadow-md z-20 p-0 pt-1 2xl:w-80 2xl:h-96">
         <ul className="bag-popup-content flex flex-col items-center flex-1 self-stretch overflow-y-scroll mb-1">
           {listProduct &&
             listProduct.map((product) => (
@@ -111,13 +111,13 @@ export default function BagPopup() {
                     alt={''}
                     width={50}
                     height={50}
-                    className="rounded"
+                    className="rounded 2xl:w-16 2xl:h-16"
                   />
                   <div className="flex flex-col items-start gap-1 self-stretch">
-                    <p className="text-sm font-medium first-letter:uppercase">
+                    <p className="text-sm font-medium first-letter:uppercase 2xl:text-lg">
                       {product.name}
                     </p>
-                    <p className="text-xs font-bold text-primary">
+                    <p className="text-xs font-bold text-primary 2xl:text-base">
                       {product.price.toLocaleString('pt-BR', {
                         style: 'currency',
                         currency: 'BRL',
@@ -130,12 +130,12 @@ export default function BagPopup() {
                   <TooltipProvider delayDuration={100}>
                     <Tooltip open={tooltipRemoveOpen === product.id}>
                       <TooltipTrigger>
-                        <button
+                        <span
                           className="bag-item-remove flex justify-center items-center self-stretch p-4"
                           onClick={() => openTooltipRemove(product.id)}
                         >
                           <i className="icon-[solar--close-circle-broken] w-6 h-6 text-light-black"></i>
-                        </button>
+                        </span>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Clique novamente para excluir</p>
@@ -147,11 +147,11 @@ export default function BagPopup() {
               </li>
             ))}
         </ul>
-        <div className="flex justify-center items-center gap-2 self-stretch rounded-b text-xs p-1">
+        <div className="flex justify-center items-center gap-2 self-stretch rounded-b text-xs p-1 2xl:text-sm">
           <p className="font-medium">Total: {getTotal()}</p>
           <Link
             href={'/'}
-            className="font-bold py-1 px-2 bg-primary text-background rounded"
+            className="font-medium py-1 px-2 bg-primary text-background rounded 2xl:font-semibold"
           >
             Ver carrinho
           </Link>

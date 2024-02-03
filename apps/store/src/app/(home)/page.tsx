@@ -21,7 +21,7 @@ export default async function Home() {
   //console.log(cookies().get('teste'))
 
   return (
-    <div className="min-h-screen">
+    <div className="container min-h-screen">
       <p>Home</p>
       <p>Home</p>
       <p>Home</p>
