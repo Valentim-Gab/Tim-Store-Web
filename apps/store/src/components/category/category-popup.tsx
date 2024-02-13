@@ -16,17 +16,17 @@ export default function CategoryPopup() {
   return (
     <Popover onOpenChange={() => setIsOpen(!isOpen)}>
       <PopoverTrigger
-        className={twMerge(
-          'flex items-center justify-center gap-2 cursor-pointer py-1 px-2 rounded',
-          isOpen ? 'bg-background' : ''
-        )}
+        data-open={isOpen}
+        className="flex items-center justify-center gap-2 cursor-pointer py-1 px-2 rounded data-[open=true]:bg-background"
       >
         <i
-          className={`icon-[solar--hamburger-menu-bold] w-6 h-6 ${
-            isOpen ? 'text-primary' : ''
-          }`}
+          data-open={isOpen}
+          className="icon-[solar--hamburger-menu-bold] w-6 h-6 data-[open=true]:text-primary"
         ></i>
-        <p className={`font-bold ${isOpen ? 'text-primary' : ''}`}>
+        <p
+          data-open={isOpen}
+          className="font-bold data-[open=true]:text-primary"
+        >
           Todas as categorias
         </p>
       </PopoverTrigger>

@@ -1,15 +1,24 @@
 import Link from 'next/link'
 import React from 'react'
 import './navbar-mobile.scss'
+import { tv } from 'tailwind-variants'
 
 interface NavbarProps {
-  active: boolean
+  isOpen: boolean
   pathname: string
   setActive: React.Dispatch<React.SetStateAction<boolean>>
 }
+const navItemStyles = tv({
+  base: 'item flex items-center justify-center gap-2',
+  variants: {
+    active: {
+      true: 'px-2 py-1 bg-background text-primary rounded',
+    },
+  },
+})
 
 export default function NavbarMobile({
-  active,
+  isOpen,
   setActive,
   pathname,
 }: NavbarProps) {
@@ -38,9 +47,8 @@ export default function NavbarMobile({
 
   return (
     <nav
-      className={`navbar-mobile bg-primary text-background w-full ${
-        active ? 'active' : ''
-      }`}
+      data-open={isOpen}
+      className={`navbar-mobile bg-primary text-background w-full`}
     >
       <ul className="items pb-2">
         {items &&
@@ -53,16 +61,12 @@ export default function NavbarMobile({
               }}
             >
               <li
-                className={`flex items-center self-stretch cursor-pointer p-4 ${
-                  pathname === item.url ? 'py-1' : ''
-                }`}
+                data-active={pathname === item.url}
+                className="flex items-center self-stretch cursor-pointer p-4 data-[active=true]:py-1"
               >
                 <div
-                  className={`item flex items-center justify-center gap-2 ${
-                    pathname === item.url
-                      ? 'bg-background text-primary py-1 px-2 rounded'
-                      : ''
-                  }`}
+                  data-active={pathname === item.url}
+                  className={navItemStyles({ active: pathname === item.url })}
                 >
                   <i className={`${item.icon} text-lg`}></i>
                   <p className="font-medium">{item.text}</p>

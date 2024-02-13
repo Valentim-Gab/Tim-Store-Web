@@ -2,14 +2,14 @@
   z-index: 10;
   transition: 0.4s;
 
-  &.hidden-scroll {
+  &[data-scroll="true"] {
     transform: translateY(-80px);
 
     &:hover {
       transform: translateY(0);
     }
   }
-  
+
   .search-container {
     box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.25) inset;
   }

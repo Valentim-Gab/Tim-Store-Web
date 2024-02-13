@@ -5,11 +5,6 @@ import './header.scss'
 import { usePathname } from 'next/navigation'
 import Navbar from './navbar'
 import Link from 'next/link'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@radix-ui/react-popover'
 import BagPopup from './bag-popup'
 
 export default function Header() {
@@ -36,9 +31,8 @@ export default function Header() {
   return (
     <header className="flex-col self-stretch h-36 hidden w-full lg:flex">
       <div
-        className={`header-container bg-primary text-background shadow-md fixed top-0 w-full ${
-          isHeaderHidden ? 'hidden-scroll' : ''
-        }`}
+        data-scroll={isHeaderHidden}
+        className="header-container bg-primary text-background shadow-md fixed top-0 w-full"
       >
         <div className="container flex justify-between items-center self-stretch h-20">
           <Link

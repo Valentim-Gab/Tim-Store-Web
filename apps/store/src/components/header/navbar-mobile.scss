@@ -12,7 +12,7 @@
     top: 64px;
   }
 
-  &.active {
+  &[data-open="true"] {
     transform: scaleY(1);
     opacity: 1;
   }

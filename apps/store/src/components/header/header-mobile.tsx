@@ -6,12 +6,11 @@ import { usePathname } from 'next/navigation'
 import NavbarMobile from './navbar-mobile'
 
 export default function HeaderMobile() {
-  //const token = cookies().get('access_token')
-  const [active, setActive] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
   function showItems() {
-    setActive(!active)
+    setIsOpen(!isOpen)
   }
 
   return (
@@ -32,7 +31,7 @@ export default function HeaderMobile() {
           onClick={showItems}
           className="flex justify-center items-center"
         >
-          {!active ? (
+          {!isOpen ? (
             <span className="flex items-center justify-center w-14 h-14">
               <i className="burger-icon icon-[solar--hamburger-menu-broken] w-14 h-14"></i>
             </span>
@@ -43,7 +42,7 @@ export default function HeaderMobile() {
           )}
         </button>
       </div>
-      <NavbarMobile active={active} setActive={setActive} pathname={pathname} />
+      <NavbarMobile isOpen={isOpen} setActive={setIsOpen} pathname={pathname} />
     </header>
   )
 }

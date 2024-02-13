@@ -10,19 +10,19 @@ export default function Navbar({ pathname }: NavbarProps) {
   const items = [
     {
       text: 'Feminino',
-      url: '/female',
+      url: '/feminino',
     },
     {
       text: 'Masculino',
-      url: '/male',
+      url: '/masculino',
     },
     {
       text: 'Infantil',
-      url: '/children',
+      url: '/infantil',
     },
     {
-      text: 'Esporte',
-      url: '/sport',
+      text: 'Beleza',
+      url: '/beleza',
     },
   ]
 
@@ -40,9 +40,8 @@ export default function Navbar({ pathname }: NavbarProps) {
             >
               <Link
                 href={item.url}
-                className={`flex items-center justify-center cursor-pointer py-1 px-2 rounded ${
-                  pathname === item.url ? 'bg-background text-primary' : ''
-                }`}
+                data-active={pathname === item.url}
+                className="flex items-center justify-center cursor-pointer py-1 px-2 rounded data-[active=true]:bg-background data-[active=true]:text-primary"
               >
                 <p className="font-bold">{item.text}</p>
               </Link>

@@ -84,9 +84,8 @@ export default function BagPopup() {
   return (
     <Popover onOpenChange={() => setIsOpen(!isOpen)}>
       <PopoverTrigger
-        className={`flex justify-center items-center p-1 rounded-full ${
-          isOpen ? 'bg-background text-primary' : ''
-        }`}
+        data-open={isOpen}
+        className="flex justify-center items-center p-1 rounded-full data-[open=true]:bg-background data-[open=true]:text-primary"
       >
         <i className="icon-[solar--bag-4-bold] w-8 h-8"></i>
       </PopoverTrigger>
