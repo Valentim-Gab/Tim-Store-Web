@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import CategoryPopup from '../category/category-popup'
 
 interface NavbarProps {
   pathname: string
@@ -29,10 +30,7 @@ export default function Navbar({ pathname }: NavbarProps) {
     <nav className="container sticky text-background w-full">
       <ul className="flex items-center self-stretch">
         <li className="flex items-center justify-center self-stretch rounded">
-          <button className="flex items-center justify-center gap-2 cursor-pointer py-1 px-2">
-            <i className="icon-[solar--hamburger-menu-bold] w-6 h-6"></i>
-            <p className="font-bold">Todas as categorias</p>
-          </button>
+          <CategoryPopup />
         </li>
         {items &&
           items.map((item, index) => (
