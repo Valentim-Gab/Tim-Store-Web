@@ -24,9 +24,13 @@ export default function Login() {
 
       const data = await res.json()
 
-      console.log(data)
-
       cookies().set('access_token', data.tokens.access_token, {
+        maxAge: 60 * 60 * 24 * 7, //1 semana
+        httpOnly: true,
+        secure: true,
+      })
+
+      cookies().set('refresh_token', data.tokens.refresh_token, {
         maxAge: 60 * 60 * 24 * 7, //1 semana
         httpOnly: true,
         secure: true,

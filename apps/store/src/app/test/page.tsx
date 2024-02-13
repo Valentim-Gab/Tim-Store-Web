@@ -2,10 +2,16 @@ import usePrefetchQuery from '@/hooks/prefetch-query';
 import { AxiosInstance } from 'axios';
 import React from 'react'
 import { getAPIClient } from '../api/apiConfig';
+import { destroyCookie } from 'nookies';
 
 export default async function Test() {
   async function getAll(serverApi?: AxiosInstance): Promise<any> {
-    const response = await serverApi!.get(``)
+    'use server'
+
+    const response = await serverApi!.get(`http://localhost:3001/user/admin`)
+
+    destroyCookie(undefined, 'access_token')
+    destroyCookie(undefined, 'refresh_token')
 
     return response.data;
   }

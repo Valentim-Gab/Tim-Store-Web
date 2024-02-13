@@ -1,7 +1,9 @@
+
 import axios from 'axios'
 import { destroyCookie, parseCookies, setCookie } from 'nookies'
 import { redirect } from 'next/navigation'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
+import { cookies } from 'next/headers'
 
 const baseURL = 'http://localhost:3001'
 
@@ -121,19 +123,35 @@ export function getAPIServer(serverCookies: RequestCookie[]) {
         )
 
         if (res && res.data && res.data.tokens) {
-          const newAccessToken = res.data.token.access_token
+          const newAccessToken = res.data.tokens.access_token
 
-          destroyCookie(undefined, 'access_token')
-          destroyCookie(undefined, 'refresh_token')
+          console.log(res.data)
+
+          // destroyCookie(undefined, 'access_token')
+          // destroyCookie(undefined, 'refresh_token')
+
+          cookies().delete('access_token')
+          cookies().delete('refresh_token')
 
           // Set refreshed token
-          setCookie(undefined, 'access_token', res.data.tokens.access_token, {
-            maxAge: 60 * 60, // 1 hour
+          // setCookie(undefined, 'access_token', res.data.tokens.access_token, {
+          //   maxAge: 60 * 60, // 1 hour
+          //   httpOnly: true,
+          //   secure: true,
+          // })
+          // setCookie(undefined, 'refresh_token', res.data.tokens.refresh_token, {
+          //   maxAge: 60 * 60, // 1 hour
+          //   httpOnly: true,
+          //   secure: true,
+          // })
+
+          cookies().set('access_token', res.data.tokens.access_token, {
+            maxAge: 60 * 60 * 24 * 7, //1 semana
             httpOnly: true,
             secure: true,
           })
-          setCookie(undefined, 'refresh_token', res.data.tokens.refresh_token, {
-            maxAge: 60 * 60, // 1 hour
+          cookies().set('refresh_token', res.data.tokens.refresh_token, {
+            maxAge: 60 * 60 * 24 * 7, //1 semana
             httpOnly: true,
             secure: true,
           })
@@ -164,7 +182,7 @@ export function getAPIServer(serverCookies: RequestCookie[]) {
 
       if (
         error.response &&
-        error.response.status === 401 &&
+        error.response.status === 403 &&
         !originalRequest._retry
       ) {
         originalRequest._retry = true
