@@ -11,9 +11,9 @@ export default function CategoryMiniCardImage({
   return (
     <Image
       src={rest.src ?? ''}
-      width={80}
-      height={80}
-      alt={rest.alt ?? 'Imagem da category image'}
+      width={100}
+      height={100}
+      alt={rest.alt ?? 'Imagem da categoria'}
       className={twMerge('rounded-full shadow-lg', rest.className)}
     />
   )

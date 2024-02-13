@@ -1,42 +1,76 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
 import React, { useState } from 'react'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '../ui/tooltip'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { CategoryMiniCard } from './category-mini-card'
-
-const categoriesNavigation = [
-  {
-    id: 1,
-    name: 'Bolsas',
-    image:
-      'https://cdn.discordapp.com/attachments/1175185524433109093/1206969174698496090/pink-office-handbag-free-png.webp?ex=65ddf0a3&is=65cb7ba3&hm=366d9f4f90faa157f94f43ca464eeaf21013d1e8afc25b31def70559c7f74b37&',
-  },
-]
+import Link from 'next/link'
+import { CategoryService } from '@/services/category-service/category-service'
+import { twMerge } from 'tailwind-merge'
 
 export default function CategoryPopup() {
-  const imageDiscordExample =
-    'https://cdn.discordapp.com/attachments/1175185524433109093/1206969174698496090/pink-office-handbag-free-png.webp?ex=65ddf0a3&is=65cb7ba3&hm=366d9f4f90faa157f94f43ca464eeaf21013d1e8afc25b31def70559c7f74b37&'
+  const categoryService = new CategoryService()
+  const categoriesNavigation = categoryService.getStaticCategories()
+  const [selectedCategory, setSelectedCategory] = React.useState(1)
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <Popover>
-      <PopoverTrigger className="flex items-center justify-center gap-2 cursor-pointer py-1 px-2">
-        <i className="icon-[solar--hamburger-menu-bold] w-6 h-6"></i>
-        <p className="font-bold">Todas as categorias</p>
+    <Popover onOpenChange={() => setIsOpen(!isOpen)}>
+      <PopoverTrigger
+        className={twMerge(
+          'flex items-center justify-center gap-2 cursor-pointer py-1 px-2 rounded',
+          isOpen ? 'bg-background' : ''
+        )}
+      >
+        <i
+          className={`icon-[solar--hamburger-menu-bold] w-6 h-6 ${
+            isOpen ? 'text-primary' : ''
+          }`}
+        ></i>
+        <p className={`font-bold ${isOpen ? 'text-primary' : ''}`}>
+          Todas as categorias
+        </p>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col gap-8 p-4 self-stretch">
+      <PopoverContent className="hidden lg:flex flex-col gap-4 p-4 self-stretch w-[960px] mx-8">
         <div className="flex justify-between items-center w-full">
-          <CategoryMiniCard.Root href={'/bag'}>
-            <CategoryMiniCard.Image src={imageDiscordExample} />
-            <CategoryMiniCard.Text>Bolsas</CategoryMiniCard.Text>
-          </CategoryMiniCard.Root>
+          {categoriesNavigation.map((category) => (
+            <div
+              key={category.id}
+              onMouseEnter={() => {
+                setSelectedCategory(category.id)
+              }}
+            >
+              <CategoryMiniCard.Root
+                href={category.url}
+                className={twMerge(
+                  'hover:scale-110 transition ease-in-out duration-400',
+                  category.id === selectedCategory ? 'scale-110' : ''
+                )}
+              >
+                <CategoryMiniCard.Image src={category.image} />
+                <CategoryMiniCard.Text>{category.name}</CategoryMiniCard.Text>
+              </CategoryMiniCard.Root>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-between self-stretch gap-8 p-4 w-full">
+          {categoriesNavigation
+            .filter(
+              (categoryNavigation) => categoryNavigation.id === selectedCategory
+            )
+            .map((categoryNavigation) =>
+              categoryNavigation.mainCategories.map((mainCategory, index) => (
+                <div key={index} className="flex flex-col gap-2">
+                  <h3 className="font-semibold text-xl">{mainCategory.name}</h3>
+                  <ul className="flex flex-col gap-2">
+                    {mainCategory.subCategories.map((subCategory, index) => (
+                      <li key={index}>
+                        <Link href={subCategory.url}>{subCategory.name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            )}
         </div>
       </PopoverContent>
     </Popover>

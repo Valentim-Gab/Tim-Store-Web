@@ -57,10 +57,6 @@ export default function BagPopup() {
     null
   )
 
-  function open() {
-    setIsOpen(!isOpen)
-  }
-
   function openTooltipRemove(productId: number) {
     if (productId !== tooltipRemoveOpen) {
       setTooltipRemoveOpen(productId)
@@ -86,7 +82,7 @@ export default function BagPopup() {
   }
 
   return (
-    <Popover onOpenChange={open}>
+    <Popover onOpenChange={() => setIsOpen(!isOpen)}>
       <PopoverTrigger
         className={`flex justify-center items-center p-1 rounded-full ${
           isOpen ? 'bg-background text-primary' : ''
