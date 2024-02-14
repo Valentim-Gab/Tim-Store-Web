@@ -6,6 +6,7 @@ export const CategoryChildrens = {
   mainCategories: [
     {
       name: 'Calçados',
+      url: '/calcados/infantil',
       subCategories: [
         {
           name: 'Botas',
@@ -31,6 +32,7 @@ export const CategoryChildrens = {
     },
     {
       name: 'Roupas',
+      url: '/roupas/infantil',
       subCategories: [
         {
           name: 'Blusas e Camisetas',
@@ -72,6 +74,7 @@ export const CategoryChildrens = {
     },
     {
       name: 'Populares',
+      url: '/populares/infantil',
       subCategories: [
         {
           name: 'Animes',
@@ -93,42 +96,43 @@ export const CategoryChildrens = {
     },
     {
       name: 'Esporte',
+      url: '/esporte/infantil',
       subCategories: [
         {
           name: 'Bermudas e shorts',
-          url: '/bermudas-shorts/feminino',
+          url: '/bermudas-shorts/infantil',
         },
         {
           name: 'Bolsas e mochilas',
-          url: '/bolsas-mochilas/feminino',
+          url: '/bolsas-mochilas/infantil',
         },
         {
           name: 'Bonés',
-          url: '/bones/feminino',
+          url: '/bones/infantil',
         },
         {
           name: 'Calças e Leggings',
-          url: '/calcas-leggings/feminino',
+          url: '/calcas-leggings/infantil',
         },
         {
           name: 'Camisetas',
-          url: '/camisetas-esportivas/feminino',
+          url: '/camisetas-esportivas/infantil',
         },
         {
           name: 'Jaquetas e Moletons',
-          url: '/jaquetas-moletons/feminino',
+          url: '/jaquetas-moletons/infantil',
         },
         {
           name: 'Regatas',
-          url: '/regatas/feminino',
+          url: '/regatas/infantil',
         },
         {
           name: 'Tênis esportivo',
-          url: '/tenis-esportivo/feminino',
+          url: '/tenis-esportivo/infantil',
         },
         {
           name: 'Tops',
-          url: '/tops/feminino',
+          url: '/tops/infantil',
         },
       ],
     },

@@ -6,6 +6,7 @@ export const CategoryMale = {
   mainCategories: [
     {
       name: 'Calçados',
+      url: '/calcados/masculino',
       subCategories: [
         {
           name: 'Botas',
@@ -31,6 +32,7 @@ export const CategoryMale = {
     },
     {
       name: 'Roupas',
+      url: '/roupas/masculino',
       subCategories: [
         {
           name: 'Bermudas',
@@ -72,6 +74,7 @@ export const CategoryMale = {
     },
     {
       name: 'Acessórios',
+      url: '/acessorios/masculino',
       subCategories: [
         {
           name: 'Bonés',
@@ -97,6 +100,7 @@ export const CategoryMale = {
     },
     {
       name: 'Moda Íntima',
+      url: '/moda-intima/masculino',
       subCategories: [
         {
           name: 'Cuecas',
@@ -118,6 +122,7 @@ export const CategoryMale = {
     },
     {
       name: 'Esporte',
+      url: '/esporte/masculino',
       subCategories: [
         {
           name: 'Bermudas e shorts',

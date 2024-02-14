@@ -30,7 +30,10 @@ export default function CategoryPopup() {
           Todas as categorias
         </p>
       </PopoverTrigger>
-      <PopoverContent className="hidden lg:flex flex-col gap-4 self-stretch w-[960px]" align='start'>
+      <PopoverContent
+        className="hidden lg:flex flex-col gap-4 self-stretch w-[960px]"
+        align="start"
+      >
         <div className="flex justify-between items-center p-4 w-full">
           {categoriesNavigation.map((category) => (
             <div
@@ -41,9 +44,7 @@ export default function CategoryPopup() {
                 setSelectedCategory(category.id)
               }}
             >
-              <CategoryMiniCard.Root
-                href={category.url}
-              >
+              <CategoryMiniCard.Root href={category.url}>
                 <CategoryMiniCard.Image src={category.image} />
                 <CategoryMiniCard.Text>{category.name}</CategoryMiniCard.Text>
               </CategoryMiniCard.Root>
@@ -58,11 +59,21 @@ export default function CategoryPopup() {
             .map((categoryNavigation) =>
               categoryNavigation.mainCategories.map((mainCategory, index) => (
                 <div key={index} className="flex flex-col gap-2">
-                  <h3 className="font-semibold text-xl p-1">{mainCategory.name}</h3>
+                  <Link
+                    href={mainCategory.url ?? '#'}
+                    className="font-semibold text-xl p-1 hover:text-primary"
+                  >
+                    {mainCategory.name}
+                  </Link>
                   <ul className="flex flex-col gap-1">
                     {mainCategory.subCategories.map((subCategory, index) => (
                       <li key={index}>
-                        <Link href={subCategory.url} className='hover:text-primary p-1'>{subCategory.name}</Link>
+                        <Link
+                          href={subCategory.url}
+                          className="hover:text-primary p-1"
+                        >
+                          {subCategory.name}
+                        </Link>
                       </li>
                     ))}
                   </ul>

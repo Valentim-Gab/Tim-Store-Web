@@ -6,6 +6,7 @@ export const CategoryFemale = {
   mainCategories: [
     {
       name: 'Calçados',
+      url: '/calcados/feminino',
       subCategories: [
         {
           name: 'Botas',
@@ -31,6 +32,7 @@ export const CategoryFemale = {
     },
     {
       name: 'Roupas',
+      url: '/roupas/feminino',
       subCategories: [
         {
           name: 'Camisetas',
@@ -72,6 +74,7 @@ export const CategoryFemale = {
     },
     {
       name: 'Acessórios',
+      url: '/acessorios/feminino',
       subCategories: [
         {
           name: 'Bolsas',
@@ -101,6 +104,7 @@ export const CategoryFemale = {
     },
     {
       name: 'Moda Íntima',
+      url: '/moda-intima/feminino',
       subCategories: [
         {
           name: 'Calcinhas',
@@ -126,6 +130,7 @@ export const CategoryFemale = {
     },
     {
       name: 'Esporte',
+      url: '/esporte/feminino',
       subCategories: [
         {
           name: 'Bermudas e shorts',

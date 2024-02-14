@@ -6,113 +6,117 @@ export const CategoryBeauty = {
   mainCategories: [
     {
       name: 'Perfumes e Corpo',
+      url: 'perfumes-corpo/beleza',
       subCategories: [
         {
           name: 'Feminino',
-          url: '/feminino/perfumes',
+          url: '/feminino/beleza',
         },
         {
           name: 'Masculino',
-          url: '/masculino/perfumes',
+          url: '/masculino/beleza',
         },
         {
           name: 'Importado',
-          url: '/importado/perfumes',
+          url: '/importado/beleza',
         },
         {
           name: 'Nacional',
-          url: '/nacional/perfumes',
+          url: '/nacional/beleza',
         },
         {
           name: 'Desodorante',
-          url: '/desodorante',
+          url: '/desodorante/beleza',
         },
         {
           name: 'Loção',
-          url: '/locao',
+          url: '/locao/beleza',
         },
         {
           name: 'Óleo Corporal',
-          url: '/oleo-corporal',
+          url: '/oleo-corporal/beleza',
         },
         {
           name: 'Sabonete',
-          url: '/sabonete',
+          url: '/sabonete/beleza',
         },
       ],
     },
     {
       name: 'Maquiagem e Pele',
+      url: '/maquiagem-pele/beleza',
       subCategories: [
         {
           name: 'Boca',
-          url: '/boca',
+          url: '/boca/beleza',
         },
         {
           name: 'Olhos e Sobrancelhas',
-          url: '/olhos-sobrancelhas',
+          url: '/olhos-sobrancelhas/beleza',
         },
         {
           name: 'Demaquilante',
-          url: '/demaquilante',
+          url: '/demaquilante/beleza',
         },
         {
           name: 'Creme Anti-idade',
-          url: '/creme-anti-idade',
+          url: '/creme-anti-idade/beleza',
         },
         {
           name: 'Hidratante',
-          url: '/hidratante',
+          url: '/hidratante/beleza',
         },
         {
           name: 'Máscaras Faciais',
-          url: '/mascaras-faciais',
+          url: '/mascaras-faciais/beleza',
         },
         {
           name: 'Protetor Solar',
-          url: '/protetor-solar',
+          url: '/protetor-solar/beleza',
         },
       ],
     },
     {
       name: 'Cabelos',
+      url: 'cabelos/beleza',
       subCategories: [
         {
           name: 'Shampoo',
-          url: '/shampoo',
+          url: '/shampoo/beleza',
         },
         {
           name: 'Condicionador',
-          url: '/condicionador',
+          url: '/condicionador/beleza',
         },
         {
           name: 'Finalizador e Modelador',
-          url: '/finalizador-modelador',
+          url: '/finalizador-modelador/beleza',
         },
         {
           name: 'Máscara',
-          url: '/mascara',
+          url: '/mascara/beleza',
         },
         {
           name: 'Tratamentos',
-          url: '/tratamentos',
+          url: '/tratamentos/beleza',
         },
       ],
     },
     {
       name: 'Unhas',
+      url: 'unhas/beleza',
       subCategories: [
         {
           name: 'Bases e Extra Brilhos',
-          url: '/bases-extra-brilhos',
+          url: '/bases-extra-brilhos/beleza',
         },
         {
           name: 'Esmaltes',
-          url: '/esmaltes',
+          url: '/esmaltes/beleza',
         },
         {
           name: 'Unhas Postiças',
-          url: '/unhas-posticas',
+          url: '/unhas-posticas/beleza',
         },
       ],
     },
