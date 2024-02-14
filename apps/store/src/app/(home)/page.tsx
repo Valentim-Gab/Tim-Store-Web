@@ -1,3 +1,4 @@
+import { Carousel } from '@/components/carousel'
 import Product from '@/components/product/product'
 import React, { useEffect } from 'react'
 
@@ -21,7 +22,11 @@ export default async function Home() {
   //console.log(cookies().get('teste'))
 
   return (
-    <div className="container min-h-screen">
+    <main className="container min-h-screen py-4">
+      <div className="flex items-center justify-center">
+        <Carousel.Root> 
+        </Carousel.Root>
+      </div>
       <p>Home</p>
       <p>Home</p>
       <p>Home</p>
@@ -99,6 +104,6 @@ export default async function Home() {
       <p>Home</p>
       
       <Product />
-    </div>
+    </main>
   )
 }
