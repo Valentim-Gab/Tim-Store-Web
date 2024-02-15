@@ -19,6 +19,7 @@ export default function CarouselRoot() {
             width={240}
             height={170}
             alt="Anúncio do carrossel"
+            priority={true}
             className="rounded w-60 h-40"
           />
           <p className="content-text absolute bottom-0 text-white m-1 font-bold w-52">
@@ -54,13 +55,13 @@ export default function CarouselRoot() {
       <CarouselPrevious
         className="active:rounded-full"
         variant={'ghost'}
-        customIcon={
+        icon={
           <i className="icon-[solar--alt-arrow-left-bold-duotone] w-8 h-8 text-primary rounded-full drop-shadow-md"></i>
         }
       />
       <CarouselNext
         variant={'ghost'}
-        customIcon={
+        icon={
           <i className="icon-[solar--alt-arrow-right-bold-duotone] w-8 h-8 text-primary"></i>
         }
       />

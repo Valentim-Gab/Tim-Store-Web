@@ -199,7 +199,7 @@ const CarouselPrevious = React.forwardRef<
   React.ComponentProps<typeof Button>
 >(
   (
-    { className, variant = 'outline', size = 'icon', customIcon, ...props },
+    { className, variant = 'outline', size = 'icon', icon, ...props },
     ref
   ) => {
     const { orientation, scrollPrev, canScrollPrev } = useCarousel()
@@ -218,11 +218,11 @@ const CarouselPrevious = React.forwardRef<
         )}
         disabled={!canScrollPrev}
         onClick={scrollPrev}
-        customIcon={customIcon}
+        icon={icon}
         {...props}
       >
-        {customIcon ? (
-          customIcon
+        {icon ? (
+          icon
         ) : (
           <>
             <ArrowLeft className="h-4 w-4" />
@@ -240,7 +240,7 @@ const CarouselNext = React.forwardRef<
   React.ComponentProps<typeof Button>
 >(
   (
-    { className, variant = 'outline', size = 'icon', customIcon, ...props },
+    { className, variant = 'outline', size = 'icon', icon, ...props },
     ref
   ) => {
     const { orientation, scrollNext, canScrollNext } = useCarousel()
@@ -259,11 +259,11 @@ const CarouselNext = React.forwardRef<
         )}
         disabled={!canScrollNext}
         onClick={scrollNext}
-        customIcon={customIcon}
+        icon={icon}
         {...props}
       >
-        {customIcon ? (
-          customIcon
+        {icon ? (
+          icon
         ) : (
           <>
             <ArrowRight className="h-4 w-4" />
