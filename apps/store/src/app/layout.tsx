@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import HeaderMobile from '@/components/header/header-mobile'
 import Header from '@/components/header/header'
+import ThemeProvider from '@/components/providers/theme-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,20 +14,25 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-br">
+    <html lang="pt-br" suppressHydrationWarning>
       <body className={inter.className}>
         <AuthProvider>
-          <Header />
-          <HeaderMobile />
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            <HeaderMobile />
+            {children}
+          </ThemeProvider>
         </AuthProvider>
-        {/* <Header />
-        {children} */}
       </body>
     </html>
   )
