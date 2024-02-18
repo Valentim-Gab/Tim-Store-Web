@@ -6,11 +6,22 @@ import { usePathname } from 'next/navigation'
 import Navbar from './navbar'
 import Link from 'next/link'
 import BagPopup from './bag-popup'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
+import { Button } from '../ui/button'
+import { Moon, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
 
 export default function Header() {
   const pathname = usePathname()
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
   const [lastScrollTop, setLastScrollTop] = useState(0)
+
+  const { setTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +43,7 @@ export default function Header() {
     <header className="flex-col self-stretch h-36 hidden w-full lg:flex">
       <div
         data-scroll={isHeaderHidden}
-        className="header-container bg-primary text-background shadow-md fixed top-0 w-full"
+        className="header-container bg-primary text-white shadow-md fixed top-0 w-full"
       >
         <div className="container flex justify-between items-center self-stretch h-20">
           <Link
@@ -45,13 +56,33 @@ export default function Header() {
             <input
               placeholder="O que você procura?"
               type="text"
-              className="bg-transparent text-sm border-none outline-none text-foreground w-full py-1 px-2 placeholder:text-light-black"
+              className="bg-transparent text-sm border-none outline-none text-foreground w-full py-1 px-2 placeholder:text-placeholder"
             />
             <button className="flex justify-center items-center rounded p-1">
-              <i className="icon-[lucide--search] w-6 h-6 text-light-black"></i>
+              <i className="icon-[lucide--search] w-6 h-6 text-placeholder"></i>
             </button>
           </div>
           <div className="flex justify-end items-center gap-8 self-stretch">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon">
+                  <Sun className="w-6 h-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem className="cursor-pointer focus:bg-primary focus:text-white" onClick={() => setTheme('light')}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer focus:bg-primary focus:text-white" onClick={() => setTheme('dark')}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer focus:bg-primary focus:text-white" onClick={() => setTheme('system')}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <BagPopup />
             <button className="flex justify-center items-center gap-2 p-4 font-bold rounded">
               <i className="icon-[solar--login-3-bold] w-6 h-6"></i>

@@ -26,13 +26,7 @@ const config = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-        light: {
-          black: 'hsl(var(--light-black))',
-          white: 'hsl(var(--light-white))',
-        },
-        money: {
-          green: 'hsl(var(--money-green))',
-        },
+        placeholder: 'hsl(var(--placeholder))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',

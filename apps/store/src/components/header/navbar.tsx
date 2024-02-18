@@ -27,7 +27,7 @@ export default function Navbar({ pathname }: NavbarProps) {
   ]
 
   return (
-    <nav className="container sticky text-background w-full">
+    <nav className="flex justify-between items-center container sticky text-white w-full">
       <ul className="flex items-center self-stretch">
         <li className="flex items-center justify-center self-stretch rounded">
           <CategoryPopup />

@@ -24,9 +24,7 @@
     --input: 220 13% 91%;
     --ring: 262.1 83.3% 57.8%;
     --radius: 0.4rem;
-    --light-black: 0, 0%, 27%;
-    --light-white: 216, 12%, 84%;
-    --money-green: 120, 80%, 20% 
+    --placeholder: 0, 0%, 27%;
   }
 
   .dark {
@@ -49,6 +47,7 @@
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
     --ring: 263.4 70% 50.4%;
+    --placeholder: 216, 12%, 84%;
   }
 }
  
