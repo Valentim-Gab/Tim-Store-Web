@@ -9,7 +9,10 @@ import BagPopup from './bag-popup'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
@@ -21,7 +24,7 @@ export default function Header() {
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
   const [lastScrollTop, setLastScrollTop] = useState(0)
 
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,22 +68,35 @@ export default function Header() {
           <div className="flex justify-end items-center gap-8 self-stretch">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="icon">
-                  <Sun className="w-6 h-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <Button size="icon" className="mr-2">
+                  <Sun className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                   <span className="sr-only">Toggle theme</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem className="cursor-pointer focus:bg-primary focus:text-white" onClick={() => setTheme('light')}>
-                  Light
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer focus:bg-primary focus:text-white" onClick={() => setTheme('dark')}>
-                  Dark
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer focus:bg-primary focus:text-white" onClick={() => setTheme('system')}>
-                  System
-                </DropdownMenuItem>
+              <DropdownMenuContent className="mx-2">
+                <DropdownMenuLabel>Tema do site</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+                  <DropdownMenuRadioItem
+                    value="light"
+                    className="cursor-pointer focus:bg-primary focus:text-white"
+                  >
+                    Claro
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem
+                    value="dark"
+                    className="cursor-pointer focus:bg-primary focus:text-white"
+                  >
+                    Escuro
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem
+                    value="system"
+                    className="cursor-pointer focus:bg-primary focus:text-white"
+                  >
+                    Sistema
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
             <BagPopup />

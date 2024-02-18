@@ -41,7 +41,7 @@ export default function Navbar({ pathname }: NavbarProps) {
               <Link
                 href={item.url}
                 data-active={pathname === item.url}
-                className="flex items-center justify-center cursor-pointer py-1 px-2 rounded data-[active=true]:bg-background data-[active=true]:text-primary"
+                className="flex items-center justify-center cursor-pointer py-1 px-2 rounded data-[active=true]:bg-white data-[active=true]:text-primary"
               >
                 <p className="font-bold">{item.text}</p>
               </Link>
