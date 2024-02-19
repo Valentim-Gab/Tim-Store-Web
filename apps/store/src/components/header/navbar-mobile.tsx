@@ -1,19 +1,8 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 import './navbar-mobile.scss'
 import { tv } from 'tailwind-variants'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
-import { Button } from '../ui/button'
-import { Moon, Sun } from 'lucide-react'
-import { useTheme } from 'next-themes'
+import DrawerThemeMobile from './drawer-theme-mobile'
 
 interface NavbarProps {
   isOpen: boolean
@@ -57,8 +46,6 @@ export default function NavbarMobile({
     },
   ]
 
-  const { theme, setTheme } = useTheme()
-
   return (
     <nav
       data-open={isOpen}
@@ -67,14 +54,14 @@ export default function NavbarMobile({
       <ul className="items pb-2">
         {items &&
           items.map((item, index) => (
-            <li key={index} className="flex justify-between items-center">
+            <li key={index} className="flex justify-between items-center gap-2">
               <Link
                 href={item.url}
                 onClick={() => {
                   setActive(false)
                 }}
                 data-active={pathname === item.url}
-                className="flex items-center self-stretch cursor-pointer p-4 data-[active=true]:py-1"
+                className="flex items-center self-stretch cursor-pointer p-4 w-full data-[active=true]:py-1"
               >
                 <div
                   data-active={pathname === item.url}
@@ -84,35 +71,7 @@ export default function NavbarMobile({
                   <p className="font-medium">{item.text}</p>
                 </div>
               </Link>
-              {index === 0 && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button size="icon" className="mr-2">
-                      <Sun className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                      <Moon className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                      <span className="sr-only">Toggle theme</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="mx-2">
-                    <DropdownMenuLabel>Tema do site</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuRadioGroup
-                      value={theme}
-                      onValueChange={setTheme}
-                    >
-                      <DropdownMenuRadioItem value="light" className="cursor-pointer focus:bg-primary focus:text-white">
-                        Claro
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="dark" className="cursor-pointer focus:bg-primary focus:text-white">
-                        Escuro
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="system" className="cursor-pointer focus:bg-primary focus:text-white">
-                        Sistema
-                      </DropdownMenuRadioItem>
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
+              {index === 0 && <DrawerThemeMobile />}
             </li>
           ))}
       </ul>
