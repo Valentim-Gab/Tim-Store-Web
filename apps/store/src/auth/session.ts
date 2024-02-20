@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
@@ -45,6 +46,8 @@ export async function updateSession(request: NextRequest) {
           secure: true,
         })
 
+        console.log('refresh middle')
+        
         return res
       }
     } else if (resRefresh.status === 403 || resRefresh.status === 401) {
@@ -53,4 +56,14 @@ export async function updateSession(request: NextRequest) {
   }
 
   return
+}
+
+export async function logoutSession() {
+  const res = NextResponse.next()
+
+  res.cookies.delete('session')
+  res.cookies.delete('access_token')
+  res.cookies.delete('refresh_token')
+
+  return res
 }

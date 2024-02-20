@@ -1,9 +1,9 @@
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { destroyCookie, parseCookies, setCookie } from 'nookies'
 
-export async function FetchAuth(url: string, method: string, ctx: any) {
+export async function FetchAuth(url: string, method: string) {
   try {
-    const { ['access_token']: token } = parseCookies()
+    const token = cookies().get('access_token')?.value ?? ''
 
     const res = await fetch(url, {
       method: method,
@@ -11,16 +11,19 @@ export async function FetchAuth(url: string, method: string, ctx: any) {
         ContentType: 'application/json',
         Authorization: `Bearer ${token}`,
       },
+      credentials: 'include',
     })
 
     const data = await res.json()
+
+    console.log(res.status)
 
     if (
       res.status === 403 &&
       data.error === 'session_expired'
     ) {
       if (await refreshToken()) {
-        return FetchAuth(url, method, ctx)
+        return FetchAuth(url, method)
       } else {
         logout()
       }
@@ -34,8 +37,8 @@ export async function FetchAuth(url: string, method: string, ctx: any) {
   }
 
   async function refreshToken(): Promise<boolean> {
-    const { ['access_token']: accessToken } = parseCookies()
-    const { ['refresh_token']: refreshToken } = parseCookies()
+    const accessToken = cookies().get('access_token')?.value
+    const refreshToken = cookies().get('refresh_token')?.value
 
     const resRefresh = await fetch('http://localhost:3001/refresh', {
       method: 'POST',
@@ -46,18 +49,27 @@ export async function FetchAuth(url: string, method: string, ctx: any) {
       body: JSON.stringify({ refresh_token: refreshToken }),
     })
 
-    console.log(await resRefresh.json())
-
     if (resRefresh.ok && resRefresh.status === 201) {
       const { tokens } = await resRefresh.json()
 
       if (tokens.access_token && tokens.refresh_token) {
-        setCookie(ctx, 'access_token', tokens.access_token, {
-          maxAge: 60 * 60 * 24 * 7, // 1 week
+        cookies().set('session', tokens.access_token, {
+          httpOnly: true,
+          secure: true,
+          maxAge: 30,
         })
-        setCookie(ctx, 'refresh_token', tokens.refresh_token, {
-          maxAge: 60 * 60 * 24 * 7, // 1 week
+  
+        cookies().set('access_token', tokens.access_token, {
+          httpOnly: true,
+          secure: true,
         })
+  
+        cookies().set('refresh_token', tokens.refresh_token, {
+          httpOnly: true,
+          secure: true,
+        })
+
+        console.log('refresh feth')
 
         return true
       }
@@ -69,15 +81,6 @@ export async function FetchAuth(url: string, method: string, ctx: any) {
   }
 
   function logout() {
-    console.warn('[LOGOUT]')
-    // destroyCookie(ctx, 'access_token')
-    // destroyCookie(ctx, 'refresh_token')
-
-    // if (typeof window === 'undefined') {
-    //   ctx.res.writeHead(302, { Location: '/login' })
-    //   ctx.res.end()
-    // } else {
-    //   window.location.href = '/login'
-    // }
+    //redirect('/logout')
   }
 }
