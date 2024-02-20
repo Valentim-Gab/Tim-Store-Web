@@ -25,15 +25,15 @@ export default function Login() {
       const data = await res.json()
 
       cookies().set('access_token', data.tokens.access_token, {
-        maxAge: 60 * 60 * 24 * 7, //1 semana
         httpOnly: true,
         secure: true,
+        maxAge: 30
       })
 
-      cookies().set('refresh_token', data.tokens.refresh_token, {
-        maxAge: 60 * 60 * 24 * 7, //1 semana
+      cookies().set('refresh_token', data.tokens.refresh_token, {        
         httpOnly: true,
         secure: true,
+        maxAge: 60, //* 60 * 24 * 7, //1 semana
       })
 
       redirect('/')
