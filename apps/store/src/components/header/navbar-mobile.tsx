@@ -32,7 +32,7 @@ export default function NavbarMobile({
     {
       icon: 'icon-[solar--bag-4-bold]',
       text: 'Carrinho',
-      url: '/cart',
+      url: '/test',
     },
     {
       icon: 'icon-[solar--login-3-bold]',

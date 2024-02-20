@@ -7,37 +7,57 @@ export default function Login() {
   async function handleSignIn(formData: FormData) {
     'use server'
 
-    if (formData.entries()) {
-      const login: Login = {
-        username: formData.get('email')?.toString() ?? '',
-        password: formData.get('password')?.toString() ?? ''
-      }
+    cookies().set('session', "SESSION", {
+      httpOnly: true,
+      secure: true,
+      maxAge: 30
+    })
 
-      const res = await fetch('http://localhost:3001/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(login),
-        credentials: 'include'
-      })
+    cookies().set('access_token', "ACCESS", {
+      httpOnly: true,
+      secure: true,
+      //maxAge: 30
+    })
 
-      const data = await res.json()
+    cookies().set('refresh_token', "REFRESH", {        
+      httpOnly: true,
+      secure: true,
+      //maxAge: 60, //* 60 * 24 * 7, //1 semana
+    })
 
-      cookies().set('access_token', data.tokens.access_token, {
-        httpOnly: true,
-        secure: true,
-        maxAge: 30
-      })
+    redirect('/')
 
-      cookies().set('refresh_token', data.tokens.refresh_token, {        
-        httpOnly: true,
-        secure: true,
-        maxAge: 60, //* 60 * 24 * 7, //1 semana
-      })
+    // if (formData.entries()) {
+    //   const login: Login = {
+    //     username: formData.get('email')?.toString() ?? '',
+    //     password: formData.get('password')?.toString() ?? ''
+    //   }
 
-      redirect('/')
-    }
+    //   const res = await fetch('http://localhost:3001/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(login),
+    //     credentials: 'include'
+    //   })
+
+    //   const data = await res.json()
+
+    //   cookies().set('access_token', data.tokens.access_token, {
+    //     httpOnly: true,
+    //     secure: true,
+    //     maxAge: 30
+    //   })
+
+    //   cookies().set('refresh_token', data.tokens.refresh_token, {        
+    //     httpOnly: true,
+    //     secure: true,
+    //     maxAge: 60, //* 60 * 24 * 7, //1 semana
+    //   })
+
+    //   redirect('/')
+    //  }
   }
 
   return (

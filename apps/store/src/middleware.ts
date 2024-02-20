@@ -2,8 +2,6 @@ import { updateSession } from '@/lib/session'
 import { NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  console.log('vamos')
-
   return await updateSession(request)
 }
 
@@ -16,6 +14,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|logout).*)',
   ],
 }

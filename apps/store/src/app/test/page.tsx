@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 export default async function Test() {
@@ -6,7 +7,7 @@ export default async function Test() {
 
   console.log(accessToken)
 
-  const res = await fetch('http://localhost:3001/user', {
+  const res = await fetch('http://localhost:3001/test', {
     method: 'GET',
     headers: {
       ContentType: 'application/json',
@@ -16,7 +17,7 @@ export default async function Test() {
     cache: 'no-cache',
   })
 
-  console.log(res.status)
+  //console.log(res.status)
   
   // const data = await res.json()
 
