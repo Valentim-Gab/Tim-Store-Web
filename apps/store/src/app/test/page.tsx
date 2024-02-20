@@ -3,11 +3,9 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 
 export default async function Test() {
-  const accessToken = cookies().get('access_token')?.value
+  const accessToken = cookies().get('access_token')?.value ?? ''
 
-  console.log(accessToken)
-
-  const res = await fetch('http://localhost:3001/test', {
+  const res = await fetch('http://localhost:3001/user', {
     method: 'GET',
     headers: {
       ContentType: 'application/json',
@@ -17,11 +15,9 @@ export default async function Test() {
     cache: 'no-cache',
   })
 
-  //console.log(res.status)
-  
-  // const data = await res.json()
+  const data = await res.json()
 
-  // console.log(data.user)
+  console.log(data)
 
   return <div>Test</div>
 }

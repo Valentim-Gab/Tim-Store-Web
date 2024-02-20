@@ -35,6 +35,11 @@ export default function NavbarMobile({
       url: '/test',
     },
     {
+      icon: 'icon-[solar--bag-4-bold]',
+      text: 'Cliente',
+      url: '/cliente',
+    },
+    {
       icon: 'icon-[solar--login-3-bold]',
       text: 'Entrar',
       url: '/login',

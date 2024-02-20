@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
@@ -9,67 +8,46 @@ export async function updateSession(request: NextRequest) {
   if (!accessToken && !refreshToken && !session) return
 
   if (accessToken && refreshToken && !session) {
-    console.log(`\n\n[EXPIROU SESSÃO]: ${refreshToken}`)
+    const resRefresh = await fetch('http://localhost:3001/refresh', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    })
 
-    // const resRefresh = await fetch('http://localhost:3001/refresh', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${accessToken}`,
-    //   },
-    //   body: JSON.stringify({ refresh_token: refreshToken }),
-    // })
+    if (resRefresh.ok && resRefresh.status === 201) {
+      const { tokens } = await resRefresh.json()
 
-    // console.log(await resRefresh.json())
+      if (tokens.access_token && tokens.refresh_token) {
+        const res = NextResponse.next()
 
-    // if (resRefresh.ok && resRefresh.status === 201) {
-    //   const { tokens } = await resRefresh.json()
+        res.cookies.set({
+          name: 'session',
+          value: tokens.access_token,
+          httpOnly: true,
+          maxAge: 30,
+          secure: true,
+        })
 
-    //   if (tokens.access_token && tokens.refresh_token) {
-    //     res.cookies.set({
-    //       name: 'access_token',
-    //       value: tokens.access_token,
-    //       httpOnly: true,
-    //       maxAge: 30,
-    //     })
+        res.cookies.set({
+          name: 'access_token',
+          value: tokens.access_token,
+          httpOnly: true,
+          secure: true,
+        })
 
-    //     res.cookies.set({
-    //       name: 'refresh_token',
-    //       value: tokens.refresh_token,
-    //       httpOnly: true,
-    //       maxAge: 60,
-    //     })
+        res.cookies.set({
+          name: 'refresh_token',
+          value: tokens.refresh_token,
+          httpOnly: true,
+          secure: true,
+        })
 
-    //     return res
-    //   }
-    // } else if (resRefresh.status === 403 || resRefresh.status === 401) {
-    //   redirect('/login')
-    // }
-
-    if (false) {
-      const res = NextResponse.next()
-
-      res.cookies.set({
-        name: 'session',
-        value: 'NEW SESSION',
-        httpOnly: true,
-        maxAge: 30,
-      })
-
-      res.cookies.set({
-        name: 'access_token',
-        value: 'NEW ACCESS',
-        httpOnly: true,
-      })
-
-      res.cookies.set({
-        name: 'refresh_token',
-        value: 'NEW REFRESH',
-        httpOnly: true,
-      })
-
-      return res
-    } else {
+        return res
+      }
+    } else if (resRefresh.status === 403 || resRefresh.status === 401) {
       return NextResponse.redirect(new URL('/logout', request.url))
     }
   }

@@ -7,57 +7,41 @@ export default function Login() {
   async function handleSignIn(formData: FormData) {
     'use server'
 
-    cookies().set('session', "SESSION", {
-      httpOnly: true,
-      secure: true,
-      maxAge: 30
-    })
+    if (formData.entries()) {
+      const login: Login = {
+        username: formData.get('email')?.toString() ?? '',
+        password: formData.get('password')?.toString() ?? '',
+      }
 
-    cookies().set('access_token', "ACCESS", {
-      httpOnly: true,
-      secure: true,
-      //maxAge: 30
-    })
+      const res = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(login),
+        credentials: 'include',
+      })
 
-    cookies().set('refresh_token', "REFRESH", {        
-      httpOnly: true,
-      secure: true,
-      //maxAge: 60, //* 60 * 24 * 7, //1 semana
-    })
+      const data = await res.json()
 
-    redirect('/')
+      cookies().set('session', data.tokens.access_token, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 30,
+      })
 
-    // if (formData.entries()) {
-    //   const login: Login = {
-    //     username: formData.get('email')?.toString() ?? '',
-    //     password: formData.get('password')?.toString() ?? ''
-    //   }
+      cookies().set('access_token', data.tokens.access_token, {
+        httpOnly: true,
+        secure: true,
+      })
 
-    //   const res = await fetch('http://localhost:3001/login', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(login),
-    //     credentials: 'include'
-    //   })
+      cookies().set('refresh_token', data.tokens.refresh_token, {
+        httpOnly: true,
+        secure: true,
+      })
 
-    //   const data = await res.json()
-
-    //   cookies().set('access_token', data.tokens.access_token, {
-    //     httpOnly: true,
-    //     secure: true,
-    //     maxAge: 30
-    //   })
-
-    //   cookies().set('refresh_token', data.tokens.refresh_token, {        
-    //     httpOnly: true,
-    //     secure: true,
-    //     maxAge: 60, //* 60 * 24 * 7, //1 semana
-    //   })
-
-    //   redirect('/')
-    //  }
+      redirect('/')
+    }
   }
 
   return (
@@ -66,10 +50,16 @@ export default function Login() {
         <label htmlFor="email">Email:</label>
         <input type="text" name="email" id="email" className="text-black" />
         <label htmlFor="password">Senha:</label>
-        <input type="password" name="password" id="password" className="text-black" />
-        <button type="submit" className="border p-4">Login</button>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          className="text-black"
+        />
+        <button type="submit" className="border p-4">
+          Login
+        </button>
       </form>
     </main>
   )
 }
-
