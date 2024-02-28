@@ -100,10 +100,13 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
             <BagPopup />
-            <button className="flex justify-center items-center gap-2 p-4 font-bold rounded">
+            <Link
+              href={'/login'}
+              className="flex justify-center items-center gap-2 p-4 font-bold rounded"
+            >
               <i className="icon-[solar--login-3-bold] w-6 h-6"></i>
               Entrar
-            </button>
+            </Link>
           </div>
         </div>
         <Navbar pathname={pathname} />

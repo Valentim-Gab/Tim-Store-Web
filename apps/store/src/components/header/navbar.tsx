@@ -10,7 +10,7 @@ export default function Navbar({ pathname }: NavbarProps) {
   const items = [
     {
       text: 'Feminino',
-      url: '/feminino',
+      url: '/posty',
     },
     {
       text: 'Masculino',

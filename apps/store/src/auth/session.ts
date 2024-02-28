@@ -30,6 +30,7 @@ export async function updateSession(request: NextRequest) {
           httpOnly: true,
           maxAge: 30,
           secure: true,
+          path: '/',
         })
 
         res.cookies.set({
@@ -37,6 +38,7 @@ export async function updateSession(request: NextRequest) {
           value: tokens.access_token,
           httpOnly: true,
           secure: true,
+          path: '/',
         })
 
         res.cookies.set({
@@ -44,6 +46,7 @@ export async function updateSession(request: NextRequest) {
           value: tokens.refresh_token,
           httpOnly: true,
           secure: true,
+          path: '/',
         })
 
         console.log('refresh middle')
