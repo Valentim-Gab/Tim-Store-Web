@@ -28,7 +28,7 @@ export default function Login({ searchParams }: LoginProps) {
         credentials: 'include',
       })
 
-      const data = await res.json()
+      const data = await res.json() //TODO: tratar login
 
       const user = {
         id: data.user.id ?? '',

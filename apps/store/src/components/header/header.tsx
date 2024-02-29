@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import './header.scss'
 import { usePathname } from 'next/navigation'
 import Navbar from './navbar'
@@ -19,34 +19,20 @@ import { Button } from '../ui/button'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { parseCookies } from 'nookies'
+import SignInBtn from './sign-in-btn'
 
 export default function Header() {
   const pathname = usePathname()
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
   const [lastScrollTop, setLastScrollTop] = useState(0)
-  const [sessionData, setSessionData] = useState<any>(null)
   const { theme, setTheme } = useTheme()
-  const { session } = parseCookies()
-
-  if (session) {
-    try {
-      if (!sessionData) {
-        setSessionData(JSON.parse(session))
-      } else if (sessionData.name != JSON.parse(session).name) {
-        setSessionData(JSON.parse(session))
-      }
-    } catch (error) {
-      setSessionData(null)
-    }
-  }
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollTop =
         window.scrollY || document.documentElement.scrollTop
 
-      if (currentScrollTop > lastScrollTop) setIsHeaderHidden(true)
-      else setIsHeaderHidden(false)
+      setIsHeaderHidden(currentScrollTop > lastScrollTop)
 
       setLastScrollTop(currentScrollTop <= 0 ? 0 : currentScrollTop)
     }
@@ -54,7 +40,7 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll)
 
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollTop, sessionData])
+  }, [lastScrollTop])
 
   return (
     <header className="flex-col self-stretch h-36 hidden w-full lg:flex">
@@ -114,17 +100,9 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
             <BagPopup />
-            {sessionData ? (
-              <p>{sessionData.name}</p>
-            ) : (
-              <Link
-                href={'/login'}
-                className="flex justify-center items-center gap-2 p-4 font-bold rounded"
-              >
-                <i className="icon-[solar--login-3-bold] w-6 h-6"></i>
-                Entrar
-              </Link>
-            )}
+            <Suspense fallback={<p>Carregando...</p>}>
+              <SignInBtn />
+            </Suspense>
           </div>
         </div>
         <Navbar pathname={pathname} />
