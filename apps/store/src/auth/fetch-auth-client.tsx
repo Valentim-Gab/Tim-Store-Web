@@ -8,7 +8,7 @@ export default async function fetchAuthClient({
   body,
   token,
   cache,
-}: FetchAuth) {
+}: FetchAuth): Promise<any> {
   try {
     const res = await fetch(url, {
       method: method ?? 'GET',
@@ -30,9 +30,15 @@ export default async function fetchAuthClient({
       })
 
       const data = await res.json()
+      
+      const user = {
+        id: data.user.id ?? '',
+        name: data.user.name ?? '',
+        email: data.user.email ?? '',
+      }
 
       if (res.ok && res.status === 201) {
-        setCookie(null, 'session', 'value', {
+        setCookie(null, 'session', JSON.stringify(user), {
           maxAge: data.tokens.expires,
           secure: true,
         })

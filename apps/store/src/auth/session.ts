@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function checkSession(
@@ -10,6 +9,13 @@ export async function checkSession(
   const session = request.cookies.get('session')?.value
 
   if (protectedRouters.includes(request.nextUrl.pathname)) {
+    const redirectURL = new URL('/logout', request.url)
+    redirectURL.searchParams.set('callback', request.nextUrl.pathname.replace('/', ''))
+
+    if (!accessToken && !refreshToken && !session) {
+      return NextResponse.redirect(redirectURL);
+    }
+
     const res = await fetch('http://localhost:3001/refresh', {
       method: 'POST',
       headers: {
@@ -20,9 +26,6 @@ export async function checkSession(
     })
 
     if (res.status == 403 || res.status == 401) {
-      const redirectURL = new URL('/login', request.url)
-      redirectURL.searchParams.set('callback', request.url.split('/').pop() ?? '/');
-
       return NextResponse.redirect(redirectURL);
     }
   }
@@ -38,14 +41,20 @@ export async function checkSession(
     })
 
     if (resRefresh.ok && resRefresh.status === 201) {
-      const { tokens } = await resRefresh.json()
+      const { user, tokens } = await resRefresh.json()
 
       if (tokens.access_token && tokens.refresh_token) {
         const res = NextResponse.next()
 
+        const userSession = {
+          id: user.id ?? '',
+          name: 'user.name' ?? '',
+          email: user.email ?? '',
+        }
+
         res.cookies.set({
           name: 'session',
-          value: 'value',
+          value: JSON.stringify(userSession),
           maxAge: tokens.expires,
           secure: true,
         })

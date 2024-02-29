@@ -30,7 +30,13 @@ export default function Login({ searchParams }: LoginProps) {
 
       const data = await res.json()
 
-      cookies().set('session', 'value', {
+      const user = {
+        id: data.user.id ?? '',
+        name: data.user.name ?? '',
+        email: data.user.email ?? '',
+      }
+
+      cookies().set('session', JSON.stringify(user), {
         maxAge: data.tokens.expires,
         secure: true,
       })

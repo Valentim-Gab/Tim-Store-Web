@@ -18,7 +18,7 @@ export default function Navbar({ pathname }: NavbarProps) {
     },
     {
       text: 'Infantil',
-      url: '/infantil',
+      url: '/cliente',
     },
     {
       text: 'Beleza',

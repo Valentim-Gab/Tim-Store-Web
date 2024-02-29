@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { redirect, useRouter } from 'next/navigation'
 import { setCookie } from 'nookies'
 import { FetchAuth } from '@/auth/fetch-auth'
@@ -9,23 +9,19 @@ import fetchAuthClient from '@/auth/fetch-auth-client'
 export default function Posty() {
   const router = useRouter()
 
-  async function action(event: React.FormEvent) { 
+  function Action(event: React.FormEvent) {
     event.preventDefault()
 
     fetchAuthClient({
       url: 'http://localhost:3001/testy',
       method: 'POST',
-    }).then(data => {
-      console.log(data)
-
-      if (!data) {
-        return router.push('/logout')
-      }
-    }).catch(err => {
-      console.error(err)
-
-      return router.push('/logout')
     })
+      .then((data: any) => {
+        console.log(data)
+      })
+      .catch((err: any) => {
+        console.error(err)
+      })
   }
 
   // function action(event: React.FormEvent) {
@@ -49,7 +45,7 @@ export default function Posty() {
 
   return (
     <main className="min-h-screen p-8">
-      <form onSubmit={action} className="flex flex-col gap-4">
+      <form onSubmit={Action} className="flex flex-col gap-4">
         <button type="submit" className="border p-4">
           Teste
         </button>
