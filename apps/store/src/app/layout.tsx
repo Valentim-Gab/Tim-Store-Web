@@ -1,4 +1,3 @@
-import { AuthProvider } from '@/contexts/auth-context'
 import './globals.scss'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -21,18 +20,16 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body className={inter.className}>
-        <AuthProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Header />
-            <HeaderMobile />
-            {children}
-          </ThemeProvider>
-        </AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <HeaderMobile />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

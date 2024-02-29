@@ -3,7 +3,13 @@ import { Login } from '@/interfaces/Login'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-export default function Login() {
+interface LoginProps {
+  searchParams: {
+    callback?: string
+  }
+}
+
+export default function Login({ searchParams }: LoginProps) {
   async function handleSignIn(formData: FormData) {
     'use server'
 
@@ -24,10 +30,9 @@ export default function Login() {
 
       const data = await res.json()
 
-      cookies().set('session', data.tokens.access_token, {
-        httpOnly: true,
+      cookies().set('session', 'value', {
+        maxAge: data.tokens.expires,
         secure: true,
-        maxAge: 30,
       })
 
       cookies().set('access_token', data.tokens.access_token, {
@@ -40,7 +45,7 @@ export default function Login() {
         secure: true,
       })
 
-      redirect('/')
+      redirect(searchParams.callback ?? '/')
     }
   }
 

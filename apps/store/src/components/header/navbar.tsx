@@ -14,7 +14,7 @@ export default function Navbar({ pathname }: NavbarProps) {
     },
     {
       text: 'Masculino',
-      url: '/masculino',
+      url: '/test',
     },
     {
       text: 'Infantil',

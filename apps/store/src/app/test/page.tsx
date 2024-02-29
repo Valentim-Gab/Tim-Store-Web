@@ -1,23 +1,40 @@
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import React from 'react'
+import fetchAuthClient from '@/auth/fetch-auth-client'
+import FetchAuthServer from '@/auth/fetch-auth-server'
+import { redirect, useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
 
 export default async function Test() {
-  const accessToken = cookies().get('access_token')?.value ?? ''
+  // const [data, setData] = React.useState(null)
+  // const router = useRouter()
 
-  const res = await fetch('http://localhost:3001/user', {
+  // useEffect(() => {
+  //   fetchAuthClient({
+  //     url: 'http://localhost:3001/user',
+  //     method: 'GET',
+  //   }).then(data => {
+  //     console.log(data)
+  
+  //     if (!data) {
+  //       return router.push('/logout')
+  //     }
+  
+  //     setData(data)
+  //   }).catch(err => {
+  //     console.error(err)
+  
+  //     return router.push('/logout')
+  //   })
+  // }, [router])
+
+  const data = await FetchAuthServer({
+    url: 'http://localhost:3001/user',
     method: 'GET',
-    headers: {
-      ContentType: 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    credentials: 'include',
     cache: 'no-cache',
   })
 
-  const data = await res.json()
+  if (!data) {
+    return redirect('/test')
+  }
 
-  console.log(data)
-
-  return <div>Test</div>
+  return <div>{JSON.stringify(data)}</div>
 }

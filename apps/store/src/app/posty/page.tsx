@@ -2,6 +2,9 @@
 
 import React from 'react'
 import { redirect, useRouter } from 'next/navigation'
+import { setCookie } from 'nookies'
+import { FetchAuth } from '@/auth/fetch-auth'
+import fetchAuthClient from '@/auth/fetch-auth-client'
 
 export default function Posty() {
   const router = useRouter()
@@ -9,38 +12,20 @@ export default function Posty() {
   async function action(event: React.FormEvent) { 
     event.preventDefault()
 
-    const res = await fetch('http://localhost:3001/testy', {
+    fetchAuthClient({
+      url: 'http://localhost:3001/testy',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        //Authorization: `Bearer ${token}`,
-      },
-      credentials: 'include',
-    })
-
-    console.log(res.statusText)
-
-    if (res.status == 403) {
-      const res = await fetch('http://localhost:3001/refresh', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      })
-
-      const data = await res.json()
-
+    }).then(data => {
       console.log(data)
 
-      if (res.ok && res.status === 201) {
-        await action(event)
-      } else if (res.status === 403 || res.status === 401) {
-        router.push('/logout')
+      if (!data) {
+        return router.push('/logout')
       }
-    } else if (res.status == 401) {
-      router.push('/logout')
-    }
+    }).catch(err => {
+      console.error(err)
+
+      return router.push('/logout')
+    })
   }
 
   // function action(event: React.FormEvent) {

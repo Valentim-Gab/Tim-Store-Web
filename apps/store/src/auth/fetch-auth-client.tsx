@@ -1,0 +1,60 @@
+import React from 'react'
+import { FetchAuth } from './fetch-auth'
+import { setCookie } from 'nookies'
+
+export default async function fetchAuthClient({
+  url,
+  method,
+  body,
+  token,
+  cache,
+}: FetchAuth) {
+  try {
+    const res = await fetch(url, {
+      method: method ?? 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+      credentials: 'include',
+      cache: cache,
+    })
+
+    if (res.status == 403) {
+      const res = await fetch('http://localhost:3001/refresh', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      })
+
+      const data = await res.json()
+
+      if (res.ok && res.status === 201) {
+        setCookie(null, 'session', 'value', {
+          maxAge: data.tokens.expires,
+          secure: true,
+        })
+
+        return await fetchAuthClient({
+          url,
+          method,
+          body,
+          token,
+          cache,
+        })
+      } else if (res.status === 403 || res.status === 401) {
+        throw new Error('Unauthorized')
+      }
+    } else if (res.status == 401) {
+      throw new Error('Unauthorized')
+    }
+
+    const data = await res.json()
+
+    return data
+  } catch (error) {
+    throw new Error('Unauthorized')
+  }
+}
