@@ -10,15 +10,15 @@ export default function Navbar({ pathname }: NavbarProps) {
   const items = [
     {
       text: 'Feminino',
-      url: '/posty',
+      url: '/feminino',
     },
     {
       text: 'Masculino',
-      url: '/test',
+      url: '/masculino',
     },
     {
       text: 'Infantil',
-      url: '/cliente',
+      url: '/infantil',
     },
     {
       text: 'Beleza',
