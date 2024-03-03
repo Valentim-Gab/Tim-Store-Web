@@ -31,9 +31,9 @@ export default function CarouselRoot() {
   }, [carouseuApi])
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-2 px-8">
       <Carousel setApi={setCarouseuApi}>
-        <CarouselContent className="w-60 h-40">
+        <CarouselContent className="min-w-[240px] min-h-[170px] max-w-[440px] max-h-[300px]">
           <CarouselItem>
             <Image
               src={'/assets/images/carousel/carousel-item-1.png'}
@@ -41,7 +41,7 @@ export default function CarouselRoot() {
               height={170}
               alt="Anúncio do carrossel"
               priority={true}
-              className="rounded w-60 h-40"
+              className="rounded w-full h-full object-cover"
             />
             <p className="content-text absolute bottom-0 text-white m-1 font-bold w-52">
               Se vista bem sem gastar muito
@@ -53,7 +53,7 @@ export default function CarouselRoot() {
               width={240}
               height={170}
               alt="Anúncio do carrossel"
-              className="rounded"
+              className="rounded w-full h-full object-cover"
             />
             <p className="content-text absolute bottom-0 text-white m-2 font-bold w-52">
               Os homens também merecem
@@ -66,7 +66,7 @@ export default function CarouselRoot() {
               width={240}
               height={170}
               alt="Anúncio do carrossel"
-              className="rounded"
+              className="rounded w-full h-full object-cover"
             />
             <p className="content-text absolute bottom-0 text-white m-2 font-bold w-52">
               Para todas as mulheres
