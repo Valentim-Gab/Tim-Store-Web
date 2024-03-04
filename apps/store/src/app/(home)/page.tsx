@@ -51,24 +51,23 @@ export default function Home() {
     name: 'Product 6',
     price: 650,
     condition: 'Novo',
-    image: 'https://cdn.discordapp.com/attachments/1173615976525336646/1173617768600444978/20231004_083920.jpg?ex=65ef0938&is=65dc9438&hm=b42014c87df2937176f03c0a2c4d858510c5d3793bd019d2a816b858535fb74a&',
+    image:
+      'https://cdn.discordapp.com/attachments/1173615976525336646/1173617768600444978/20231004_083920.jpg?ex=65ef0938&is=65dc9438&hm=b42014c87df2937176f03c0a2c4d858510c5d3793bd019d2a816b858535fb74a&',
   }
 
   return (
-    <main className="flex flex-col gap-8 items-center container min-h-screen py-4">
-      <div className="flex flex-col items-center justify-center gap-4">
+    <main className="flex flex-col gap-8 items-center container min-h-screen py-8">
+      <div className="flex flex-col items-center justify-center gap-16 lg:flex-row lg:items-start">
         <Carousel.Root></Carousel.Root>
-        <Link href={'#'} className="flex flex-col gap-4 items-center p-4 bg-card min-w-[240px] rounded-lg">
-          <h2 className="text-sm">Oferta do dia</h2>
-          <CardProduct.Root key={dailyOffer.id}>
+        <Link
+          href={'#'}
+          className="flex flex-col gap-4 items-center p-4 bg-card min-w-[240px] max-w-[440px] w-full rounded-lg shadow sm:px-8 lg:w-[240px] 2xl:w-fit 2xl:px-16"
+        >
+          <h2 className="text-sm sm:text-base">Oferta do dia</h2>
+          <CardProduct.Root key={dailyOffer.id} className="shadow-none">
             <CardProduct.Image src={dailyOffer.image ?? ''} />
             <CardProduct.Data>
               <CardProduct.Title>{dailyOffer.name}</CardProduct.Title>
-              {dailyOffer.condition && (
-                <CardProduct.Condition>
-                  {dailyOffer.condition}
-                </CardProduct.Condition>
-              )}
               <CardProduct.Price value={dailyOffer.price}></CardProduct.Price>
             </CardProduct.Data>
           </CardProduct.Root>

@@ -20,6 +20,7 @@ import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { parseCookies } from 'nookies'
 import SignInBtn from './sign-in-btn'
+import Image from 'next/image'
 
 export default function Header() {
   const pathname = usePathname()
@@ -53,7 +54,12 @@ export default function Header() {
             href="/"
             className="logo text-2xl font-black cursor-pointer px-2"
           >
-            TIM-BRECHO
+            <Image
+              src={'/assets/images/main/tim-brecho.png'}
+              alt="Site logo"
+              width={180}
+              height={40}
+            />
           </Link>
           <div className="search-container flex gap-2 items-center py-1 px-2 rounded bg-background w-2/5 min-w-80">
             <input
