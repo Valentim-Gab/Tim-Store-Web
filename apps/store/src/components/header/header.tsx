@@ -59,6 +59,8 @@ export default function Header() {
               alt="Site logo"
               width={180}
               height={40}
+              className='w-[180px] h-[40px]'
+              priority={true}
             />
           </Link>
           <div className="search-container flex gap-2 items-center py-1 px-2 rounded bg-background w-2/5 min-w-80">

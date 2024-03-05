@@ -100,9 +100,7 @@ export default function BagPopup() {
               >
                 <div className="flex gap-2">
                   <Image
-                    src={
-                      'https://cdn.discordapp.com/attachments/1175185524433109093/1202074715032658010/Frame_2.png?ex=65cc2251&is=65b9ad51&hm=89b8b351dae21ba9f404f380de2d534b9352796b37a7865e5d64672f95ad9266&'
-                    }
+                    src={'/assets/images/carousel/carousel-item-1.png'}
                     alt={''}
                     width={50}
                     height={50}

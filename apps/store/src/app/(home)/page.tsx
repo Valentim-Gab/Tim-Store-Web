@@ -1,5 +1,6 @@
+import { CardAdBanner } from '@/components/cards/card-ad-banner'
 import { CardProduct } from '@/components/cards/card-product'
-import { Carousel } from '@/components/carousel'
+import CarouselHome from '@/components/carousel-home/carousel-home'
 import { Product } from '@/interfaces/Product'
 import Link from 'next/link'
 import React from 'react'
@@ -55,10 +56,28 @@ export default function Home() {
       'https://cdn.discordapp.com/attachments/1173615976525336646/1173617768600444978/20231004_083920.jpg?ex=65ef0938&is=65dc9438&hm=b42014c87df2937176f03c0a2c4d858510c5d3793bd019d2a816b858535fb74a&',
   }
 
+  const carouselItems = [
+    {
+      src: '/assets/images/carousel/carousel-item-1.png',
+      alt: 'Anúncio do carrossel',
+      text: 'Se vista bem sem gastar muito',
+    },
+    {
+      src: '/assets/images/categories/category-male.png',
+      alt: 'Anúncio do carrossel',
+      text: 'Os homens também merecem',
+    },
+    {
+      src: '/assets/images/categories/category-female.png',
+      alt: 'Anúncio do carrossel',
+      text: 'Para todas as mulheres',
+    },
+  ]
+
   return (
     <main className="flex flex-col gap-8 items-center container min-h-screen py-8">
       <div className="flex flex-col items-center justify-center gap-16 lg:flex-row lg:items-start">
-        <Carousel.Root></Carousel.Root>
+        <CarouselHome carouselItems={carouselItems}></CarouselHome>
         <Link
           href={'#'}
           className="flex flex-col gap-4 items-center p-4 bg-card min-w-[240px] max-w-[440px] w-full rounded-lg shadow sm:px-8 lg:w-[240px] 2xl:w-fit 2xl:px-16"
@@ -73,6 +92,7 @@ export default function Home() {
           </CardProduct.Root>
         </Link>
       </div>
+      <CardAdBanner.root />
       <h2>Últimos itens adicionados</h2>
       <div className="flex flex-wrap justify-center gap-2">
         {products &&

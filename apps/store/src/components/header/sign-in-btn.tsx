@@ -27,6 +27,10 @@ export default function SignInBtn() {
     }
 
     setLoading(false)
+
+    return () => {
+      setLoading(false)
+    }
   }, [session, sessionData, currentRoute, path])
 
   useEffect(() => {

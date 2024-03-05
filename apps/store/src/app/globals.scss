@@ -25,6 +25,8 @@
     --ring: 262.1 83.3% 57.8%;
     --radius: 0.4rem;
     --placeholder: 0, 0%, 27%;
+    --card-ad-banner: 0, 100%, 87%;
+    --card-ad-banner-second: 168, 99%, 40%;
   }
 
   .dark {
@@ -50,7 +52,7 @@
     --placeholder: 216, 12%, 84%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
