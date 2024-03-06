@@ -20,11 +20,11 @@ export default function CategoryPopup() {
       >
         <i
           data-open={isOpen}
-          className="icon-[solar--hamburger-menu-bold] w-6 h-6 data-[open=true]:text-primary"
+          className="icon-[solar--hamburger-menu-bold] w-6 h-6 data-[open=true]:text-primary dark:data-[open=true]:text-white"
         ></i>
         <p
           data-open={isOpen}
-          className="font-bold data-[open=true]:text-primary"
+          className="font-bold data-[open=true]:text-primary dark:data-[open=true]:text-white"
         >
           Todas as categorias
         </p>

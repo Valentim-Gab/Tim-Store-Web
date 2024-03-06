@@ -19,36 +19,48 @@ export default function BagPopup() {
       name: 'Casaco grande',
       price: 50.0,
       condition: 'semi-novo',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
     },
     {
       id: 2,
       name: 'Calça',
       price: 150.0,
       condition: 'novo',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
     },
     {
       id: 3,
       name: 'Tênis',
       price: 250.0,
       condition: 'usado',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
     },
     {
       id: 4,
       name: 'Bermuda',
       price: 100.0,
       condition: 'novo',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
     },
     {
       id: 5,
       name: 'Blusa',
       price: 70.0,
       condition: 'usado',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
     },
     {
       id: 6,
       name: 'Vestido',
       price: 200.0,
       condition: 'novo',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
     },
   ]
 
@@ -85,7 +97,7 @@ export default function BagPopup() {
     <Popover onOpenChange={() => setIsOpen(!isOpen)}>
       <PopoverTrigger
         data-open={isOpen}
-        className="flex justify-center items-center p-1 rounded-full data-[open=true]:bg-background data-[open=true]:text-primary"
+        className="flex justify-center items-center p-1 rounded-full data-[open=true]:bg-background data-[open=true]:text-primary dark:data-[open=true]:text-white"
       >
         <i className="icon-[solar--bag-4-bold] w-8 h-8"></i>
       </PopoverTrigger>
@@ -100,7 +112,7 @@ export default function BagPopup() {
               >
                 <div className="flex gap-2">
                   <Image
-                    src={'/assets/images/carousel/carousel-item-1.png'}
+                    src={product.image}
                     alt={''}
                     width={50}
                     height={50}

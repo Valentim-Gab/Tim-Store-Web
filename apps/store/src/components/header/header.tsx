@@ -27,6 +27,7 @@ export default function Header() {
   const [isHeaderHidden, setIsHeaderHidden] = useState(false)
   const [lastScrollTop, setLastScrollTop] = useState(0)
   const { theme, setTheme } = useTheme()
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,7 +60,7 @@ export default function Header() {
               alt="Site logo"
               width={180}
               height={40}
-              className='w-[180px] h-[40px]'
+              className="w-[180px] h-[40px]"
               priority={true}
             />
           </Link>
@@ -74,9 +75,13 @@ export default function Header() {
             </button>
           </div>
           <div className="flex justify-end items-center gap-8 self-stretch">
-            <DropdownMenu>
+            <DropdownMenu onOpenChange={() => setDrawerOpen(!drawerOpen)}>
               <DropdownMenuTrigger asChild>
-                <Button size="icon" className="mr-2">
+                <Button
+                  size="icon"
+                  data-active={drawerOpen}
+                  className="rounded-full mr-2 focus-visible:ring-offset-0 focus-visible:ring-0 data-[active=true]:bg-background data-[active=true]:text-primary dark:data-[active=true]:text-white"
+                >
                   <Sun className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                   <Moon className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                   <span className="sr-only">Toggle theme</span>

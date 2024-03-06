@@ -48,7 +48,8 @@ export default function SignInBtn() {
   return (
     <Link
       href={'/login'}
-      className="flex justify-center items-center gap-2 p-4 font-bold rounded"
+      data-active={path === '/login'}
+      className="flex justify-center items-center gap-2 px-4 py-2 font-bold rounded data-[active=true]:bg-white data-[active=true]:text-primary"
     >
       <i className="icon-[solar--login-3-bold] w-6 h-6"></i>
       Entrar
