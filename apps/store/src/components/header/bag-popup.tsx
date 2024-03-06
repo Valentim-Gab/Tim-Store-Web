@@ -150,11 +150,11 @@ export default function BagPopup() {
               </li>
             ))}
         </ul>
-        <div className="flex justify-center items-center gap-2 self-stretch rounded-b p-1 text-sm">
+        <div className="flex justify-center items-center gap-4 self-stretch rounded-b py-1 px-2 text-sm">
           <p className="font-medium">Total: {getTotal()}</p>
           <Link
             href={'/'}
-            className=" py-1 px-2 bg-primary text-background rounded font-semibold"
+            className="py-1 px-2 bg-primary text-white rounded font-semibold"
           >
             Ver carrinho
           </Link>

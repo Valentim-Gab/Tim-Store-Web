@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { CategoryMiniCard } from './category-mini-card'
 import Link from 'next/link'
 import { CategoryService } from '@/services/category-service/category-service'
+import CategoryMiniCard from './category-mini-card'
 
 export default function CategoryPopup() {
   const categoryService = new CategoryService()
@@ -43,10 +43,9 @@ export default function CategoryPopup() {
                 setSelectedCategory(category.id)
               }}
             >
-              <CategoryMiniCard.Root href={category.url}>
-                <CategoryMiniCard.Image src={category.image} />
-                <CategoryMiniCard.Text>{category.name}</CategoryMiniCard.Text>
-              </CategoryMiniCard.Root>
+              <CategoryMiniCard href={category.url} image={category.image}>
+                <p className="text-sm font-semibold">{category.name}</p>
+              </CategoryMiniCard>
             </div>
           ))}
         </div>

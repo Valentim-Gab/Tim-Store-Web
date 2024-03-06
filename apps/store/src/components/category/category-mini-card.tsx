@@ -1,14 +1,15 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import React, { LinkHTMLAttributes, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 interface CategoryMiniCardRootProps
   extends LinkHTMLAttributes<HTMLAnchorElement> {
-  children: ReactNode
+  image: string
 }
 
-export default function CategoryMiniCardRoot({
-  children,
+export default function CategoryMiniCard({
+  image,
   ...rest
 }: CategoryMiniCardRootProps) {
   return (
@@ -19,7 +20,14 @@ export default function CategoryMiniCardRoot({
         rest.className
       )}
     >
-      {children}
+      <Image
+        src={image ?? ''}
+        width={100}
+        height={100}
+        alt="Imagem da categoria"
+        className="rounded-full shadow-lg min-w-[100px]"
+      />
+      {rest.children}
     </Link>
   )
 }

@@ -1,6 +1,8 @@
 import { CardAdBanner } from '@/components/cards/card-ad-banner'
 import { CardProduct } from '@/components/cards/card-product'
 import CarouselHome from '@/components/carousel-home/carousel-home'
+import CarouselMini from '@/components/category/carousel-mini'
+import CategoryMiniCard from '@/components/category/category-mini-card'
 import { Product } from '@/interfaces/Product'
 import Link from 'next/link'
 import React from 'react'
@@ -43,7 +45,8 @@ export default function Home() {
       name: 'Product 4',
       price: 450,
       condition: 'Usado',
-      image: 'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
     },
   ]
 
@@ -84,6 +87,39 @@ export default function Home() {
       icon: 'icon-[solar--earth-bold]',
       title: 'Precisando roupas para o verão?',
       click: 'Clique aqui!',
+    },
+  ]
+
+  const categoriesNavigation = [
+    {
+      name: 'Bolsas',
+      url: '#',
+      image: '/assets/images/categories/category-beauty.png',
+      alt: 'Bolsas',
+    },
+    {
+      name: 'Bolsas',
+      url: '#',
+      image: '/assets/images/categories/category-beauty.png',
+      alt: 'Bolsas',
+    },
+    {
+      name: 'Bolsas',
+      url: '#',
+      image: '/assets/images/categories/category-beauty.png',
+      alt: 'Bolsas',
+    },
+    {
+      name: 'Bolsas',
+      url: '#',
+      image: '/assets/images/categories/category-beauty.png',
+      alt: 'Bolsas',
+    },
+    {
+      name: 'Bolsas',
+      url: '#',
+      image: '/assets/images/categories/category-beauty.png',
+      alt: 'Bolsas',
     },
   ]
 
@@ -150,6 +186,28 @@ export default function Home() {
             ))}
         </div>
       </section>
+
+      <section className="flex flex-col items-center self-stretch gap-4 my-4 lg:h-[200px]">
+        <h2>
+          <strong>Pode ser do seu interesse</strong>
+        </h2>
+        <div className="flex items-center gap-2 self-stretch overflow-x-scroll w-[250px] pb-2 lg:absolute lg:left-1/3 lg:mt-16">
+          {categoriesNavigation.map((category, index) => (
+            <CategoryMiniCard
+              key={index}
+              href={category.url}
+              image={category.image}
+
+            >
+              <p className="text-xs font-light">{category.name}</p>
+            </CategoryMiniCard>
+          ))}
+        </div>
+
+        {/* <CarouselMini carouselItems={categoriesNavigation} /> */}
+      </section>
+
+      <section className='my-8'></section>
     </main>
   )
 }

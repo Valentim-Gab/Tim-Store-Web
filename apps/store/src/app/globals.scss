@@ -53,9 +53,35 @@
   }
 }
 
+
+
 @layer base {
   * {
     @apply border-border;
+
+    &::-webkit-scrollbar {
+      max-width: 0.5rem;
+      height: 0.25rem;
+      border: none;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      @apply bg-primary;
+      border-radius: 0.4rem;
+    }
+  
+    &::-webkit-scrollbar-track {
+      outline: 1px solid hsl(var(--background));
+      background-color: transparent;
+    }
+  
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+  
+    &::-webkit-scrollbar-corner {
+      background-color: transparent;
+    }
   }
   body {
     @apply bg-background text-foreground;
