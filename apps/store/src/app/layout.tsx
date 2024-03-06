@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import HeaderMobile from '@/components/header/header-mobile'
 import Header from '@/components/header/header'
 import ThemeProvider from '@/components/providers/theme-provider'
+import Footer from '@/components/footer/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           <Header />
           <HeaderMobile />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

@@ -2,6 +2,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { LinkHTMLAttributes, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { VariantProps, tv } from 'tailwind-variants'
+
+const ImageVariants = tv({
+  base: 'rounded-full shadow-lg min-w-[100px]',
+  variants: {
+    expand: {
+      true: 'lg:min-w-[160px]',
+    },
+  },
+})
 
 interface CategoryMiniCardRootProps
   extends LinkHTMLAttributes<HTMLAnchorElement> {
@@ -10,8 +20,9 @@ interface CategoryMiniCardRootProps
 
 export default function CategoryMiniCard({
   image,
+  expand,
   ...rest
-}: CategoryMiniCardRootProps) {
+}: CategoryMiniCardRootProps & VariantProps<typeof ImageVariants>) {
   return (
     <Link
       href={rest.href ?? '#'}
@@ -25,7 +36,7 @@ export default function CategoryMiniCard({
         width={100}
         height={100}
         alt="Imagem da categoria"
-        className="rounded-full shadow-lg min-w-[100px]"
+        className={ImageVariants({ expand })}
       />
       {rest.children}
     </Link>

@@ -121,6 +121,24 @@ export default function Home() {
       image: '/assets/images/categories/category-beauty.png',
       alt: 'Bolsas',
     },
+    {
+      name: 'Bolsas',
+      url: '#',
+      image: '/assets/images/categories/category-beauty.png',
+      alt: 'Bolsas',
+    },
+    {
+      name: 'Bolsas',
+      url: '#',
+      image: '/assets/images/categories/category-beauty.png',
+      alt: 'Bolsas',
+    },
+    {
+      name: 'Bolsas',
+      url: '#',
+      image: '/assets/images/categories/category-beauty.png',
+      alt: 'Bolsas',
+    },
   ]
 
   return (
@@ -187,27 +205,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col items-center self-stretch gap-4 my-4 lg:h-[200px]">
-        <h2>
+      <section className="flex flex-col items-center self-stretch gap-4 mt-4 mb-16 lg:gap-8">
+        <h2 className="sm:text-2xl">
           <strong>Pode ser do seu interesse</strong>
         </h2>
-        <div className="flex items-center gap-2 self-stretch overflow-x-scroll w-[250px] pb-2 lg:absolute lg:left-1/3 lg:mt-16">
-          {categoriesNavigation.map((category, index) => (
-            <CategoryMiniCard
-              key={index}
-              href={category.url}
-              image={category.image}
-
-            >
-              <p className="text-xs font-light">{category.name}</p>
-            </CategoryMiniCard>
-          ))}
-        </div>
-
-        {/* <CarouselMini carouselItems={categoriesNavigation} /> */}
+        <CarouselMini carouselItems={categoriesNavigation} />
       </section>
-
-      <section className='my-8'></section>
     </main>
   )
 }
