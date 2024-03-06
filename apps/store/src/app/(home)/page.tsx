@@ -74,6 +74,19 @@ export default function Home() {
     },
   ]
 
+  const listCardAdBanner = [
+    {
+      icon: 'icon-[solar--dumbbell-large-bold-duotone]',
+      title: 'Precisando de roupas de treino?',
+      click: 'Clique aqui!',
+    },
+    {
+      icon: 'icon-[solar--earth-bold]',
+      title: 'Precisando roupas para o verão?',
+      click: 'Clique aqui!',
+    },
+  ]
+
   return (
     <main className="flex flex-col gap-8 items-center container min-h-screen py-8">
       <div className="flex flex-col items-center justify-center gap-16 lg:flex-row lg:items-start">
@@ -92,7 +105,24 @@ export default function Home() {
           </CardProduct.Root>
         </Link>
       </div>
-      <CardAdBanner.root />
+
+      <div className="flex items-center justify-center flex-wrap gap-4 p-4 lg:gap-16">
+        {listCardAdBanner &&
+          listCardAdBanner.map((item, index) => (
+            <CardAdBanner.Root
+              key={index}
+              href={'#'}
+              colors={index == 1 ? 'second' : undefined}
+            >
+              <CardAdBanner.Icon icon={item.icon}></CardAdBanner.Icon>
+              <div className="flex flex-col gap-1 lg:gap-2">
+                <p className="text-xs font-medium lg:text-base">{item.title}</p>
+                <p className="text-xs font-bold lg:text-base">{item.click}</p>
+              </div>
+            </CardAdBanner.Root>
+          ))}
+      </div>
+
       <h2>Últimos itens adicionados</h2>
       <div className="flex flex-wrap justify-center gap-2">
         {products &&

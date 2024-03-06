@@ -5,7 +5,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { CategoryMiniCard } from './category-mini-card'
 import Link from 'next/link'
 import { CategoryService } from '@/services/category-service/category-service'
-import { twMerge } from 'tailwind-merge'
 
 export default function CategoryPopup() {
   const categoryService = new CategoryService()

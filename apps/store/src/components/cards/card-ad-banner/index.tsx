@@ -1,5 +1,7 @@
-import CardAdBannerRoot from "./card-ad-banner-root";
+import CardAdBannerIcon from './card-ad-banner-icon'
+import CardAdBannerRoot from './card-ad-banner-root'
 
 export const CardAdBanner = {
-  root: CardAdBannerRoot
+  Root: CardAdBannerRoot,
+  Icon: CardAdBannerIcon,
 }
