@@ -66,12 +66,12 @@ export default function Home() {
       text: 'Se vista bem sem gastar muito',
     },
     {
-      src: '/assets/images/categories/category-male.png',
+      src: '/assets/images/carousel/carousel-item-1.png',
       alt: 'Anúncio do carrossel',
       text: 'Os homens também merecem',
     },
     {
-      src: '/assets/images/categories/category-female.png',
+      src: '/assets/images/carousel/carousel-item-1.png',
       alt: 'Anúncio do carrossel',
       text: 'Para todas as mulheres',
     },
@@ -88,6 +88,11 @@ export default function Home() {
       title: 'Precisando roupas para o verão?',
       click: 'Clique aqui!',
     },
+    {
+      icon: 'icon-[solar--earth-bold]',
+      title: 'Precisando roupas para o inverno?',
+      click: 'Clique aqui!',
+    }
   ]
 
   const categoriesNavigation = [
@@ -142,9 +147,12 @@ export default function Home() {
   ]
 
   return (
-    <main className="flex flex-col items-center gap-4 container min-h-screen 2xl:gap-8">
-      <section className="flex flex-col items-center justify-center self-stretch gap-8 my-4 lg:gap-16 lg:my-6 lg:flex-row lg:items-start">
+    <main className="flex flex-col items-center gap-4 min-h-screen 2xl:gap-8">
+      <section className="w-full">
         <CarouselHome carouselItems={carouselItems}></CarouselHome>
+      </section>
+
+      <section className="container flex flex-col items-center justify-center self-stretch gap-8 my-4 lg:gap-16 lg:my-6 lg:flex-row lg:items-start">
         <Link
           href={'#'}
           className="flex flex-col gap-4 items-center p-4 bg-card min-w-[240px] max-w-[440px] w-full rounded-lg shadow sm:px-8 lg:w-[240px] 2xl:w-fit 2xl:px-16"
@@ -158,26 +166,28 @@ export default function Home() {
             </CardProduct.Data>
           </CardProduct.Root>
         </Link>
+
+        <div className="flex flex-col items-center justify-center gap-4 lg:gap-16">
+          {listCardAdBanner &&
+            listCardAdBanner.map((item, index) => (
+              <CardAdBanner.Root
+                key={index}
+                href={'#'}
+                colors={index == 1 ? 'second' : undefined}
+              >
+                <CardAdBanner.Icon icon={item.icon}></CardAdBanner.Icon>
+                <div className="flex flex-col gap-1 lg:gap-2">
+                  <p className="text-xs font-medium lg:text-base">
+                    {item.title}
+                  </p>
+                  <p className="text-xs font-bold lg:text-base">{item.click}</p>
+                </div>
+              </CardAdBanner.Root>
+            ))}
+        </div>
       </section>
 
-      <section className="flex items-center justify-center flex-wrap gap-4 my-4 lg:gap-16 lg:my-8">
-        {listCardAdBanner &&
-          listCardAdBanner.map((item, index) => (
-            <CardAdBanner.Root
-              key={index}
-              href={'#'}
-              colors={index == 1 ? 'second' : undefined}
-            >
-              <CardAdBanner.Icon icon={item.icon}></CardAdBanner.Icon>
-              <div className="flex flex-col gap-1 lg:gap-2">
-                <p className="text-xs font-medium lg:text-base">{item.title}</p>
-                <p className="text-xs font-bold lg:text-base">{item.click}</p>
-              </div>
-            </CardAdBanner.Root>
-          ))}
-      </section>
-
-      <section className="flex flex-col items-center self-stretch gap-4 my-4 lg:gap-8">
+      <section className="container flex flex-col items-center self-stretch gap-4 my-4 lg:gap-8">
         <h2 className="sm:text-2xl">
           <strong>Últimos itens adicionados</strong>
         </h2>
@@ -205,7 +215,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col items-center self-stretch gap-4 mt-4 mb-16 lg:gap-8">
+      <section className="container flex flex-col items-center self-stretch gap-4 mt-4 mb-16 lg:gap-8">
         <h2 className="sm:text-2xl">
           <strong>Pode ser do seu interesse</strong>
         </h2>
