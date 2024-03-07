@@ -101,7 +101,7 @@ export default function BagPopup() {
       >
         <i className="icon-[solar--bag-4-bold] w-8 h-8"></i>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col justify-between items-center text-foreground bg-background rounded shadow-md z-20 p-0 pt-1 w-72 h-80 2xl:w-80 2xl:h-96">
+      <PopoverContent className="flex flex-col justify-between items-center text-foreground bg-card rounded shadow-md z-20 p-0 pt-1 w-72 h-80 2xl:w-80 2xl:h-96">
         <ul className="bag-popup-content flex flex-col items-center flex-1 self-stretch overflow-y-scroll mb-1">
           {listProduct &&
             listProduct.map((product) => (
