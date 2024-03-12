@@ -17,7 +17,7 @@ import Autoplay from 'embla-carousel-autoplay'
 interface CarouselItem {
   src: string
   alt: string
-  text: string
+  text?: string
 }
 
 export default function CarouselHome({
@@ -27,26 +27,18 @@ export default function CarouselHome({
 }) {
   const [carouseuApi, setCarouseuApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
-  const [loading, setLoading] = useState(true)
-  const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }))
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }))
 
   useEffect(() => {
     if (!carouseuApi) {
       return
     }
 
-    setLoading(true)
     setCurrent(carouseuApi.selectedScrollSnap() + 1)
 
     carouseuApi.on('select', () => {
       setCurrent(carouseuApi.selectedScrollSnap() + 1)
     })
-
-    setLoading(false)
-
-    return () => {
-      setLoading(false)
-    }
   }, [carouseuApi])
 
   return (
@@ -55,75 +47,58 @@ export default function CarouselHome({
         setApi={setCarouseuApi}
         plugins={[plugin.current]}
         onMouseEnter={plugin.current.stop}
-        onMouseLeave={plugin.current.reset}
+        onMouseLeave={() => {
+          plugin.current.reset
+          plugin.current.play()
+        }}
         className="flex flex-col items-center"
       >
-        {/* <CarouselContent className="min-w-[240px] min-h-[170px] max-w-[460px] max-h-[300px] lg:max-w-[600px] lg:max-h-[420px] 2xl:max-w-[1200px] 2xl:max-h-[520px]"> */}
         <CarouselContent className="relative w-full ml-0">
           {carouselItems &&
             carouselItems.length > 0 &&
             carouselItems.map((item, index) => (
-              <CarouselItem
-                key={index}
-                data-loading={loading}
-                className="pl-0 w-full"
-                // className={
-                //   loading
-                //     ? 'min-w-[240px] max-w-[460px] min-h-[300px] lg:max-w-[600px] lg:min-h-[420px] 2xl:max-w-[1200px] 2xl:min-h-[520px]'
-                //     : ''
-                // }
-              >
-                {loading ? (
-                  <Skeleton className="rounded w-full h-full" />
-                ) : (
-                  <>
-                    <Image
-                      src={item.src}
-                      width={240}
-                      height={170}
-                      alt={item.alt}
-                      priority={true}
-                      className="block w-full overflow-clip image-carousel"
-                    />
-                    <p className="content-text absolute bottom-0 text-white m-2 font-bold min-w-52 w-4/5 sm:w-[400px] sm:text-xl sm:m-4 lg:text-2xl lg:bottom-8 lg:w-[525px] 2xl:text-4xl 2xl:w-[600px]">
-                      {item.text}
-                    </p>
-                  </>
-                )}
+              <CarouselItem key={index} className="pl-0 w-full">
+                <Image
+                  src={item.src}
+                  width={240}
+                  height={170}
+                  alt={item.alt}
+                  priority={true}
+                  className="block w-full overflow-clip image-carousel"
+                />
+                <p className="content-text absolute bottom-0 text-white m-2 font-bold min-w-52 w-4/5 sm:w-[400px] sm:text-xl sm:m-4 lg:text-2xl lg:bottom-8 lg:w-[525px] 2xl:text-4xl 2xl:w-[600px]">
+                  {item.text}
+                </p>
               </CarouselItem>
             ))}
         </CarouselContent>
-        {!loading && (
-          <>
-            <CarouselPrevious
-              className="rounded bg-white/75 w-6 h-10 -left-0 sm:w-8 sm:h-12 lg:w-10 lg:h-14"
-              variant={'ghost'}
-              icon={
-                <i className="icon-[solar--alt-arrow-left-bold-duotone] w-full h-full text-primary rounded-full drop-shadow-md"></i>
-              }
-            />
-            <CarouselNext
-              className="rounded bg-white/75 w-6 h-10 -right-0 sm:w-8 sm:h-12 lg:w-10 lg:h-14"
-              variant={'ghost'}
-              icon={
-                <i className="icon-[solar--alt-arrow-right-bold-duotone] w-full h-full text-primary rounded-full drop-shadow-md"></i>
-              }
-            />
-            <div className="flex gap-1 bg-black/50 absolute top-2 py-1 px-2 rounded-full lg:bottom-4 lg:top-auto">
-              {carouseuApi &&
-                carouseuApi.scrollSnapList().length > 1 &&
-                carouseuApi
-                  .scrollSnapList()
-                  .map((_, index) => (
-                    <div
-                      key={index}
-                      data-current={current - 1 == index}
-                      className="w-1 h-1 rounded-full bg-white opacity-50 data-[current=true]:opacity-100 data-[current=true]:w-3 transition delay-400 sm:w-2 sm:h-2 sm:data-[current=true]:w-6"
-                    ></div>
-                  ))}
-            </div>
-          </>
-        )}
+        <CarouselPrevious
+          className="rounded bg-white/75 w-6 h-10 -left-0 sm:w-8 sm:h-12 lg:w-10 lg:h-14"
+          variant={'ghost'}
+          icon={
+            <i className="icon-[solar--alt-arrow-left-bold-duotone] w-full h-full text-primary rounded-full drop-shadow-md"></i>
+          }
+        />
+        <CarouselNext
+          className="rounded bg-white/75 w-6 h-10 -right-0 sm:w-8 sm:h-12 lg:w-10 lg:h-14"
+          variant={'ghost'}
+          icon={
+            <i className="icon-[solar--alt-arrow-right-bold-duotone] w-full h-full text-primary rounded-full drop-shadow-md"></i>
+          }
+        />
+        <div className="flex gap-1 bg-black/50 absolute top-2 py-1 px-2 rounded-full lg:bottom-4 lg:top-auto">
+          {carouseuApi &&
+            carouseuApi.scrollSnapList().length > 1 &&
+            carouseuApi
+              .scrollSnapList()
+              .map((_, index) => (
+                <div
+                  key={index}
+                  data-current={current - 1 == index}
+                  className="w-1 h-1 rounded-full bg-white opacity-50 data-[current=true]:opacity-100 data-[current=true]:w-3 transition delay-400 sm:w-2 sm:h-2 sm:data-[current=true]:w-6"
+                ></div>
+              ))}
+        </div>
       </Carousel>
     </div>
   )

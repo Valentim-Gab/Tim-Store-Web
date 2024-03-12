@@ -6,6 +6,7 @@ import CategoryMiniCard from '@/components/category/category-mini-card'
 import { Product } from '@/interfaces/Product'
 import Link from 'next/link'
 import React from 'react'
+import './home.scss'
 
 export default function Home() {
   const products: Product[] = [
@@ -50,30 +51,54 @@ export default function Home() {
     },
   ]
 
-  const dailyOffer: Product = {
-    id: '6',
-    name: 'Product 6',
-    price: 650,
-    condition: 'Novo',
-    image:
-      'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
-  }
+  const dailyOffer: Product[] = [
+    {
+      id: '6',
+      name: 'Product 6',
+      price: 650,
+      condition: 'Novo',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
+    },
+    {
+      id: '7',
+      name: 'Product 7',
+      price: 750,
+      condition: 'Usado',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
+    },
+    {
+      id: '8',
+      name: 'Product 8',
+      price: 850,
+      condition: 'Novo',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
+    },
+    {
+      id: '9',
+      name: 'Product 9',
+      price: 950,
+      condition: 'Usado',
+      image:
+        'https://cdn.discordapp.com/attachments/1175185524433109093/1214750965538889778/Frame_2.png?ex=65fa3fff&is=65e7caff&hm=e6ecc45725f15137f7b54a3f04a9fbcd95f614d7f2c158ee9e2485333c2569c0&',
+    },
+  ]
 
   const carouselItems = [
     {
-      src: '/assets/images/carousel/carousel-item-1.png',
+      src: '/assets/images/carousel/carousel-item-1.jpg',
       alt: 'Anúncio do carrossel',
       text: 'Se vista bem sem gastar muito',
     },
     {
-      src: '/assets/images/carousel/carousel-item-1.png',
+      src: '/assets/images/carousel/carousel-item-2.jpg',
       alt: 'Anúncio do carrossel',
-      text: 'Os homens também merecem',
     },
     {
-      src: '/assets/images/carousel/carousel-item-1.png',
+      src: '/assets/images/carousel/carousel-item-3.png',
       alt: 'Anúncio do carrossel',
-      text: 'Para todas as mulheres',
     },
   ]
 
@@ -88,11 +113,6 @@ export default function Home() {
       title: 'Precisando roupas para o verão?',
       click: 'Clique aqui!',
     },
-    {
-      icon: 'icon-[solar--earth-bold]',
-      title: 'Precisando roupas para o inverno?',
-      click: 'Clique aqui!',
-    }
   ]
 
   const categoriesNavigation = [
@@ -152,43 +172,56 @@ export default function Home() {
         <CarouselHome carouselItems={carouselItems}></CarouselHome>
       </section>
 
-      <section className="container flex flex-col items-center justify-center self-stretch gap-8 my-4 lg:gap-16 lg:my-6 lg:flex-row lg:items-start">
-        <Link
-          href={'#'}
-          className="flex flex-col gap-4 items-center p-4 bg-card min-w-[240px] max-w-[440px] w-full rounded-lg shadow sm:px-8 lg:w-[240px] 2xl:w-fit 2xl:px-16"
-        >
-          <h2 className="text-sm sm:text-base">Oferta do dia</h2>
-          <CardProduct.Root key={dailyOffer.id} className="shadow-none">
-            <CardProduct.Image src={dailyOffer.image ?? ''} />
-            <CardProduct.Data>
-              <CardProduct.Title>{dailyOffer.name}</CardProduct.Title>
-              <CardProduct.Price value={dailyOffer.price}></CardProduct.Price>
-            </CardProduct.Data>
-          </CardProduct.Root>
-        </Link>
+      <section className="container flex flex-wrap items-center justify-center gap-4 my-8">
+        {listCardAdBanner &&
+          listCardAdBanner.map((item, index) => (
+            <CardAdBanner.Root
+              key={index}
+              href={'#'}
+              colors={index == 1 ? 'second' : undefined}
+            >
+              <CardAdBanner.Icon icon={item.icon}></CardAdBanner.Icon>
+              <div className="flex flex-col gap-1 lg:gap-2">
+                <p className="text-xs font-medium lg:text-base">{item.title}</p>
+                <p className="text-xs font-bold lg:text-base">{item.click}</p>
+              </div>
+            </CardAdBanner.Root>
+          ))}
+      </section>
 
-        <div className="flex flex-col items-center justify-center gap-4 lg:gap-16">
-          {listCardAdBanner &&
-            listCardAdBanner.map((item, index) => (
-              <CardAdBanner.Root
-                key={index}
+      <section className="container flex flex-col items-center self-stretch gap-4 my-4 lg:gap-8">
+        <h2 className="sm:text-xl uppercase">
+          <strong>Promoções</strong>
+        </h2>
+        <div className="flex flex-wrap justify-center self-stretch gap-2">
+          {dailyOffer &&
+            dailyOffer.length > 0 &&
+            dailyOffer.map((product) => (
+              <Link
+                key={product.id}
                 href={'#'}
-                colors={index == 1 ? 'second' : undefined}
+                className={
+                  'slide-top' /*'hover:scale-110 transition ease-in-out delay-150'*/
+                }
               >
-                <CardAdBanner.Icon icon={item.icon}></CardAdBanner.Icon>
-                <div className="flex flex-col gap-1 lg:gap-2">
-                  <p className="text-xs font-medium lg:text-base">
-                    {item.title}
-                  </p>
-                  <p className="text-xs font-bold lg:text-base">{item.click}</p>
-                </div>
-              </CardAdBanner.Root>
+                <CardProduct.Root className="shadow-none">
+                  <CardProduct.Image src={product.image ?? ''} />
+                  <CardProduct.Data>
+                    <CardProduct.Title>{product.name}</CardProduct.Title>
+                    <CardProduct.Price
+                      value={product.price}
+                    ></CardProduct.Price>
+                  </CardProduct.Data>
+                </CardProduct.Root>
+              </Link>
             ))}
         </div>
       </section>
 
+      
+
       <section className="container flex flex-col items-center self-stretch gap-4 my-4 lg:gap-8">
-        <h2 className="sm:text-2xl">
+        <h2 className="sm:text-xl uppercase">
           <strong>Últimos itens adicionados</strong>
         </h2>
         <div className="flex flex-wrap justify-center self-stretch gap-2">
@@ -216,7 +249,7 @@ export default function Home() {
       </section>
 
       <section className="container flex flex-col items-center self-stretch gap-4 mt-4 mb-16 lg:gap-8">
-        <h2 className="sm:text-2xl">
+        <h2 className="sm:text-xl uppercase">
           <strong>Pode ser do seu interesse</strong>
         </h2>
         <CarouselMini carouselItems={categoriesNavigation} />
