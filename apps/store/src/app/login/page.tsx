@@ -2,6 +2,7 @@ import React from 'react'
 import { Login } from '@/interfaces/Login'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import ButtonMain from '@/components/buttons/button-main'
 
 interface LoginProps {
   searchParams: {
@@ -67,9 +68,14 @@ export default function Login({ searchParams }: LoginProps) {
           id="password"
           className="text-black"
         />
-        <button type="submit" className="border p-4">
+        {/* <button type="submit" className="border p-4">
           Login
-        </button>
+        </button> */}
+        <ButtonMain type="submit">
+          <i className="icon-[solar--login-3-bold] w-[24px] h-[24px]"></i>
+          Entrar
+        </ButtonMain>
+        <ButtonMain type="submit" stylized={'google'} />
       </form>
     </main>
   )

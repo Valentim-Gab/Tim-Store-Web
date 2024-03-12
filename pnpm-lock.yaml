@@ -23,6 +23,9 @@ importers:
 
   apps/store:
     dependencies:
+      '@iconify-json/logos':
+        specifier: ^1.1.42
+        version: 1.1.42
       '@iconify-json/lucide':
         specifier: ^1.1.157
         version: 1.1.157
@@ -508,6 +511,12 @@ packages:
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
+
+  /@iconify-json/logos@1.1.42:
+    resolution: {integrity: sha512-/f+frtPm3m3Z30oy8Pk+QqRDkbmAiIaWGPl5CmsCXm15MVfvw9a/V/gD7WzdyuSGAZcFuQaqbHXj92y/n+2ifg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: false
 
   /@iconify-json/lucide@1.1.157:
     resolution: {integrity: sha512-r53yiAAL6EZocHuHdeV2tL6G23aU70HdMEMs8sfv3SLyxwv4DSDHZ64yVj4lD12t8nkTxO6Lkj79yY1NQDn8dA==}
