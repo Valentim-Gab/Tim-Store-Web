@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
-export default function Links() {
+export default function SignLinks() {
   const pathname = usePathname()
 
   const className =
@@ -24,7 +24,7 @@ export default function Links() {
   ]
 
   return (
-    <div className="flex self-stretch">
+    <div className="flex self-stretch lg:hidden">
       {links.map((link) => (
         <Link
           key={link.href}

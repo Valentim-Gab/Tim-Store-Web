@@ -1,8 +1,11 @@
+'use client'
+
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './navbar-mobile.scss'
 import { tv } from 'tailwind-variants'
 import DrawerThemeMobile from './drawer-theme-mobile'
+import { parseCookies } from 'nookies'
 
 interface NavbarProps {
   isOpen: boolean
@@ -23,6 +26,23 @@ export default function NavbarMobile({
   setActive,
   pathname,
 }: NavbarProps) {
+  const [currentRoute, setCurrentRoute] = useState('')
+  const [sessionData, setSessionData] = useState<any>(null)
+  const { session } = parseCookies()
+
+  useEffect(() => {
+    if (session) {
+      try {
+        if (!sessionData || sessionData.name != JSON.parse(session).name)
+          setSessionData(JSON.parse(session))
+      } catch (error) {
+        setSessionData(null)
+      }
+    } else if (currentRoute != pathname) {
+      setSessionData(null)
+    }
+  }, [session, sessionData, pathname, currentRoute])
+
   const items = [
     {
       icon: 'icon-[solar--home-bold]',
@@ -40,13 +60,8 @@ export default function NavbarMobile({
       url: '/cliente',
     },
     {
-      icon: 'icon-[solar--login-3-bold]',
-      text: 'Entrar',
-      url: '/login',
-    },
-    {
       icon: 'icon-[solar--hamburger-menu-bold]',
-      text: 'Todas as categorias',
+      text: 'Categorias',
       url: '/categories',
     },
   ]
@@ -57,6 +72,27 @@ export default function NavbarMobile({
       className={`navbar-mobile bg-primary text-white w-full`}
     >
       <ul className="items pb-2">
+        {sessionData && (
+          <li className="flex justify-between items-center gap-2">
+            <Link
+              href={'/user'}
+              onClick={() => {
+                setActive(false)
+              }}
+              data-active={pathname === '/user'}
+              className="flex items-center self-stretch cursor-pointer p-4 w-full data-[active=true]:py-1"
+            >
+              <div
+                data-active={pathname === '/user'}
+                className={navItemStyles({ active: pathname === '/user' })}
+              >
+                <i className={`icon-[solar--user-bold] w-[32px] h-[32px]`}></i>
+                <p className="font-medium">{sessionData.name}</p>
+              </div>
+            </Link>
+            <DrawerThemeMobile />
+          </li>
+        )}
         {items &&
           items.map((item, index) => (
             <li key={index} className="flex justify-between items-center gap-2">
@@ -76,9 +112,48 @@ export default function NavbarMobile({
                   <p className="font-medium">{item.text}</p>
                 </div>
               </Link>
-              {index === 0 && <DrawerThemeMobile />}
+              {index === 0 && !sessionData && <DrawerThemeMobile />}
             </li>
           ))}
+        {!sessionData ? (
+          <li className="flex justify-between items-center gap-2">
+            <Link
+              href={'/login'}
+              onClick={() => {
+                setActive(false)
+              }}
+              data-active={pathname === '/login'}
+              className="flex items-center self-stretch cursor-pointer p-4 w-full data-[active=true]:py-1"
+            >
+              <div
+                data-active={pathname === '/login'}
+                className={navItemStyles({ active: pathname === '/login' })}
+              >
+                <i className={`icon-[solar--login-3-bold] text-lg`}></i>
+                <p className="font-medium">Entrar</p>
+              </div>
+            </Link>
+          </li>
+        ) : (
+          <li className="flex justify-between items-center gap-2">
+            <Link
+              href={'/logout'}
+              onClick={() => {
+                setActive(false)
+              }}
+              data-active={pathname === '/logout'}
+              className="flex items-center self-stretch cursor-pointer p-4 w-full data-[active=true]:py-1"
+            >
+              <div
+                data-active={pathname === '/logout'}
+                className={navItemStyles({ active: pathname === '/logout' })}
+              >
+                <i className={`icon-[solar--login-3-bold] text-lg`}></i>
+                <p className="font-medium">Sair</p>
+              </div>
+            </Link>
+          </li>
+        )}
       </ul>
     </nav>
   )

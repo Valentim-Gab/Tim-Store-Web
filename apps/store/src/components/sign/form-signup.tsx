@@ -8,29 +8,29 @@ import { z } from 'zod'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import InputMain from '../inputs/input-main'
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
+import { twMerge } from 'tailwind-merge'
 
 const formSchema = z.object({
   username: z.string().email({ message: 'Email é inválido' }),
-  password: z.string().min(8, { message: 'Mínimo de 8 caracteres' }),
 })
 
-export default function FormLogin() {
+interface FormSignupProps {
+  className?: string
+}
+
+export default function FormSignup({ className }: FormSignupProps) {
   const pathname = usePathname()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
-      password: '',
     },
   })
 
@@ -43,7 +43,7 @@ export default function FormLogin() {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         data-path={pathname}
-        className="flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/login']:rounded-tr data-[path='/login/signup']:rounded-tl"
+        className={twMerge("flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/login']:rounded-tr data-[path='/login/signup']:rounded-tl lg:w-[400px] lg-rounded lg:py-4 lg:data-[path='/login/signup']:rounded-tl-none lg:shadow-none", className)}
       >
         <FormField
           control={form.control}
@@ -62,34 +62,12 @@ export default function FormLogin() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <InputMain
-                  {...field}
-                  placeholder="Senha"
-                  type="password"
-                  autoComplete="current-password"
-                />
-              </FormControl>
-              <FormMessage />
-              <div className="flex flex-col items-end w-full">
-                <Link href={'#'} className="text-xs font-light underline">
-                  Esqueci minha senha
-                </Link>
-              </div>
-            </FormItem>
-          )}
-        />
         <div className="flex items-center flex-col gap-4">
-          <ButtonMain type="submit" className="w-full">
-            <i className="icon-[solar--login-3-bold] w-[24px] h-[24px]"></i>
-            Entrar
+          <ButtonMain type="submit" className="w-full gap-1">
+            <i className="icon-[solar--alt-arrow-right-bold-duotone] w-[24px] h-[24px]"></i>
+            Continuar cadastro
           </ButtonMain>
-          <ButtonMain type="button" stylized={'google'} className="w-full" />
+          <ButtonMain type="button" stylized={'google'} className="w-full lg:hidden" />
         </div>
       </form>
     </Form>
