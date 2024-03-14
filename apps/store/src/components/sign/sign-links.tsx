@@ -14,11 +14,11 @@ export default function SignLinks() {
 
   const links = [
     {
-      href: '/login',
+      href: '/auth/signin',
       label: 'Acessar',
     },
     {
-      href: '/login/signup',
+      href: '/auth/signup',
       label: 'Criar conta',
     },
   ]

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import Links from '../../components/sign/sign-links'
+import Links from '../../../components/sign/sign-links'
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (

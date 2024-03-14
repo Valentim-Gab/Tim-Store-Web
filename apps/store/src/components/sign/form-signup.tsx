@@ -15,6 +15,7 @@ import {
 import InputMain from '../inputs/input-main'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   username: z.string().email({ message: 'Email é inválido' }),
@@ -26,6 +27,7 @@ interface FormSignupProps {
 
 export default function FormSignup({ className }: FormSignupProps) {
   const pathname = usePathname()
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,6 +38,10 @@ export default function FormSignup({ className }: FormSignupProps) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
+
+    if (values.username) {
+      router.push(`/auth/signup/data?email=${values.username}`)
+    }
   }
 
   return (

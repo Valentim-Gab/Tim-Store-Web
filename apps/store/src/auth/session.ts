@@ -9,7 +9,7 @@ export async function checkSession(
   const session = request.cookies.get('session')?.value
 
   if (protectedRouters.includes(request.nextUrl.pathname)) {
-    const redirectURL = new URL('/logout', request.url)
+    const redirectURL = new URL('/auth/signout', request.url)
     redirectURL.searchParams.set('callback', request.nextUrl.pathname.replace('/', ''))
 
     if (!accessToken && !refreshToken && !session) {
@@ -80,7 +80,7 @@ export async function checkSession(
         return res
       }
     } else if (resRefresh.status === 403 || resRefresh.status === 401) {
-      return NextResponse.redirect(new URL('/logout', request.url))
+      return NextResponse.redirect(new URL('/auth/signout', request.url))
     }
   }
 

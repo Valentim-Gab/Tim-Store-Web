@@ -118,16 +118,16 @@ export default function NavbarMobile({
         {!sessionData ? (
           <li className="flex justify-between items-center gap-2">
             <Link
-              href={'/login'}
+              href={'/auth/signin'}
               onClick={() => {
                 setActive(false)
               }}
-              data-active={pathname === '/login'}
+              data-active={pathname === '/auth/signin'}
               className="flex items-center self-stretch cursor-pointer p-4 w-full data-[active=true]:py-1"
             >
               <div
-                data-active={pathname === '/login'}
-                className={navItemStyles({ active: pathname === '/login' })}
+                data-active={pathname === '/auth/signin'}
+                className={navItemStyles({ active: pathname === '/auth/signin' })}
               >
                 <i className={`icon-[solar--login-3-bold] text-lg`}></i>
                 <p className="font-medium">Entrar</p>
@@ -137,16 +137,16 @@ export default function NavbarMobile({
         ) : (
           <li className="flex justify-between items-center gap-2">
             <Link
-              href={'/logout'}
+              href={'/auth/signup'}
               onClick={() => {
                 setActive(false)
               }}
-              data-active={pathname === '/logout'}
+              data-active={pathname === '/auth/signup'}
               className="flex items-center self-stretch cursor-pointer p-4 w-full data-[active=true]:py-1"
             >
               <div
-                data-active={pathname === '/logout'}
-                className={navItemStyles({ active: pathname === '/logout' })}
+                data-active={pathname === '/auth/signup'}
+                className={navItemStyles({ active: pathname === '/auth/signup' })}
               >
                 <i className={`icon-[solar--login-3-bold] text-lg`}></i>
                 <p className="font-medium">Sair</p>

@@ -1,6 +1,6 @@
 import React from 'react'
-import SignOptionsForms from '../../../components/sign/sign-options-forms'
 import FormLogin from '@/components/sign/form-login'
+import SignOptionsForms from '@/components/sign/sign-options-forms'
 
 interface LoginProps {
   searchParams: {
@@ -8,7 +8,7 @@ interface LoginProps {
   }
 }
 
-export default function Login({ searchParams }: LoginProps) {
+export default function Signin({ searchParams }: LoginProps) {
   // async function handleSignIn(formData: FormData) {
   //   'use server'
 

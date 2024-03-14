@@ -48,7 +48,7 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
         password: values.password.toString() ?? '',
       }
 
-      const res = await fetch('http://192.168.1.100:3001/login', {
+      const res = await fetch('http://localhost:3001/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
       if (res.ok && res.status === 201) {
         setCookie(null, 'session', JSON.stringify(data.user), {
           maxAge: data.tokens.expires,
-          ///secure: true,
+          ///secure: true, //TODO: Verificar utilização de SECURE em PROD
         })
       }
 

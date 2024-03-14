@@ -6,10 +6,10 @@ interface LogoutProps {
   }
 }
 
-export default function Logout({ searchParams }: LogoutProps) {
+export default function Signout({ searchParams }: LogoutProps) {
   const url = searchParams.callback
-    ? `/login?callback=${searchParams.callback}`
-    : '/login'
+    ? `/auth/signin?callback=${searchParams.callback}`
+    : '/auth/signin'
 
   redirect(url)
 }

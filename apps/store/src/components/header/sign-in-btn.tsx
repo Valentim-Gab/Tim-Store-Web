@@ -42,13 +42,13 @@ export default function SignInBtn() {
   }
 
   if (sessionData) {
-    return <Link href={'/logout'}>{sessionData.name}</Link>
+    return <Link href={'/auth/signout'}>{sessionData.name}</Link>
   }
 
   return (
     <Link
-      href={'/login'}
-      data-active={path === '/login'}
+      href={'/auth/signin'}
+      data-active={path === '/auth/signin'}
       className="flex justify-center items-center gap-2 px-4 py-2 font-bold rounded data-[active=true]:bg-white data-[active=true]:text-primary"
     >
       <i className="icon-[solar--login-3-bold] w-6 h-6"></i>
