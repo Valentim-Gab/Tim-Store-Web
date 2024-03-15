@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import './input-main.scss'
 import { VariantProps, tv } from 'tailwind-variants'
+import { twMerge } from 'tailwind-merge'
 
 const inputMainLabelStyle = tv({
   base: 'form-label',
@@ -11,22 +12,28 @@ const inputMainLabelStyle = tv({
   },
 })
 
-interface InputMainLabelProps extends VariantProps<typeof inputMainLabelStyle> {
-  name: string
+interface InputMainLabelProps
+  extends VariantProps<typeof inputMainLabelStyle>,
+    React.DetailedHTMLProps<
+      React.LabelHTMLAttributes<HTMLLabelElement>,
+      HTMLLabelElement
+    > {
   value: string
   children: ReactNode
+  className?: string
 }
 
 export default function InputMainLabel({
-  name,
   value,
   children,
   styleLabel,
+  className,
+  ...rest
 }: InputMainLabelProps) {
   return (
     <label
-      htmlFor={name}
-      className={inputMainLabelStyle({ styleLabel })}
+      {...rest}
+      className={twMerge(inputMainLabelStyle({ styleLabel }), className)}
       data-label={value != ''}
     >
       {children}

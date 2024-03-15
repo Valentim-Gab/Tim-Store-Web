@@ -2,9 +2,9 @@ import React, { forwardRef } from 'react'
 import './input-main.scss'
 import { useMask, MaskProps } from '@react-input/mask'
 import './input-main.scss'
-import { inputMainInputStyle } from './input-main-input'
 import { VariantProps } from 'tailwind-variants'
 import { twMerge } from 'tailwind-merge'
+import { inputMainInputStyle } from '.'
 
 interface InputMainInputMaskProps
   extends React.DetailedHTMLProps<

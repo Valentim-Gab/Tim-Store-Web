@@ -40,7 +40,14 @@ const formSchema2 = z.object({
   cpf: z
     .string()
     .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, { message: 'CPF inválido' }),
-  //date_birth: z.date(),
+  date_birth: z
+    .date({
+      errorMap: (error) => {
+        return { message: 'Data inválida' }
+      },
+    })
+    .min(new Date('1900-01-01'), { message: 'Data inválida' })
+    .max(new Date(), { message: 'Data inválida' }),
   phone_number: z
     .string()
     .length(11, { message: 'Telefone deve ter 11 caracteres' }),
@@ -71,12 +78,10 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
     resolver: zodResolver(formSchema2),
     defaultValues: {
       cpf: '',
-      //date_birth: new Date(),
+      date_birth: undefined,
       phone_number: '',
     },
   })
-
-  const { errors } = form1.formState
 
   function onSubmitForm1(values: z.infer<typeof formSchema1>) {
     console.log(values)
@@ -113,10 +118,11 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       type="text"
                       autoComplete="username"
                       styleLabel="primary"
+                      id={field.name}
                     />
                     <InputMain.Label
+                      htmlFor={field.name}
                       value={field.value}
-                      name={field.name}
                       styleLabel="primary"
                     >
                       Nome
@@ -139,10 +145,11 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       type="text"
                       autoComplete="family-name"
                       styleLabel="primary"
+                      id={field.name}
                     />
                     <InputMain.Label
+                      htmlFor={field.name}
                       value={field.value}
-                      name={field.name}
                       styleLabel="primary"
                     >
                       Sobrenome
@@ -165,13 +172,14 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       type="email"
                       autoComplete="email"
                       styleLabel="primary"
+                      id={field.name}
                     />
                     <InputMain.Label
+                      htmlFor={field.name}
                       value={field.value}
-                      name={field.name}
                       styleLabel="primary"
                     >
-                      Nome
+                      Email
                     </InputMain.Label>
                   </InputMain.Root>
                 </FormControl>
@@ -191,10 +199,11 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       type="password"
                       autoComplete="new-password"
                       styleLabel="primary"
+                      id={field.name}
                     />
                     <InputMain.Label
+                      htmlFor={field.name}
                       value={field.value}
-                      name={field.name}
                       styleLabel="primary"
                     >
                       Senha
@@ -217,13 +226,14 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       type="password"
                       autoComplete="new-password"
                       styleLabel="primary"
+                      id={field.name}
                     />
                     <InputMain.Label
+                      htmlFor={field.name}
                       value={field.value}
-                      name={field.name}
                       styleLabel="primary"
                     >
-                      Confirme a senha
+                      Confirme a senhaa
                     </InputMain.Label>
                   </InputMain.Root>
                 </FormControl>
@@ -256,6 +266,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
               <FormItem>
                 <FormControl>
                   <InputMain.Root>
+                    <InputMain.Label
+                      value={field.value}
+                      htmlFor={field.name}
+                      styleLabel="primary"
+                    >
+                      CPF
+                    </InputMain.Label>
                     <InputMain.InputMask
                       {...field}
                       type="text"
@@ -263,38 +280,40 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       mask="___.___.___-__"
                       replacement={{ _: /\d/ }}
                       styleLabel="primary"
+                      id={field.name}
                     />
-                    <InputMain.Label
-                      value={field.value}
-                      name={field.name}
-                      styleLabel="primary"
-                    >
-                      CPF
-                    </InputMain.Label>
                   </InputMain.Root>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
-          {/* <FormField
+          <FormField
             control={form2.control}
             name="date_birth"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain
-                    {...field}
-                    type="date"
-                    autoComplete="bday"
-                    placeholder="Data de nascimento"
-                  />
+                  <InputMain.Root>
+                    <InputMain.Date
+                      field={field}
+                      styleLabel="primary"
+                      label={
+                        <InputMain.Label
+                          value={field.value?.toString() ?? ''}
+                          htmlFor={field.name}
+                          styleLabel="primary"
+                        >
+                          Data de nascimento
+                        </InputMain.Label>
+                      }
+                    />
+                  </InputMain.Root>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
           <FormField
             control={form2.control}
             name="phone_number"
@@ -307,10 +326,11 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       type="tel"
                       autoComplete="tel"
                       styleLabel="primary"
+                      id={field.name}
                     />
                     <InputMain.Label
+                      htmlFor={field.name}
                       value={field.value}
-                      name={field.name}
                       styleLabel="primary"
                     >
                       Celular

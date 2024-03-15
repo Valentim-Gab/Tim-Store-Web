@@ -2,6 +2,7 @@ import React, { DetailedHTMLProps, ReactNode, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { tv } from 'tailwind-variants'
 import './input-main.scss'
+import { InputMain } from '.'
 
 const InputMainStyle = tv({
   base: 'flex items-center gap-2 w-full rounded border relative',
@@ -15,7 +16,7 @@ interface InputMainInputProps
   children?: ReactNode
 }
 
-const InputMainInput = forwardRef<HTMLDivElement, InputMainInputProps>(
+const InputMainRoot = forwardRef<HTMLDivElement, InputMainInputProps>(
   (props, ref) => {
     return (
       <div ref={ref} className={twMerge(InputMainStyle(), props.className)}>
@@ -25,6 +26,6 @@ const InputMainInput = forwardRef<HTMLDivElement, InputMainInputProps>(
   }
 )
 
-InputMainInput.displayName = 'InputMainInput'
+InputMainRoot.displayName = 'InputMainRoot'
 
-export default InputMainInput
+export default InputMainRoot

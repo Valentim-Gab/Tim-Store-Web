@@ -2,15 +2,7 @@ import React, { forwardRef } from 'react'
 import './input-main.scss'
 import { VariantProps, tv } from 'tailwind-variants'
 import { twMerge } from 'tailwind-merge'
-
-export const inputMainInputStyle = tv({
-  base: 'focus-visible:outline-none bg-transparent form-input w-full p-4',
-  variants: {
-    styleLabel: {
-      primary: 'label-primary',
-    },
-  },
-})
+import { inputMainInputStyle } from '.'
 
 interface InputMainInputProps
   extends React.DetailedHTMLProps<

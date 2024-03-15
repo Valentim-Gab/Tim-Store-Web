@@ -66,6 +66,8 @@ export default function Header() {
           </Link>
           <div className="search-container flex gap-2 items-center py-1 px-2 rounded bg-background w-2/5 min-w-80">
             <input
+              id="search-header"
+              name="search-header"
               placeholder="O que você procura?"
               type="text"
               className="bg-transparent text-sm border-none outline-none text-foreground w-full py-1 px-2 placeholder:text-placeholder"

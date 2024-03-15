@@ -20,7 +20,8 @@ export default function HeaderMobile() {
           <i className="icon-[lucide--search] w-8 h-8"></i>
         </button>
         <input
-          id="search"
+          id="search-header-mobile"
+          name="search-header-mobile"
           placeholder="O que você procura?"
           type="text"
           className="font-medium border-none outline-none bg-transparent w-full placeholder:text-gray-300"
