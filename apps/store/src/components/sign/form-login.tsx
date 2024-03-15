@@ -12,12 +12,12 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form'
-import InputMain from '../inputs/input-main'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Login } from '@/interfaces/Login'
 import { twMerge } from 'tailwind-merge'
 import { setCookie } from 'nookies'
+import { InputMain } from '../inputs/input-main'
 
 const formSchema = z.object({
   username: z.string().email({ message: 'Email é inválido' }),
@@ -82,7 +82,7 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         data-path={pathname}
         className={twMerge(
-          "flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/login']:rounded-tr data-[path='/login/signup']:rounded-tl lg:w-[400px] lg:rounded lg:py-4 lg:shadow-none",
+          "flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/auth/signin']:rounded-tr data-[path='/auth/signup']:rounded-tl lg:w-[400px] lg:rounded lg:py-4 lg:shadow-none",
           className
         )}
       >
@@ -92,12 +92,21 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <InputMain
-                  {...field}
-                  type="email"
-                  autoComplete="username"
-                  placeholder="Email"
-                />
+                <InputMain.Root>
+                  <InputMain.Input
+                    {...field}
+                    type="email"
+                    autoComplete="email"
+                    styleLabel="primary"
+                  />
+                  <InputMain.Label
+                    value={field.value}
+                    name={field.name}
+                    styleLabel="primary"
+                  >
+                    Email
+                  </InputMain.Label>
+                </InputMain.Root>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,12 +118,21 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <InputMain
-                  {...field}
-                  placeholder="Senha"
-                  type="password"
-                  autoComplete="current-password"
-                />
+                <InputMain.Root>
+                  <InputMain.Input
+                    {...field}
+                    type="password"
+                    autoComplete="current-password"
+                    styleLabel="primary"
+                  />
+                  <InputMain.Label
+                    value={field.value}
+                    name={field.name}
+                    styleLabel="primary"
+                  >
+                    Senha
+                  </InputMain.Label>
+                </InputMain.Root>
               </FormControl>
               <FormMessage />
               <div className="flex flex-col items-end w-full">

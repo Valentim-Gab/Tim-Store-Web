@@ -12,10 +12,10 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form'
-import InputMain from '../inputs/input-main'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import { useRouter } from 'next/navigation'
+import { InputMain } from '../inputs/input-main'
 
 const formSchema = z.object({
   username: z.string().email({ message: 'Email é inválido' }),
@@ -49,7 +49,10 @@ export default function FormSignup({ className }: FormSignupProps) {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         data-path={pathname}
-        className={twMerge("flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/login']:rounded-tr data-[path='/login/signup']:rounded-tl lg:w-[400px] lg-rounded lg:py-4 lg:data-[path='/login/signup']:rounded-tl-none lg:shadow-none", className)}
+        className={twMerge(
+          "flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/auth/signin']:rounded-tr data-[path='/auth/signup']:rounded-tl lg:w-[400px] lg-rounded lg:py-4 lg:data-[path='/auth/signup']:rounded-tl-none lg:shadow-none",
+          className
+        )}
       >
         <FormField
           control={form.control}
@@ -57,12 +60,21 @@ export default function FormSignup({ className }: FormSignupProps) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <InputMain
-                  {...field}
-                  type="email"
-                  autoComplete="username"
-                  placeholder="Email"
-                />
+                <InputMain.Root>
+                  <InputMain.Input
+                    {...field}
+                    type="email"
+                    autoComplete="email"
+                    styleLabel="primary"
+                  />
+                  <InputMain.Label
+                    value={field.value}
+                    name={field.name}
+                    styleLabel="primary"
+                  >
+                    Email
+                  </InputMain.Label>
+                </InputMain.Root>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -73,7 +85,11 @@ export default function FormSignup({ className }: FormSignupProps) {
             <i className="icon-[solar--alt-arrow-right-bold-duotone] w-[24px] h-[24px]"></i>
             Continuar cadastro
           </ButtonMain>
-          <ButtonMain type="button" stylized={'google'} className="w-full lg:hidden" />
+          <ButtonMain
+            type="button"
+            stylized={'google'}
+            className="w-full lg:hidden"
+          />
         </div>
       </form>
     </Form>

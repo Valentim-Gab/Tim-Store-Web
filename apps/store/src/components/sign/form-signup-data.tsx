@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import ButtonMain from '@/components/buttons/button-main'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -12,10 +12,10 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form'
-import InputMain from '../inputs/input-main'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import { useRouter } from 'next/navigation'
+import { InputMain } from '../inputs/input-main'
 
 const formSchema1 = z
   .object({
@@ -40,7 +40,6 @@ const formSchema2 = z.object({
   cpf: z
     .string()
     .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, { message: 'CPF inválido' }),
-  //cnpj: z.string().length(14, { message: 'CNPJ deve ter 14 caracteres' }),
   //date_birth: z.date(),
   phone_number: z
     .string()
@@ -72,7 +71,6 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
     resolver: zodResolver(formSchema2),
     defaultValues: {
       cpf: '',
-      //cnpj: '',
       //date_birth: new Date(),
       phone_number: '',
     },
@@ -109,12 +107,21 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain
-                    {...field}
-                    type="text"
-                    autoComplete="name"
-                    placeholder="Nome"
-                  />
+                  <InputMain.Root>
+                    <InputMain.Input
+                      {...field}
+                      type="text"
+                      autoComplete="username"
+                      styleLabel="primary"
+                    />
+                    <InputMain.Label
+                      value={field.value}
+                      name={field.name}
+                      styleLabel="primary"
+                    >
+                      Nome
+                    </InputMain.Label>
+                  </InputMain.Root>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -126,12 +133,21 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain
-                    {...field}
-                    type="text"
-                    autoComplete="family-name"
-                    placeholder="Sobrenome"
-                  />
+                  <InputMain.Root>
+                    <InputMain.Input
+                      {...field}
+                      type="text"
+                      autoComplete="family-name"
+                      styleLabel="primary"
+                    />
+                    <InputMain.Label
+                      value={field.value}
+                      name={field.name}
+                      styleLabel="primary"
+                    >
+                      Sobrenome
+                    </InputMain.Label>
+                  </InputMain.Root>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -143,12 +159,21 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain
-                    {...field}
-                    type="email"
-                    autoComplete="username"
-                    placeholder="Email"
-                  />
+                  <InputMain.Root>
+                    <InputMain.Input
+                      {...field}
+                      type="email"
+                      autoComplete="email"
+                      styleLabel="primary"
+                    />
+                    <InputMain.Label
+                      value={field.value}
+                      name={field.name}
+                      styleLabel="primary"
+                    >
+                      Nome
+                    </InputMain.Label>
+                  </InputMain.Root>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -160,12 +185,21 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain
-                    {...field}
-                    type="password"
-                    autoComplete="new-password"
-                    placeholder="Senha"
-                  />
+                  <InputMain.Root>
+                    <InputMain.Input
+                      {...field}
+                      type="password"
+                      autoComplete="new-password"
+                      styleLabel="primary"
+                    />
+                    <InputMain.Label
+                      value={field.value}
+                      name={field.name}
+                      styleLabel="primary"
+                    >
+                      Senha
+                    </InputMain.Label>
+                  </InputMain.Root>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -177,12 +211,21 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain
-                    {...field}
-                    type="password"
-                    autoComplete="new-password"
-                    placeholder="Confirme a senha"
-                  />
+                  <InputMain.Root>
+                    <InputMain.Input
+                      {...field}
+                      type="password"
+                      autoComplete="new-password"
+                      styleLabel="primary"
+                    />
+                    <InputMain.Label
+                      value={field.value}
+                      name={field.name}
+                      styleLabel="primary"
+                    >
+                      Confirme a senha
+                    </InputMain.Label>
+                  </InputMain.Root>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -212,39 +255,29 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain
-                    {...field}
-                    type="text"
-                    autoComplete="cpf"
-                    placeholder="CPF"
-                    mask={{
-                      maskPattern: '___.___.___-__',
-                      replacement: { _: /\d/ },
-                    }}
-                  />
+                  <InputMain.Root>
+                    <InputMain.InputMask
+                      {...field}
+                      type="text"
+                      autoComplete="cpf"
+                      mask="___.___.___-__"
+                      replacement={{ _: /\d/ }}
+                      styleLabel="primary"
+                    />
+                    <InputMain.Label
+                      value={field.value}
+                      name={field.name}
+                      styleLabel="primary"
+                    >
+                      CPF
+                    </InputMain.Label>
+                  </InputMain.Root>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          {/* <FormField
-            control={form2.control}
-            name="cnpj"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <InputMain
-                    {...field}
-                    type="text"
-                    autoComplete="cnpj"
-                    placeholder="CNPJ"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
           {/* <FormField
             control={form2.control}
             name="date_birth"
@@ -268,12 +301,21 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain
-                    {...field}
-                    type="tel"
-                    autoComplete="tel"
-                    placeholder="Telefone"
-                  />
+                  <InputMain.Root>
+                    <InputMain.Input
+                      {...field}
+                      type="tel"
+                      autoComplete="tel"
+                      styleLabel="primary"
+                    />
+                    <InputMain.Label
+                      value={field.value}
+                      name={field.name}
+                      styleLabel="primary"
+                    >
+                      Celular
+                    </InputMain.Label>
+                  </InputMain.Root>
                 </FormControl>
                 <FormMessage />
               </FormItem>
