@@ -265,14 +265,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain.Root>
-                    <InputMain.Label
-                      value={field.value}
-                      htmlFor={field.name}
-                      styleLabel="primary"
-                    >
-                      CPF
-                    </InputMain.Label>
+                  <InputMain.Root>             
                     <InputMain.InputMask
                       {...field}
                       type="text"
@@ -282,6 +275,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       styleLabel="primary"
                       id={field.name}
                     />
+                    <InputMain.Label
+                      value={field.value}
+                      htmlFor={field.name}
+                      styleLabel="primary"
+                    >
+                      CPF
+                    </InputMain.Label>
                   </InputMain.Root>
                 </FormControl>
                 <FormMessage />
