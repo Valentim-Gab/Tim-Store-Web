@@ -14,10 +14,11 @@ import {
 } from '@/components/ui/form'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
-import { useRouter } from 'next/navigation'
 import { InputMain } from '../inputs/input-main'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { Label } from '../ui/label'
+import { User } from '@/interfaces/User'
+import { UserService } from '@/services/UserService'
 
 const formSchema1 = z
   .object({
@@ -65,9 +66,10 @@ interface FormSignupProps {
 }
 
 export default function FormSignupData({ className, email }: FormSignupProps) {
-  const pathname = usePathname()
   const [formStep, setFormStep] = useState(1)
   const formItems = [1, 2]
+  const pathname = usePathname()
+  const userService = new UserService()
 
   const form1 = useForm<z.infer<typeof formSchema1>>({
     resolver: zodResolver(formSchema1),
@@ -91,8 +93,6 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
   })
 
   function onSubmitForm1(values: z.infer<typeof formSchema1>) {
-    console.log(values)
-
     setFormStep(2)
     scrollTo(0, 0)
 
@@ -100,7 +100,16 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
   }
 
   function onSubmitForm2(values: z.infer<typeof formSchema2>) {
-    console.log(values)
+    userService.create({
+      name: form1.getValues().name,
+      last_name: form1.getValues().last_name,
+      email: form1.getValues().email,
+      password: form1.getValues().password,
+      date_birth: values.date_birth,
+      cpf: values.cpf,
+      phone_number: values.phone_number,
+      gender: { id_gender: values.gender },
+    })
 
     setFormStep(3)
     scrollTo(0, 0)
@@ -297,7 +306,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       replacement={{ _: /\d/ }}
                       styleLabel="primary"
                       id={field.name}
-                      inputMode='numeric'
+                      inputMode="numeric"
                     />
                     <InputMain.Label
                       value={field.value}
@@ -376,7 +385,6 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       autoComplete="tel"
                       styleLabel="primary"
                       id={field.name}
-              
                     />
                     <InputMain.Label
                       htmlFor={field.name}
@@ -407,15 +415,15 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                         id={field.name}
                       >
                         <div className="flex items-center gap-2">
-                          <RadioGroupItem value="0" id="r1" />
+                          <RadioGroupItem value="1" id="r1" />
                           <Label htmlFor="r1">Masculino</Label>
                         </div>
                         <div className="flex items-center gap-2">
-                          <RadioGroupItem value="1" id="r2" />
+                          <RadioGroupItem value="2" id="r2" />
                           <Label htmlFor="r2">Feminino</Label>
                         </div>
                         <div className="flex items-center gap-2">
-                          <RadioGroupItem value="2" id="r3" />
+                          <RadioGroupItem value="3" id="r3" />
                           <Label htmlFor="r3">Outro</Label>
                         </div>
                       </RadioGroup>

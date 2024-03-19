@@ -99,11 +99,7 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
                     autoComplete="email"
                     styleLabel="primary"
                   />
-                  <InputMain.Label
-                    value={field.value}
-                    name={field.name}
-                    styleLabel="primary"
-                  >
+                  <InputMain.Label value={field.value} styleLabel="primary">
                     Email
                   </InputMain.Label>
                 </InputMain.Root>
@@ -125,11 +121,7 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
                     autoComplete="current-password"
                     styleLabel="primary"
                   />
-                  <InputMain.Label
-                    value={field.value}
-                    name={field.name}
-                    styleLabel="primary"
-                  >
+                  <InputMain.Label value={field.value} styleLabel="primary">
                     Senha
                   </InputMain.Label>
                 </InputMain.Root>

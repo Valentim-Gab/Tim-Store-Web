@@ -67,11 +67,7 @@ export default function FormSignup({ className }: FormSignupProps) {
                     autoComplete="email"
                     styleLabel="primary"
                   />
-                  <InputMain.Label
-                    value={field.value}
-                    name={field.name}
-                    styleLabel="primary"
-                  >
+                  <InputMain.Label value={field.value} styleLabel="primary">
                     Email
                   </InputMain.Label>
                 </InputMain.Root>
