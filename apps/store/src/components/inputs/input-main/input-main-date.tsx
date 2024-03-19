@@ -20,14 +20,7 @@ interface InputMainInputProps
       HTMLInputElement
     >,
     VariantProps<typeof inputMainInputStyle> {
-  field: ControllerRenderProps<
-    {
-      cpf: string
-      date_birth: Date
-      phone_number: string
-    },
-    'date_birth'
-  >
+  field: any,
   label?: ReactNode
 }
 
@@ -62,7 +55,7 @@ const InputMainDate = forwardRef<HTMLInputElement, InputMainInputProps>(
     }
 
     return (
-      <div className="flex items-center">
+      <div className="flex items-center w-full">
         <input
           ref={inputRef}
           type="text"

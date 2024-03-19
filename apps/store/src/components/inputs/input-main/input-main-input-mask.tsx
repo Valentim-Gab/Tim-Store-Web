@@ -1,4 +1,6 @@
-import React, { forwardRef } from 'react'
+'use client'
+
+import React, { forwardRef, useState } from 'react'
 import './input-main.scss'
 import { useMask, MaskProps } from '@react-input/mask'
 import './input-main.scss'
@@ -11,20 +13,31 @@ interface InputMainInputMaskProps
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
     >,
-    VariantProps<typeof inputMainInputStyle> {
-  mask: string
-  replacement: MaskProps['replacement']
+    VariantProps<typeof inputMainInputStyle>, MaskProps {
+  showMaskOnFocus?: boolean
 }
 
 const InputMainInputMask = forwardRef<
   HTMLInputElement,
   InputMainInputMaskProps
 >((props, ref) => {
-  const { className, mask, replacement, styleLabel, ...rest } = props
+  const {
+    className,
+    mask,
+    replacement,
+    modify,
+    showMaskOnFocus,
+    showMask,
+    styleLabel,
+    ...rest
+  } = props
+  const [showMaskFocus, setShowMaskFocus] = useState(false)
 
   const inputRef = useMask({
     mask: mask,
     replacement: replacement,
+    modify: modify,
+    showMask: showMask ?? showMaskFocus,
   })
 
   return (
@@ -34,6 +47,11 @@ const InputMainInputMask = forwardRef<
       className={twMerge(inputMainInputStyle({ styleLabel }), className)}
       spellCheck="false"
       ref={inputRef}
+      onFocus={() => {
+        if (showMaskOnFocus) {
+          setShowMaskFocus(true)
+        }
+      }}
     />
   )
 })

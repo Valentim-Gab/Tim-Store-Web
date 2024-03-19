@@ -18,7 +18,7 @@ interface InputMainLabelProps
       React.LabelHTMLAttributes<HTMLLabelElement>,
       HTMLLabelElement
     > {
-  value: string
+  value: string | number
   children: ReactNode
   className?: string
 }
@@ -34,7 +34,10 @@ export default function InputMainLabel({
     <label
       {...rest}
       className={twMerge(inputMainLabelStyle({ styleLabel }), className)}
-      data-label={value != ''}
+      data-label={
+        (typeof value === 'string' && value !== '') ||
+        (typeof value === 'number' && value !== undefined)
+      }
     >
       {children}
     </label>

@@ -18,7 +18,10 @@ const InputMainInput = forwardRef<HTMLInputElement, InputMainInputProps>(
     return (
       <input
         {...rest}
-        data-input={props.value != ''}
+        data-input={
+          (typeof props.value === 'string' && props.value !== '') ||
+          (typeof props.value === 'number' && props.value !== undefined)
+        }
         className={twMerge(inputMainInputStyle({ styleLabel }), className)}
         spellCheck="false"
       />

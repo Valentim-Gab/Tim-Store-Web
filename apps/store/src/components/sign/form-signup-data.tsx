@@ -16,6 +16,8 @@ import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import { useRouter } from 'next/navigation'
 import { InputMain } from '../inputs/input-main'
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
+import { Label } from '../ui/label'
 
 const formSchema1 = z
   .object({
@@ -48,10 +50,8 @@ const formSchema2 = z.object({
     })
     .min(new Date('1900-01-01'), { message: 'Data inválida' })
     .max(new Date(), { message: 'Data inválida' }),
-  phone_number: z
-    .string()
-    .length(11, { message: 'Telefone deve ter 11 caracteres' }),
-  //gender: z.number(),
+  phone_number: z.string(),
+  gender: z.coerce.number().min(0, { message: 'Selecione o seu gênero' }),
 })
 
 interface FormSignupProps {
@@ -61,7 +61,6 @@ interface FormSignupProps {
 
 export default function FormSignupData({ className, email }: FormSignupProps) {
   const pathname = usePathname()
-  const router = useRouter()
 
   const form1 = useForm<z.infer<typeof formSchema1>>({
     resolver: zodResolver(formSchema1),
@@ -80,6 +79,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
       cpf: '',
       date_birth: undefined,
       phone_number: '',
+      gender: -1,
     },
   })
 
@@ -233,7 +233,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       value={field.value}
                       styleLabel="primary"
                     >
-                      Confirme a senhaa
+                      Confirme a senha
                     </InputMain.Label>
                   </InputMain.Root>
                 </FormControl>
@@ -265,7 +265,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <InputMain.Root>             
+                  <InputMain.Root>
                     <InputMain.InputMask
                       {...field}
                       type="text"
@@ -321,12 +321,28 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
               <FormItem>
                 <FormControl>
                   <InputMain.Root>
-                    <InputMain.Input
+                    <InputMain.InputMask
                       {...field}
-                      type="tel"
+                      type="text"
                       autoComplete="tel"
                       styleLabel="primary"
                       id={field.name}
+                      mask="(__) _ ____-____"
+                      replacement={{ _: /\d/ }}
+                      showMaskOnFocus={true}
+                      modify={(input: string) => {
+                        if (input.length == 10) {
+                          return {
+                            mask: '(__) ____-_____',
+                            replacement: { _: /\d/ },
+                          }
+                        }
+
+                        return {
+                          mask: '(__) _ ____-____',
+                          replacement: { _: /\d/ },
+                        }
+                      }}
                     />
                     <InputMain.Label
                       htmlFor={field.name}
@@ -335,6 +351,41 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                     >
                       Celular
                     </InputMain.Label>
+                  </InputMain.Root>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form2.control}
+            name="gender"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <InputMain.Root>
+                    <div className="flex flex-col gap-4 p-4">
+                      <p>Gênero</p>
+                      <RadioGroup
+                        className="flex flex-wrap"
+                        onValueChange={field.onChange}
+                        name={field.name}
+                        id={field.name}
+                      >
+                        <div className="flex items-center gap-2">
+                          <RadioGroupItem value="0" id="r1" />
+                          <Label htmlFor="r1">Masculino</Label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <RadioGroupItem value="1" id="r2" />
+                          <Label htmlFor="r2">Feminino</Label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <RadioGroupItem value="2" id="r3" />
+                          <Label htmlFor="r3">Outro</Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
                   </InputMain.Root>
                 </FormControl>
                 <FormMessage />
