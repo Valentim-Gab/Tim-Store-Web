@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonMain from '@/components/buttons/button-main'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -50,7 +50,12 @@ const formSchema2 = z.object({
     })
     .min(new Date('1900-01-01'), { message: 'Data inválida' })
     .max(new Date(), { message: 'Data inválida' }),
-  phone_number: z.string(),
+  phone_number: z
+    .string()
+    .min(1, { message: 'Obrigatório' })
+    .min(8, { message: 'Telefone inválido' })
+    .min(10, { message: 'Verifique o DDD' })
+    .transform((phone_number) => phone_number.replace('_', '')),
   gender: z.coerce.number().min(0, { message: 'Selecione o seu gênero' }),
 })
 
@@ -61,6 +66,8 @@ interface FormSignupProps {
 
 export default function FormSignupData({ className, email }: FormSignupProps) {
   const pathname = usePathname()
+  const [formStep, setFormStep] = useState(1)
+  const formItems = [1, 2]
 
   const form1 = useForm<z.infer<typeof formSchema1>>({
     resolver: zodResolver(formSchema1),
@@ -86,23 +93,32 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
   function onSubmitForm1(values: z.infer<typeof formSchema1>) {
     console.log(values)
 
-    if (true) {
-      return
-    }
+    setFormStep(2)
+    scrollTo(0, 0)
+
+    return
   }
 
   function onSubmitForm2(values: z.infer<typeof formSchema2>) {
     console.log(values)
+
+    setFormStep(3)
+    scrollTo(0, 0)
+
+    return
   }
 
-  return (
-    <div className="flex flex-col gap-8">
+  function getForm1() {
+    return (
       <Form {...form1}>
+        <h1 className="text-center text-sm font-medium">
+          Informações de Login
+        </h1>
         <form
           onSubmit={form1.handleSubmit(onSubmitForm1)}
           data-path={pathname}
           className={twMerge(
-            "flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/login']:rounded-tr data-[path='/login/signup']:rounded-tl lg:w-[400px] lg-rounded lg:py-4 lg:data-[path='/login/signup']:rounded-tl-none lg:shadow-none",
+            'flex flex-col gap-4 p-4 bg-card rounded-b',
             className
           )}
         >
@@ -249,13 +265,20 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
           </div>
         </form>
       </Form>
+    )
+  }
 
+  function getForm2() {
+    return (
       <Form {...form2}>
+        <h1 className="text-center text-sm font-medium">
+          Informações do Usuário
+        </h1>
         <form
           onSubmit={form2.handleSubmit(onSubmitForm2)}
           data-path={pathname}
           className={twMerge(
-            "flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/login']:rounded-tr data-[path='/login/signup']:rounded-tl lg:w-[400px] lg-rounded lg:py-4 lg:data-[path='/login/signup']:rounded-tl-none lg:shadow-none",
+            'flex flex-col gap-4 p-4 bg-card rounded-b',
             className
           )}
         >
@@ -269,11 +292,12 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                     <InputMain.InputMask
                       {...field}
                       type="text"
-                      autoComplete="cpf"
+                      autoComplete="new-password"
                       mask="___.___.___-__"
                       replacement={{ _: /\d/ }}
                       styleLabel="primary"
                       id={field.name}
+                      inputMode='numeric'
                     />
                     <InputMain.Label
                       value={field.value}
@@ -298,6 +322,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                     <InputMain.Date
                       field={field}
                       styleLabel="primary"
+                      autoComplete="bday"
                       label={
                         <InputMain.Label
                           value={field.value?.toString() ?? ''}
@@ -321,7 +346,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
               <FormItem>
                 <FormControl>
                   <InputMain.Root>
-                    <InputMain.InputMask
+                    {/* <InputMain.InputMask
                       {...field}
                       type="text"
                       autoComplete="tel"
@@ -330,6 +355,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       mask="(__) _ ____-____"
                       replacement={{ _: /\d/ }}
                       showMaskOnFocus={true}
+                      inputMode='tel'
                       modify={(input: string) => {
                         if (input.length == 10) {
                           return {
@@ -343,6 +369,14 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                           replacement: { _: /\d/ },
                         }
                       }}
+                    /> */}
+                    <InputMain.Input
+                      {...field}
+                      type="tel"
+                      autoComplete="tel"
+                      styleLabel="primary"
+                      id={field.name}
+              
                     />
                     <InputMain.Label
                       htmlFor={field.name}
@@ -400,6 +434,42 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
           </div>
         </form>
       </Form>
+    )
+  }
+
+  return (
+    <div className="flex flex-col gap-4 bg-card rounded shadow">
+      <div className="flex items-center justify-center p-4">
+        {formItems.map((item) => (
+          <span className="flex items-center justify-center" key={item}>
+            <span
+              data-active={item == formStep}
+              data-checked={item <= formStep}
+              className="w-[12px] h-[12px] rounded-full bg-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:w-[16px] data-[active=true]:h-[16px] data-[checked=true]:bg-primary"
+            ></span>
+            <hr
+              data-active={item < formStep}
+              className="w-[70px] border-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:border-[2px] data-[active=true]:border-primary origin-left"
+            />
+          </span>
+        ))}
+        <span
+          data-active={formStep == 3}
+          className="flex items-center justify-center p-1 border border-muted-foreground rounded-full transition-all duration-300 ease-in-out data-[active=true]:border-[2px] data-[active=true]:border-primary"
+        >
+          <i
+            data-active={formStep == 3}
+            className="icon-[solar--flag-2-bold] w-[22px] h-[22px] text-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:text-primary data-[active=true]:w-[30px] data-[active=true]:h-[30px]"
+          ></i>
+        </span>
+      </div>
+      {formStep == 1 ? getForm1() : null}
+      {formStep == 2 ? getForm2() : null}
+      {formStep == 3 ? (
+        <div className="p-4">
+          <h2>Confirmado!</h2>
+        </div>
+      ) : null}
     </div>
   )
 }

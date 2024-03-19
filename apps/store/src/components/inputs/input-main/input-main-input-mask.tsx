@@ -13,7 +13,8 @@ interface InputMainInputMaskProps
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
     >,
-    VariantProps<typeof inputMainInputStyle>, MaskProps {
+    VariantProps<typeof inputMainInputStyle>,
+    MaskProps {
   showMaskOnFocus?: boolean
 }
 
@@ -43,7 +44,10 @@ const InputMainInputMask = forwardRef<
   return (
     <input
       {...rest}
-      data-input={props.value != ''}
+      data-input={
+        (typeof props.value === 'string' && props.value !== '') ||
+        (typeof props.value === 'number' && props.value !== undefined)
+      }
       className={twMerge(inputMainInputStyle({ styleLabel }), className)}
       spellCheck="false"
       ref={inputRef}

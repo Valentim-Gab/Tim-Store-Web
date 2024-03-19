@@ -20,16 +20,18 @@ interface InputMainInputProps
       HTMLInputElement
     >,
     VariantProps<typeof inputMainInputStyle> {
-  field: any,
+  field: any
   label?: ReactNode
 }
 
 const InputMainDate = forwardRef<HTMLInputElement, InputMainInputProps>(
   (props, ref) => {
     const { styleLabel, field, label, ...rest } = props
+
     const [dateValue, setDateValue] = useState<string>(
-      field.value?.toLocaleDateString('pt-BR') ?? ''
+      field.value instanceof Date ? field.value.toLocaleDateString('pt-BR') : ''
     )
+
     const inputRef = useMask({
       mask: 'dd/mm/yyyy',
       replacement: { d: /\d/, m: /\d/, y: /\d/ },
@@ -73,6 +75,7 @@ const InputMainDate = forwardRef<HTMLInputElement, InputMainInputProps>(
           name={field.name}
           id={field.name}
           aria-describedby={rest['aria-describedby']}
+          inputMode='numeric'
         />
         {label}
         <Popover>
