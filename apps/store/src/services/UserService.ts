@@ -1,3 +1,4 @@
+import { Env } from '@/environment/Env'
 import { User } from '@/interfaces/User'
 
 export class UserService {
@@ -5,7 +6,7 @@ export class UserService {
     console.log(user)
 
     try {
-      const res = await fetch('http://localhost:3001/user', {
+      const res = await fetch(`${Env.API_URL}/user`, {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {

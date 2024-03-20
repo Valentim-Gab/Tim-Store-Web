@@ -18,6 +18,7 @@ import { Login } from '@/interfaces/Login'
 import { twMerge } from 'tailwind-merge'
 import { setCookie } from 'nookies'
 import { InputMain } from '../inputs/input-main'
+import { Env } from '@/environment/Env'
 
 const formSchema = z.object({
   username: z.string().email({ message: 'Email é inválido' }),
@@ -48,7 +49,7 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
         password: values.password.toString() ?? '',
       }
 
-      const res = await fetch('http://localhost:3001/login', {
+      const res = await fetch(`${Env.API_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +69,7 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
       if (res.ok && res.status === 201) {
         setCookie(null, 'session', JSON.stringify(data.user), {
           maxAge: data.tokens.expires,
-          secure: true, //TODO: Verificar utilização de SECURE em PROD
+          // secure: true, //TODO: Verificar utilização de SECURE em PROD
           path: '/',
         })
       }
