@@ -30,6 +30,7 @@ const InputMainInputMask = forwardRef<
     showMaskOnFocus,
     showMask,
     styleLabel,
+    screen,
     ...rest
   } = props
   const [showMaskFocus, setShowMaskFocus] = useState(false)
@@ -48,7 +49,10 @@ const InputMainInputMask = forwardRef<
         (typeof props.value === 'string' && props.value !== '') ||
         (typeof props.value === 'number' && props.value !== undefined)
       }
-      className={twMerge(inputMainInputStyle({ styleLabel }), className)}
+      className={twMerge(
+        inputMainInputStyle({ styleLabel, screen }),
+        className
+      )}
       spellCheck="false"
       ref={inputRef}
       onFocus={() => {

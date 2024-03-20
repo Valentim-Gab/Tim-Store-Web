@@ -9,7 +9,7 @@ interface SignUpDataProps {
 
 export default function SignUpData({ searchParams }: SignUpDataProps) {
   return (
-    <main className="min-h-screen px-4 py-8">
+    <main className="flex flex-col items-center self-stretch min-h-screen px-4 py-8">
       <FormSignupData email={searchParams.email} />
     </main>
   )

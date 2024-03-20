@@ -9,6 +9,9 @@ const inputMainLabelStyle = tv({
     styleLabel: {
       primary: 'label-primary',
     },
+    screen: {
+      lg: 'screen-lg lg:text-lg lg:font-medium',
+    },
   },
 })
 
@@ -27,13 +30,17 @@ export default function InputMainLabel({
   value,
   children,
   styleLabel,
+  screen,
   className,
   ...rest
 }: InputMainLabelProps) {
   return (
     <label
       {...rest}
-      className={twMerge(inputMainLabelStyle({ styleLabel }), className)}
+      className={twMerge(
+        inputMainLabelStyle({ styleLabel, screen }),
+        className
+      )}
       data-label={
         (typeof value === 'string' && value !== '') ||
         (typeof value === 'number' && value !== undefined)

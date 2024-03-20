@@ -22,12 +22,12 @@ export default function SignupConfirmed() {
   }, [router, seconds])
 
   return (
-    <div className="flex flex-col items-center self-stretch gap-4 py-8 px-4">
-      <span className="icon-checked-custom text-primary"></span>
-      <h2 className="text-primary font-semibold text-lg">
+    <div className="flex flex-col items-center self-stretch gap-4 pt-8 pb-16 px-4 lg:gap-6 lg:pb-24">
+      <span className="icon-checked-custom text-primary w-[100px] h-[100px] lg:w-[148px] lg:h-[148px]"></span>
+      <h2 className="text-primary font-semibold text-xl lg:text-3xl">
         Cadastro Realizado!
       </h2>
-      <p className="text-center">
+      <p className="text-center text-sm lg:text-lg">
         Você será redirecionado em
         <br />
         {seconds} segundos

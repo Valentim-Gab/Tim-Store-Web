@@ -8,6 +8,9 @@ const buttonStyle = tv({
     stylized: {
       google: 'text-black bg-white font-medium gap-4 border border-black',
     },
+    screen: {
+      lg: 'lg:text-lg',
+    },
   },
 })
 
@@ -18,9 +21,13 @@ interface ButtonMainProps
     >,
     VariantProps<typeof buttonStyle> {}
 
-export default function ButtonMain({ ...rest }: ButtonMainProps) {
+export default function ButtonMain({
+  stylized,
+  screen,
+  ...rest
+}: ButtonMainProps) {
   function getChildren() {
-    if (rest.stylized === 'google') {
+    if (stylized === 'google') {
       return (
         <>
           <i className="icon-[logos--google-icon] w-[24px] h-[24px]"></i>
@@ -36,7 +43,7 @@ export default function ButtonMain({ ...rest }: ButtonMainProps) {
     <button
       {...rest}
       className={twMerge(
-        buttonStyle({ stylized: rest.stylized }),
+        buttonStyle({ stylized: stylized, screen: screen }),
         rest.className
       )}
     >

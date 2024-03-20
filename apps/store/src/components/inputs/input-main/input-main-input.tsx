@@ -13,7 +13,7 @@ interface InputMainInputProps
 
 const InputMainInput = forwardRef<HTMLInputElement, InputMainInputProps>(
   (props, ref) => {
-    const { styleLabel, className, ...rest } = props
+    const { styleLabel, screen, className, ...rest } = props
 
     return (
       <input
@@ -22,7 +22,10 @@ const InputMainInput = forwardRef<HTMLInputElement, InputMainInputProps>(
           (typeof props.value === 'string' && props.value !== '') ||
           (typeof props.value === 'number' && props.value !== undefined)
         }
-        className={twMerge(inputMainInputStyle({ styleLabel }), className)}
+        className={twMerge(
+          inputMainInputStyle({ styleLabel, screen }),
+          className
+        )}
         spellCheck="false"
       />
     )

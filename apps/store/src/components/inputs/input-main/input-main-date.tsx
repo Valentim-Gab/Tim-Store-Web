@@ -24,9 +24,18 @@ interface InputMainInputProps
   label?: ReactNode
 }
 
+const iconStyle = tv({
+  base: 'icon-[solar--calendar-broken] w-[20px] h-[20px]',
+  variants: {
+    screen: {
+      lg: 'lg:w-[28px] lg:h-[28px]',
+    },
+  },
+})
+
 const InputMainDate = forwardRef<HTMLInputElement, InputMainInputProps>(
   (props, ref) => {
-    const { styleLabel, field, label, ...rest } = props
+    const { styleLabel, screen, field, label, ...rest } = props
 
     const [dateValue, setDateValue] = useState<string>(
       field.value instanceof Date ? field.value.toLocaleDateString('pt-BR') : ''
@@ -70,18 +79,18 @@ const InputMainDate = forwardRef<HTMLInputElement, InputMainInputProps>(
             }
           }}
           value={dateValue}
-          className={inputMainInputStyle({ styleLabel })}
+          className={inputMainInputStyle({ styleLabel, screen })}
           data-input={dateValue != ''}
           name={field.name}
           id={field.name}
           aria-describedby={rest['aria-describedby']}
-          inputMode='numeric'
+          inputMode="numeric"
         />
         {label}
         <Popover>
           <PopoverTrigger asChild>
-            <button className="flex items-center justify-center p-3 rounded">
-              <i className="icon-[solar--calendar-broken] w-[20px] h-[20px]"></i>
+            <button className="flex items-center justify-center p-3 rounded lg:p-4">
+              <i className={iconStyle({ screen })}></i>
             </button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">

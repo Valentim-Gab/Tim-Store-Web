@@ -70,6 +70,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
   const formItems = [1, 2]
   const pathname = usePathname()
   const userService = new UserService()
+  // const { toast } = useToast()
 
   const form1 = useForm<z.infer<typeof formSchema1>>({
     resolver: zodResolver(formSchema1),
@@ -118,21 +119,25 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
         scrollTo(0, 0)
       })
       .catch((error) => {
-        console.error(error.message)
+        // toast({
+        //   title: 'Erro',
+        //   description: error.message ?? 'Erro ao criar usuário',
+        //   variant: 'destructive',
+        // })
       })
   }
 
   function getForm1() {
     return (
       <Form {...form1}>
-        <h1 className="text-center text-sm font-medium">
+        <h1 className="text-center text-sm font-medium lg:text-base">
           Informações de Login
         </h1>
         <form
           onSubmit={form1.handleSubmit(onSubmitForm1)}
           data-path={pathname}
           className={twMerge(
-            'flex flex-col gap-4 p-4 bg-card rounded-b',
+            'flex flex-col gap-4 p-4 bg-card rounded-b lg:px-5 lg:py-6 lg:gap-5',
             className
           )}
         >
@@ -149,11 +154,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       autoComplete="username"
                       styleLabel="primary"
                       id={field.name}
+                      screen="lg"
                     />
                     <InputMain.Label
                       htmlFor={field.name}
                       value={field.value}
                       styleLabel="primary"
+                      screen="lg"
                     >
                       Nome
                     </InputMain.Label>
@@ -176,11 +183,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       autoComplete="family-name"
                       styleLabel="primary"
                       id={field.name}
+                      screen="lg"
                     />
                     <InputMain.Label
                       htmlFor={field.name}
                       value={field.value}
                       styleLabel="primary"
+                      screen="lg"
                     >
                       Sobrenome
                     </InputMain.Label>
@@ -203,11 +212,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       autoComplete="email"
                       styleLabel="primary"
                       id={field.name}
+                      screen="lg"
                     />
                     <InputMain.Label
                       htmlFor={field.name}
                       value={field.value}
                       styleLabel="primary"
+                      screen="lg"
                     >
                       Email
                     </InputMain.Label>
@@ -230,11 +241,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       autoComplete="new-password"
                       styleLabel="primary"
                       id={field.name}
+                      screen="lg"
                     />
                     <InputMain.Label
                       htmlFor={field.name}
                       value={field.value}
                       styleLabel="primary"
+                      screen="lg"
                     >
                       Senha
                     </InputMain.Label>
@@ -257,11 +270,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       autoComplete="new-password"
                       styleLabel="primary"
                       id={field.name}
+                      screen="lg"
                     />
                     <InputMain.Label
                       htmlFor={field.name}
                       value={field.value}
                       styleLabel="primary"
+                      screen="lg"
                     >
                       Confirme a senha
                     </InputMain.Label>
@@ -285,14 +300,14 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
   function getForm2() {
     return (
       <Form {...form2}>
-        <h1 className="text-center text-sm font-medium">
+        <h1 className="text-center text-sm font-medium lg:text-base">
           Informações do Usuário
         </h1>
         <form
           onSubmit={form2.handleSubmit(onSubmitForm2)}
           data-path={pathname}
           className={twMerge(
-            'flex flex-col gap-4 p-4 bg-card rounded-b',
+            'flex flex-col gap-4 p-4 bg-card rounded-b lg:px-5 lg:py-6 lg:gap-5',
             className
           )}
         >
@@ -312,11 +327,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       styleLabel="primary"
                       id={field.name}
                       inputMode="numeric"
+                      screen="lg"
                     />
                     <InputMain.Label
                       value={field.value}
                       htmlFor={field.name}
                       styleLabel="primary"
+                      screen="lg"
                     >
                       CPF
                     </InputMain.Label>
@@ -337,11 +354,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       field={field}
                       styleLabel="primary"
                       autoComplete="bday"
+                      screen="lg"
                       label={
                         <InputMain.Label
                           value={field.value?.toString() ?? ''}
                           htmlFor={field.name}
                           styleLabel="primary"
+                          screen="lg"
                         >
                           Data de nascimento
                         </InputMain.Label>
@@ -390,11 +409,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                       autoComplete="tel"
                       styleLabel="primary"
                       id={field.name}
+                      screen="lg"
                     />
                     <InputMain.Label
                       htmlFor={field.name}
                       value={field.value}
                       styleLabel="primary"
+                      screen="lg"
                     >
                       Celular
                     </InputMain.Label>
@@ -411,25 +432,40 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
               <FormItem>
                 <FormControl>
                   <InputMain.Root>
-                    <div className="flex flex-col gap-4 p-4">
-                      <p>Gênero</p>
+                    <div className="flex flex-col gap-4 p-4 lg:p-5">
+                      <p className="lg:text-lg lg:font-medium">Gênero</p>
                       <RadioGroup
-                        className="flex flex-wrap"
+                        className="flex flex-wrap gap-4 lg:gap-6"
                         onValueChange={field.onChange}
                         name={field.name}
                         id={field.name}
                       >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 lg:gap-2">
                           <RadioGroupItem value="1" id="r1" />
-                          <Label htmlFor="r1">Masculino</Label>
+                          <Label
+                            htmlFor="r1"
+                            className="lg:text-base lg:font-semibold"
+                          >
+                            Masculino
+                          </Label>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 lg:gap-2">
                           <RadioGroupItem value="2" id="r2" />
-                          <Label htmlFor="r2">Feminino</Label>
+                          <Label
+                            htmlFor="r2"
+                            className="lg:text-base lg:font-semibold"
+                          >
+                            Feminino
+                          </Label>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 lg:gap-2">
                           <RadioGroupItem value="3" id="r3" />
-                          <Label htmlFor="r3">Outro</Label>
+                          <Label
+                            htmlFor="r3"
+                            className="lg:text-base lg:font-semibold"
+                          >
+                            Outro
+                          </Label>
                         </div>
                       </RadioGroup>
                     </div>
@@ -440,8 +476,8 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             )}
           />
           <div className="flex items-center flex-col gap-4">
-            <ButtonMain type="submit" className="w-full gap-1">
-              <i className="icon-[solar--alt-arrow-right-bold-duotone] w-[24px] h-[24px]"></i>
+            <ButtonMain type="submit" className="w-full gap-1" screen="lg">
+              <i className="icon-[solar--alt-arrow-right-bold-duotone] w-[24px] h-[24px] lg:w-[32px] lg:h-[32px]"></i>
               Prosseguir
             </ButtonMain>
           </div>
@@ -451,28 +487,28 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 bg-card rounded shadow">
-      <div className="flex items-center justify-center p-4">
+    <div className="flex flex-col gap-4 bg-card rounded shadow w-full max-w-[440px] lg:max-w-[520px]">
+      <div className="flex items-center justify-center p-4 lg:p-6">
         {formItems.map((item) => (
           <span className="flex items-center justify-center" key={item}>
             <span
               data-active={item == formStep}
               data-checked={item <= formStep}
-              className="w-[12px] h-[12px] rounded-full bg-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:w-[16px] data-[active=true]:h-[16px] data-[checked=true]:bg-primary"
+              className="w-[12px] h-[12px] rounded-full bg-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:w-[16px] data-[active=true]:h-[16px] data-[checked=true]:bg-primary lg:w-[20px] lg:h-[20px] lg:data-[active=true]:w-[24px] lg:data-[active=true]:h-[24px]"
             ></span>
             <hr
               data-active={item < formStep}
-              className="w-[70px] border-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:border-[2px] data-[active=true]:border-primary origin-left"
+              className="w-[70px] border-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:border-[2px] data-[active=true]:border-primary origin-left lg:w-[100px] lg:border-[2px] lg:data-[active=true]:border-[3px]"
             />
           </span>
         ))}
         <span
           data-active={formStep == 3}
-          className="flex items-center justify-center p-1 border border-muted-foreground rounded-full transition-all duration-300 ease-in-out data-[active=true]:border-[2px] data-[active=true]:border-primary"
+          className="flex items-center justify-center p-1 border border-muted-foreground rounded-full transition-all duration-300 ease-in-out data-[active=true]:border-[2px] data-[active=true]:border-primary lg:border-[2px] lg:data-[active=true]:border-[3px]"
         >
           <i
             data-active={formStep == 3}
-            className="icon-[solar--flag-2-bold] w-[22px] h-[22px] text-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:text-primary data-[active=true]:w-[30px] data-[active=true]:h-[30px]"
+            className="icon-[solar--flag-2-bold] w-[22px] h-[22px] text-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:text-primary data-[active=true]:w-[30px] data-[active=true]:h-[30px] lg:w-[32px] lg:h-[32px] lg:data-[active=true]:w-[40px] lg:data-[active=true]:h-[40px]"
           ></i>
         </span>
       </div>

@@ -12,6 +12,9 @@ export const inputMainInputStyle = tv({
     styleLabel: {
       primary: 'label-primary',
     },
+    screen: {
+      lg: 'screen-lg lg:p-5 lg:text-lg lg:font-medium',
+    },
   },
 })
 
