@@ -20,7 +20,6 @@ import { Label } from '../ui/label'
 import { UserService } from '@/services/UserService'
 import SignupConfirmed from './signup-confirmed'
 import { useToast } from '../ui/use-toast'
-import { ToastAction } from '../ui/toast'
 
 const formSchema1 = z
   .object({
