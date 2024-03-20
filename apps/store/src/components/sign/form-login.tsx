@@ -69,6 +69,7 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
         setCookie(null, 'session', JSON.stringify(data.user), {
           maxAge: data.tokens.expires,
           secure: true, //TODO: Verificar utilização de SECURE em PROD
+          path: '/',
         })
       }
 

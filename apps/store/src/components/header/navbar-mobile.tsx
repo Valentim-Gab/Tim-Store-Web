@@ -118,17 +118,17 @@ export default function NavbarMobile({
         {!sessionData ? (
           <li className="flex justify-between items-center gap-2">
             <Link
-              href={'/auth/signin'}
+              href={'/login'}
               onClick={() => {
                 setActive(false)
               }}
-              data-active={pathname === '/auth/signin'}
+              data-active={pathname === '/login'}
               className="flex items-center self-stretch cursor-pointer p-4 w-full data-[active=true]:py-1"
             >
               <div
-                data-active={pathname === '/auth/signin'}
+                data-active={pathname === '/login'}
                 className={navItemStyles({
-                  active: pathname === '/auth/signin',
+                  active: pathname === '/login',
                 })}
               >
                 <i className={`icon-[solar--login-3-bold] text-lg`}></i>
@@ -139,17 +139,17 @@ export default function NavbarMobile({
         ) : (
           <li className="flex justify-between items-center gap-2">
             <Link
-              href={'/auth/signout'}
+              href={'/logout'}
               onClick={() => {
                 setActive(false)
               }}
-              data-active={pathname === '/auth/signout'}
+              data-active={pathname === '/logout'}
               className="flex items-center self-stretch cursor-pointer p-4 w-full data-[active=true]:py-1"
             >
               <div
-                data-active={pathname === '/auth/signout'}
+                data-active={pathname === '/logout'}
                 className={navItemStyles({
-                  active: pathname === '/auth/signout',
+                  active: pathname === '/logout',
                 })}
               >
                 <i className={`icon-[solar--login-3-bold] text-lg`}></i>

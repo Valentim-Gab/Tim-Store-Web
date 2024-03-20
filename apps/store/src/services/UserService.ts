@@ -4,21 +4,29 @@ export class UserService {
   async create(user: User) {
     console.log(user)
 
-    const res = await fetch('http://localhost:3001/user', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    try {
+      const res = await fetch('http://localhost:3001/user', {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
-    const data = await res.json()
+      const data = await res.json()
 
-    if (res.status == 400 && !res.ok) {
-      throw new Error(data.message)
+      if (res.status == 400 && !res.ok) {
+        throw new Error(data.message)
+      }
+
+      return data
+    } catch (error) {
+      if (error instanceof TypeError) {
+        throw new Error('Erro ao conectar-se ao servidor')
+      }
+
+      throw error
     }
-
-    return data
   }
 
   getUser() {

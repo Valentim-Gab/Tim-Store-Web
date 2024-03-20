@@ -19,6 +19,8 @@ import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { Label } from '../ui/label'
 import { UserService } from '@/services/UserService'
 import SignupConfirmed from './signup-confirmed'
+import { useToast } from '../ui/use-toast'
+import { ToastAction } from '../ui/toast'
 
 const formSchema1 = z
   .object({
@@ -70,7 +72,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
   const formItems = [1, 2]
   const pathname = usePathname()
   const userService = new UserService()
-  // const { toast } = useToast()
+  const { toast } = useToast()
 
   const form1 = useForm<z.infer<typeof formSchema1>>({
     resolver: zodResolver(formSchema1),
@@ -119,11 +121,12 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
         scrollTo(0, 0)
       })
       .catch((error) => {
-        // toast({
-        //   title: 'Erro',
-        //   description: error.message ?? 'Erro ao criar usuário',
-        //   variant: 'destructive',
-        // })
+        toast({
+          title: 'Erro ao realizar cadastro',
+          description: error.message ?? null,
+          variant: 'destructive',
+          icon: <i className="icon-[solar--danger-broken] w-[48px] h-[48px] text-white"></i>,
+        })
       })
   }
 
