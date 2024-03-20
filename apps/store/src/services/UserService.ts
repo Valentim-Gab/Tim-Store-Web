@@ -12,7 +12,13 @@ export class UserService {
       },
     })
 
-    console.log(await res.json())
+    const data = await res.json()
+
+    if (res.status == 400 && !res.ok) {
+      throw new Error(data.message)
+    }
+
+    return data
   }
 
   getUser() {

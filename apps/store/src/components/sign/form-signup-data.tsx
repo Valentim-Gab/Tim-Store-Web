@@ -17,8 +17,8 @@ import { twMerge } from 'tailwind-merge'
 import { InputMain } from '../inputs/input-main'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { Label } from '../ui/label'
-import { User } from '@/interfaces/User'
 import { UserService } from '@/services/UserService'
+import SignupConfirmed from './signup-confirmed'
 
 const formSchema1 = z
   .object({
@@ -100,21 +100,26 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
   }
 
   function onSubmitForm2(values: z.infer<typeof formSchema2>) {
-    userService.create({
-      name: form1.getValues().name,
-      last_name: form1.getValues().last_name,
-      email: form1.getValues().email,
-      password: form1.getValues().password,
-      date_birth: values.date_birth,
-      cpf: values.cpf,
-      phone_number: values.phone_number,
-      gender: { id_gender: values.gender },
-    })
+    userService
+      .create({
+        name: form1.getValues().name,
+        last_name: form1.getValues().last_name,
+        email: form1.getValues().email,
+        password: form1.getValues().password,
+        date_birth: values.date_birth,
+        cpf: values.cpf,
+        phone_number: values.phone_number,
+        gender: { id_gender: values.gender },
+      })
+      .then((data) => {
+        console.log(data)
 
-    setFormStep(3)
-    scrollTo(0, 0)
-
-    return
+        setFormStep(3)
+        scrollTo(0, 0)
+      })
+      .catch((error) => {
+        console.error(error.message)
+      })
   }
 
   function getForm1() {
@@ -473,11 +478,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
       </div>
       {formStep == 1 ? getForm1() : null}
       {formStep == 2 ? getForm2() : null}
-      {formStep == 3 ? (
-        <div className="p-4">
-          <h2>Confirmado!</h2>
-        </div>
-      ) : null}
+      {formStep == 3 ? <SignupConfirmed /> : null}
     </div>
   )
 }
