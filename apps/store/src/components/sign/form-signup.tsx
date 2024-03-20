@@ -83,7 +83,7 @@ export default function FormSignup({ className }: FormSignupProps) {
           </ButtonMain>
           <ButtonMain
             type="button"
-            stylized={'google'}
+            variant={'google'}
             className="w-full lg:hidden"
           />
         </div>

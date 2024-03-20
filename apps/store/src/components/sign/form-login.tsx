@@ -146,7 +146,7 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
           </ButtonMain>
           <ButtonMain
             type="button"
-            stylized={'google'}
+            variant={'google'}
             className="w-full lg:hidden"
           />
         </div>

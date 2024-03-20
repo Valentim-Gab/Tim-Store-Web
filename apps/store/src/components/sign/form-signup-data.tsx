@@ -124,7 +124,9 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
           title: 'Erro ao realizar cadastro',
           description: error.message ?? null,
           variant: 'destructive',
-          icon: <i className="icon-[solar--danger-broken] w-[48px] h-[48px] text-white"></i>,
+          icon: (
+            <i className="icon-[solar--danger-broken] w-[48px] h-[48px] text-white"></i>
+          ),
         })
       })
   }
@@ -289,7 +291,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             )}
           />
           <div className="flex items-center flex-col gap-4">
-            <ButtonMain type="submit" className="w-full gap-1">
+            <ButtonMain type="submit" className="w-full gap-1" screen="lg">
               <i className="icon-[solar--alt-arrow-right-bold-duotone] w-[24px] h-[24px]"></i>
               Prosseguir
             </ButtonMain>
@@ -441,6 +443,7 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
                         onValueChange={field.onChange}
                         name={field.name}
                         id={field.name}
+                        defaultValue={field.value.toString() ?? undefined}
                       >
                         <div className="flex items-center gap-1 lg:gap-2">
                           <RadioGroupItem value="1" id="r1" />
@@ -477,10 +480,20 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
               </FormItem>
             )}
           />
-          <div className="flex items-center flex-col gap-4">
-            <ButtonMain type="submit" className="w-full gap-1" screen="lg">
-              <i className="icon-[solar--alt-arrow-right-bold-duotone] w-[24px] h-[24px] lg:w-[32px] lg:h-[32px]"></i>
-              Prosseguir
+          <div className="flex flex-col-reverse items-center lg:flex-row lg:justify-center gap-4">
+            <ButtonMain
+              variant="outline"
+              onClick={() => setFormStep(1)}
+              type="button"
+              className="w-full gap-1"
+              screen="lg"
+            >
+              <i className="icon-[solar--alt-arrow-left-bold-duotone] w-[24px] h-[24px] lg:w-[32px] lg:h-[32px]"></i>
+              Etapa anterior
+            </ButtonMain>
+            <ButtonMain type="submit" className="w-full" screen="lg">
+              <i className="icon-[solar--verified-check-bold] w-[24px] h-[24px] lg:w-[32px] lg:h-[32px]"></i>
+              Finalizar
             </ButtonMain>
           </div>
         </form>
@@ -500,13 +513,13 @@ export default function FormSignupData({ className, email }: FormSignupProps) {
             ></span>
             <hr
               data-active={item < formStep}
-              className="w-[70px] border-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:border-[2px] data-[active=true]:border-primary origin-left lg:w-[100px] lg:border-[2px] lg:data-[active=true]:border-[3px]"
+              className="w-[70px] border-muted-foreground transition-all duration-300 ease-in-out data-[active=true]:border-2 data-[active=true]:border-primary origin-left lg:w-[100px] lg:border-2 lg:data-[active=true]:border-[3px]"
             />
           </span>
         ))}
         <span
           data-active={formStep == 3}
-          className="flex items-center justify-center p-1 border border-muted-foreground rounded-full transition-all duration-300 ease-in-out data-[active=true]:border-[2px] data-[active=true]:border-primary lg:border-[2px] lg:data-[active=true]:border-[3px]"
+          className="flex items-center justify-center p-1 border border-muted-foreground rounded-full transition-all duration-300 ease-in-out data-[active=true]:border-2 data-[active=true]:border-primary lg:border-2 lg:data-[active=true]:border-[3px]"
         >
           <i
             data-active={formStep == 3}

@@ -28,7 +28,7 @@ export default function SignOptionsForms({
       <div className="flex flex-col items-center gap-4 sel self-stretch">
         <h3>Facilite seu Login utilizando outras opções</h3>
         <ButtonMain
-          stylized="google"
+          variant="google"
           className="border-none shadow px-16"
         ></ButtonMain>
       </div>

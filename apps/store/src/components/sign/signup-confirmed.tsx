@@ -15,7 +15,7 @@ export default function SignupConfirmed() {
 
     if (seconds === 0) {
       clearInterval(interval)
-      router.push('/auth/signin')
+      router.push('/login')
     }
 
     return () => clearInterval(interval)
