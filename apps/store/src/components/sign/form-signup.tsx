@@ -40,7 +40,7 @@ export default function FormSignup({ className }: FormSignupProps) {
     console.log(values)
 
     if (values.username) {
-      router.push(`/auth/signup/data?email=${values.username}`)
+      router.push(`/register?email=${values.username}`)
     }
   }
 
