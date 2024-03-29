@@ -1,6 +1,8 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation"
+import { destroyCookie } from "nookies"
+import { useEffect } from "react"
 
 interface LogoutProps {
   searchParams: {
@@ -9,11 +11,19 @@ interface LogoutProps {
 }
 
 export default function Logout({ searchParams }: LogoutProps) {
-  const router = useRouter()
+  destroyCookie(null, 'session')
 
   const url = searchParams.callback
     ? `/login?callback=${searchParams.callback}`
     : '/login'
 
-  router.push(url)
+
+  if (typeof window !== 'undefined')
+    window.location.href = url
+
+  return (
+    <div>
+      <h1>Saindo...</h1>
+    </div>
+  )
 }

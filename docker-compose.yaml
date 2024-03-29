@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  tim-store-web:
+    build: ./apps/store
+    container_name: tim-store-web
+    ports:
+      - '3000:3000'

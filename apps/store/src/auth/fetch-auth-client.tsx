@@ -1,6 +1,4 @@
-import React from 'react'
 import { FetchAuth } from './fetch-auth'
-import { setCookie } from 'nookies'
 
 export default async function fetchAuthClient({
   url,
@@ -21,38 +19,40 @@ export default async function fetchAuthClient({
     })
 
     if (res.status == 403) {
-      const res = await fetch('http://localhost:3001/refresh', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      })
+      // const res = await fetch('http://localhost:3001/refresh', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   credentials: 'include',
+      // })
 
-      const data = await res.json()
+      // const data = await res.json()
       
-      const user = {
-        id: data.user.id ?? '',
-        name: data.user.name ?? '',
-        email: data.user.email ?? '',
-      }
+      // const user = {
+      //   id: data.user.id ?? '',
+      //   name: data.user.name ?? '',
+      //   email: data.user.email ?? '',
+      // }
 
-      if (res.ok && res.status === 201) {
-        setCookie(null, 'session', JSON.stringify(user), {
-          maxAge: data.tokens.expires,
-          secure: true,
-        })
+      // if (res.ok && res.status === 201) {
+      //   setCookie(null, 'session', JSON.stringify(user), {
+      //     maxAge: data.tokens.expires,
+      //     secure: true,
+      //   })
 
-        return await fetchAuthClient({
-          url,
-          method,
-          body,
-          token,
-          cache,
-        })
-      } else if (res.status === 403 || res.status === 401) {
-        throw new Error('Unauthorized')
-      }
+      //   return await fetchAuthClient({
+      //     url,
+      //     method,
+      //     body,
+      //     token,
+      //     cache,
+      //   })
+      // } else if (res.status === 403 || res.status === 401) {
+      //   throw new Error('Unauthorized')
+      // }
+
+      throw new Error('Unauthorized')
     } else if (res.status == 401) {
       throw new Error('Unauthorized')
     }

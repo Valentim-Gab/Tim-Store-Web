@@ -42,7 +42,7 @@ export default function SignInBtn() {
   }
 
   if (sessionData) {
-    return <Link href={'/logout'}>{sessionData.name}</Link>
+    return <Link href={'/logout'} prefetch={false}>{sessionData.name}</Link>
   }
 
   return (

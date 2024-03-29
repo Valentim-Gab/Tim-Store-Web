@@ -19,8 +19,9 @@ import { twMerge } from 'tailwind-merge'
 import { setCookie } from 'nookies'
 import { InputMain } from '../inputs/input-main'
 import { Env } from '@/environment/Env'
+import { login } from './login'
 
-const formSchema = z.object({
+export const formSchema = z.object({
   username: z.string().email({ message: 'Email é inválido' }),
   password: z.string(),
 })
@@ -43,45 +44,46 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (values.username && values.password) {
-      const login: Login = {
-        username: values.username.toString() ?? '',
-        password: values.password.toString() ?? '',
-      }
+    // if (values.username && values.password) {
+    //   const login: Login = {
+    //     username: values.username.toString() ?? '',
+    //     password: values.password.toString() ?? '',
+    //   }
 
-      const res = await fetch(`${Env.API_URL}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(login),
-        credentials: 'include',
-      })
+    //   const res = await fetch(`${Env.API_URL}/login`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(login),
+    //     credentials: 'include',
+    //   })
 
-      const data = await res.json()
+    //   const data = await res.json()
 
-      if (!res.ok || res.status === 401) {
-        console.error(data.message)
+    //   if (!res.ok || res.status === 401) {
+    //     console.error(data.message)
 
-        return
-      }
+    //     return
+    //   }
 
-      if (res.ok && res.status === 201) {
-        setCookie(null, 'session', JSON.stringify(data.user), {
-          maxAge: data.tokens.expires,
-          // secure: true, //TODO: Verificar utilização de SECURE em PROD
-          path: '/',
-        })
-      }
+    //   if (res.ok && res.status === 201) {
+    //     setCookie(null, 'session', JSON.stringify(data.user), {
+    //       maxAge: data.tokens.expires,
+    //       secure: true, //TODO: Verificar utilização de SECURE em PROD
+    //       path: '/',
+    //     })
+    //   }
 
-      router.push(redirectUrl)
-    }
+    //   router.push(redirectUrl)
+    // }
   }
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        //onSubmit={form.handleSubmit(onSubmit)}
+        action={() => login(form.getValues(), redirectUrl)}
         data-path={pathname}
         className={twMerge(
           "flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/auth/signin']:rounded-tr data-[path='/auth/signup']:rounded-tl lg:w-[400px] lg:rounded lg:py-4 lg:shadow-none",
