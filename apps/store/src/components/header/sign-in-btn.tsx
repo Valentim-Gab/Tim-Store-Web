@@ -1,48 +1,30 @@
 'use client'
 
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { parseCookies } from 'nookies'
 import React, { useEffect, useState } from 'react'
 
 export default function SignInBtn() {
-  const [sessionData, setSessionData] = useState<any>(null)
-  const [currentRoute, setCurrentRoute] = useState('')
   const [loading, setLoading] = useState(true)
-  const { session } = parseCookies()
+  const { data: session, status } = useSession()
   const path = usePathname()
 
   useEffect(() => {
-    setLoading(true)
-
-    if (session) {
-      try {
-        if (!sessionData || sessionData.name != JSON.parse(session).name)
-          setSessionData(JSON.parse(session))
-      } catch (error) {
-        setSessionData(null)
-      }
-    } else if (path != currentRoute) {
-      setSessionData(null)
-    }
-
-    setLoading(false)
-
-    return () => {
-      setLoading(false)
-    }
-  }, [session, sessionData, currentRoute, path])
-
-  useEffect(() => {
-    setCurrentRoute(path)
-  }, [path])
+    if (status === 'loading') setLoading(true)
+    else setLoading(false)
+  }, [session, status])
 
   if (loading) {
     return <div>Carregando...</div>
   }
 
-  if (sessionData) {
-    return <Link href={'/logout'} prefetch={false}>{sessionData.name}</Link>
+  if (session && session.user) {
+    return (
+      <Link href={'/logout'} prefetch={false}>
+        {session.user.name}
+      </Link>
+    )
   }
 
   return (

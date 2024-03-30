@@ -7,8 +7,19 @@ import { Product } from '@/interfaces/Product'
 import Link from 'next/link'
 import React from 'react'
 import './home.scss'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { authOptions } from '@/auth/authOptions'
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions)
+
+  if (session && session.user) {
+    if (new Date().getTime() > session.tokens.expires) {
+      redirect('/logout')
+    }
+  }
+
   const products: Product[] = [
     {
       id: '1',

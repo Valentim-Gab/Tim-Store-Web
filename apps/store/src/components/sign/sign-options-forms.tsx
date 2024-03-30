@@ -6,7 +6,7 @@ import FormSignup from './form-signup'
 export default function SignOptionsForms({
   searchParams,
 }: {
-  searchParams: { callback?: string }
+  searchParams: { callbackUrl?: string }
 }) {
   return (
     <section className="hidden flex-col items-center gap-16 lg:flex">
@@ -15,7 +15,7 @@ export default function SignOptionsForms({
           <span className="p-4">
             <h2 className="text-xl font-medium">Acessar</h2>
           </span>
-          <FormLogin redirectUrl={searchParams.callback ?? '/'} />
+          <FormLogin redirectUrl={searchParams.callbackUrl ?? '/'} />
         </div>
         <span className="w-[1px] bg-primary"></span>
         <div className="flex flex-col items-center h-fit bg-card rounded shadow">

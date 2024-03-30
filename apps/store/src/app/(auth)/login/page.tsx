@@ -7,7 +7,8 @@ import { twMerge } from 'tailwind-merge'
 
 interface LoginProps {
   searchParams: {
-    callback?: string
+    callbackUrl?: string
+    error?: string
   }
 }
 
@@ -40,7 +41,7 @@ export default function Login({ searchParams }: LoginProps) {
         </TabsList>
         <TabsContent value="login" className="mt-0">
           <FormLogin
-            redirectUrl={searchParams.callback ?? '/'}
+            redirectUrl={searchParams.callbackUrl ?? '/'}
             className="rounded-tr"
           />
         </TabsContent>

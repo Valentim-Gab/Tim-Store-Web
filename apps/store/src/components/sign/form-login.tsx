@@ -14,12 +14,11 @@ import {
 } from '@/components/ui/form'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Login } from '@/interfaces/Login'
 import { twMerge } from 'tailwind-merge'
-import { setCookie } from 'nookies'
 import { InputMain } from '../inputs/input-main'
-import { Env } from '@/environment/Env'
-import { login } from './login'
+import { signIn } from 'next-auth/react'
+import { useToast } from '../ui/use-toast'
+import { set } from 'date-fns'
 
 export const formSchema = z.object({
   username: z.string().email({ message: 'Email é inválido' }),
@@ -31,9 +30,13 @@ interface FormLoginProps {
   className?: string
 }
 
-export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
+export default function FormLogin({
+  redirectUrl,
+  className,
+}: FormLoginProps) {
   const pathname = usePathname()
-  const router = useRouter()
+ //  const router = useRouter()
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,46 +47,43 @@ export default function FormLogin({ redirectUrl, className }: FormLoginProps) {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // if (values.username && values.password) {
-    //   const login: Login = {
-    //     username: values.username.toString() ?? '',
-    //     password: values.password.toString() ?? '',
-    //   }
+    if (values.username && values.password) {
+      signIn('credentials', {
+        username: values.username,
+        password: values.password,
+        callbackUrl: redirectUrl,
+        redirect: false,
+      }).then((res) => {
+        if (res && res.error && !res.ok) {
+          toast({
+            title: 'Email ou senha incorretos!',
+            variant: 'destructive',
+            icon: (
+              <i className="icon-[solar--danger-broken] w-[48px] h-[48px] text-destructive-foreground"></i>
+            ),
+          })
+        } else if (res && res.ok && !res.error) {
+          toast({
+            title: 'Logado com sucesso!',
+            variant: 'filled',
+            icon: (
+              <i className="icon-[solar--check-circle-broken] text-primary-foreground w-[48px] h-[48px]"></i>
+            ),
+          })
 
-    //   const res = await fetch(`${Env.API_URL}/login`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(login),
-    //     credentials: 'include',
-    //   })
-
-    //   const data = await res.json()
-
-    //   if (!res.ok || res.status === 401) {
-    //     console.error(data.message)
-
-    //     return
-    //   }
-
-    //   if (res.ok && res.status === 201) {
-    //     setCookie(null, 'session', JSON.stringify(data.user), {
-    //       maxAge: data.tokens.expires,
-    //       secure: true, //TODO: Verificar utilização de SECURE em PROD
-    //       path: '/',
-    //     })
-    //   }
-
-    //   router.push(redirectUrl)
-    // }
+          setTimeout(() => {
+            if (typeof window !== 'undefined')
+            window.location.href = redirectUrl
+          }, 1000)
+        }
+      })
+    }
   }
 
   return (
     <Form {...form}>
       <form
-        //onSubmit={form.handleSubmit(onSubmit)}
-        action={() => login(form.getValues(), redirectUrl)}
+        onSubmit={form.handleSubmit(onSubmit)}
         data-path={pathname}
         className={twMerge(
           "flex flex-col gap-4 px-4 py-8 bg-card shadow rounded-b data-[path='/auth/signin']:rounded-tr data-[path='/auth/signup']:rounded-tl lg:w-[400px] lg:rounded lg:py-4 lg:shadow-none",

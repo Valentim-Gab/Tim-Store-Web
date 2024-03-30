@@ -1,21 +1,32 @@
 'use client'
 
 import fetchAuthClient from '@/auth/fetch-auth-client'
+import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export default function Feminino() {
-  const router = useRouter()
+  // const router = useRouter()
+
+  // const { data: session, status } = useSession()
+
+  // if (session && session.user) {
+  //   if (new Date().getTime() > session.tokens.expires) {
+  //     console.log('\n\n[JWT]: Token expirado')
+
+  //     signOut()
+  //   }
+  // }
 
   async function getAuthClient() {
-    fetchAuthClient({ url: 'http://localhost:3001/test' })
-      .then((data) => {
-        console.log(data)
-      })
-      .catch((err) => {
-        console.log(err)
-        router.push('/logout')
-      })
+    // fetchAuthClient({ url: 'http://localhost:3001/test' })
+    //   .then((data) => {
+    //     console.log(data)
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //     router.push('/logout')
+    //   })
   }
 
   return (

@@ -6,6 +6,7 @@ import Header from '@/components/header/header'
 import ThemeProvider from '@/components/providers/theme-provider'
 import Footer from '@/components/footer/footer'
 import { Toaster } from '@/components/ui/toaster'
+import SessionProviderMain from '@/components/providers/session-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,18 +23,20 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <HeaderMobile />
-          {children}
-          <Footer />
-          <Toaster />
-        </ThemeProvider>
+        <SessionProviderMain>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            <HeaderMobile />
+            {children}
+            <Footer />
+            <Toaster />
+          </ThemeProvider>
+        </SessionProviderMain>
       </body>
     </html>
   )

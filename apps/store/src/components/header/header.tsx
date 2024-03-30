@@ -18,9 +18,8 @@ import {
 import { Button } from '../ui/button'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import { parseCookies } from 'nookies'
-import SignInBtn from './sign-in-btn'
 import Image from 'next/image'
+import SignInBtn from './sign-in-btn'
 
 export default function Header() {
   const pathname = usePathname()
