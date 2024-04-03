@@ -20,7 +20,7 @@ export default function Logout({ searchParams }: LogoutProps) {
         if (typeof window !== 'undefined') window.location.href = url
       })
       .catch(() => {})
-  }, 2350)
+  }, 3000)
 
   return (
     <main className="flex flex-col items-center min-h-screen gap-32 px-4 py-8 lg:py-16">

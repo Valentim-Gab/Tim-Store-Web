@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
 
         const { username, password } = credentials
 
-        const res = await fetch(`http://localhost:3001/login`, {
+        const res = await fetch(`http://localhost:3001/login-unique`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password }),

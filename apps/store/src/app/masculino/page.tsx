@@ -14,7 +14,7 @@ export default async function Masculino() {
   if (session) {
     const res = await fetch('http://localhost:3001/test', {
       headers: {
-        Authorization: `Bearer ${session.tokens.access_token}`,
+        Authorization: `Bearer ${session.tokens.token}`,
         'Content-Type': 'application/json'
       },
     })
