@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   Toast,
@@ -7,23 +7,34 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from "@/components/ui/toast"
-import { useToast } from "@/components/ui/use-toast"
+} from '@/components/ui/toast'
+import { useToast } from '@/components/ui/use-toast'
 
 export function Toaster() {
   const { toasts } = useToast()
 
   return (
     <ToastProvider>
-      {toasts.map(function ({ id, title, icon, description, action, ...props }) {
+      {toasts.map(function ({
+        id,
+        title,
+        icon,
+        description,
+        action,
+        ...props
+      }) {
         return (
-          <Toast key={id} {...props}>    
+          <Toast key={id} {...props}>
             <div className="flex items-center justify-center gap-4">
               {icon ?? icon}
               <div className="flex flex-col justify-center gap-1">
-                {title && <ToastTitle className="text-lg">{title}</ToastTitle>}
+                {title && (
+                  <ToastTitle className="sm:text-lg">{title}</ToastTitle>
+                )}
                 {description && (
-                  <ToastDescription className="text-base">{description}</ToastDescription>
+                  <ToastDescription className="sm:text-base">
+                    {description}
+                  </ToastDescription>
                 )}
               </div>
             </div>

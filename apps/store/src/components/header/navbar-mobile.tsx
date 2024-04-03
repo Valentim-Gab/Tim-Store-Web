@@ -1,11 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './navbar-mobile.scss'
 import { tv } from 'tailwind-variants'
 import DrawerThemeMobile from './drawer-theme-mobile'
-import { parseCookies } from 'nookies'
+import SignInBtn from './sign-in-btn'
+import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 
 interface NavbarProps {
   isOpen: boolean
@@ -26,22 +28,7 @@ export default function NavbarMobile({
   setActive,
   pathname,
 }: NavbarProps) {
-  const [currentRoute, setCurrentRoute] = useState('')
-  const [sessionData, setSessionData] = useState<any>(null)
-  const { session } = parseCookies()
-
-  useEffect(() => {
-    if (session) {
-      try {
-        if (!sessionData || sessionData.name != JSON.parse(session).name)
-          setSessionData(JSON.parse(session))
-      } catch (error) {
-        setSessionData(null)
-      }
-    } else if (currentRoute != pathname) {
-      setSessionData(null)
-    }
-  }, [session, sessionData, pathname, currentRoute])
+  const { data: session } = useSession()
 
   const items = [
     {
@@ -72,22 +59,34 @@ export default function NavbarMobile({
       className={`navbar-mobile bg-primary text-white w-full`}
     >
       <ul className="items pb-2">
-        {sessionData && (
+        {session && session.user && (
           <li className="flex justify-between items-center gap-2">
             <Link
-              href={'/user'}
+              href={'/perfil'}
               onClick={() => {
                 setActive(false)
               }}
-              data-active={pathname === '/user'}
+              data-active={pathname === '/perfil'}
               className="flex items-center self-stretch cursor-pointer p-4 w-full data-[active=true]:py-1"
             >
               <div
-                data-active={pathname === '/user'}
-                className={navItemStyles({ active: pathname === '/user' })}
+                data-active={pathname === '/perfil'}
+                className={navItemStyles({ active: pathname === '/perfil' })}
               >
-                <i className={`icon-[solar--user-bold] w-[32px] h-[32px]`}></i>
-                <p className="font-medium">{sessionData.name}</p>
+                {session.user.profile_image ? (
+                  <Image
+                    src={session.user.profile_image}
+                    width={32}
+                    height={32}
+                    alt="Imagem do usuário"
+                    className="rounded-full w-[32px] h-[32px]"
+                  />
+                ) : (
+                  <i
+                    className={`icon-[solar--user-bold] w-[32px] h-[32px]`}
+                  ></i>
+                )}
+                <p className="font-medium">{session.user.name}</p>
               </div>
             </Link>
             <DrawerThemeMobile />
@@ -112,10 +111,10 @@ export default function NavbarMobile({
                   <p className="font-medium">{item.text}</p>
                 </div>
               </Link>
-              {index === 0 && !sessionData && <DrawerThemeMobile />}
+              {index === 0 && !session && <DrawerThemeMobile />}
             </li>
           ))}
-        {!sessionData ? (
+        {!session ? (
           <li className="flex justify-between items-center gap-2">
             <Link
               href={'/login'}

@@ -23,10 +23,14 @@ export default function Logout({ searchParams }: LogoutProps) {
   }, 3000)
 
   return (
-    <main className="flex flex-col items-center min-h-screen gap-32 px-4 py-8 lg:py-16">
-      <div className='flex flex-col items-center gap-4'>
-      <h1 className='text-3xl font-bold'>Saindo...</h1>
-      <h2 className='text-xl font-semibold'>Sua sessão foi encerrada, faça login novamente.</h2>
+    <main className="flex flex-col items-center min-h-screen gap-24 px-4 py-12 sm:py-16 sm:gap-32">
+      <div className="flex flex-col items-center gap-4">
+        <h1 className="text-xl font-semibold sm:font-bold sm:text-3xl">
+          Saindo...
+        </h1>
+        <h2 className="text-sm font-medium text-center mx-8 sm:text-xl sm:font-semibold">
+          Sua sessão foi encerrada, faça login novamente.
+        </h2>
       </div>
       <div className="loader">
         <div className="box box0">
