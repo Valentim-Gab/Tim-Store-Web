@@ -4,6 +4,9 @@ import SignOptionsForms from '@/components/sign/sign-options-forms'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import FormSignup from '@/components/sign/form-signup'
 import { twMerge } from 'tailwind-merge'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/auth/authOptions'
+import { redirect } from 'next/navigation'
 
 interface LoginProps {
   searchParams: {
@@ -12,7 +15,13 @@ interface LoginProps {
   }
 }
 
-export default function Login({ searchParams }: LoginProps) {
+export default async function Login({ searchParams }: LoginProps) {
+  const session = await getServerSession(authOptions)
+
+  if (session) {
+    redirect('/')
+  }
+
   const classNameTab =
     'flex items-center justify-center p-4 text-sm font-medium w-full rounded-t rounded-b-none ease-in duration-200'
 
